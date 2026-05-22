@@ -595,6 +595,21 @@ h1 {
   background: #5ee6a8;
 }
 
+.status-pill.done {
+  border-color: rgba(217, 119, 6, 0.28);
+  background: #fff7ed;
+  color: var(--amber);
+}
+
+.status-pill.done::before {
+  background: var(--amber);
+}
+
+.airdrop-table .muted {
+  color: var(--muted);
+  font-weight: 700;
+}
+
 .table-link {
   text-decoration: none;
 }
