@@ -154,6 +154,13 @@ a {
   fill: currentColor;
 }
 
+.community img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
 .community .cutout,
 .community .eye {
   fill: #ffffff;
@@ -161,8 +168,7 @@ a {
 
 .community .youtube {
   width: 48px;
-  border-radius: 8px;
-  background: #ff0000;
+  background: transparent;
 }
 
 .community .youtube svg {
@@ -171,13 +177,11 @@ a {
 }
 
 .community .discord {
-  border-radius: 8px;
-  background: #5865f2;
+  background: transparent;
 }
 
 .community .telegram {
-  border-radius: 8px;
-  background: #2aabee;
+  background: transparent;
 }
 
 .community .youtube,
