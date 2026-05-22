@@ -38,15 +38,15 @@
       <section class="tracker-summary" aria-label="空投统计">
         <article class="summary-card">
           <span>总项目</span>
-          <strong>14</strong>
+          <strong id="summaryTotal">14</strong>
         </article>
         <article class="summary-card active">
           <span>进行中</span>
-          <strong>13</strong>
+          <strong id="summaryActive">13</strong>
         </article>
         <article class="summary-card warning">
           <span>已结束</span>
-          <strong>1</strong>
+          <strong id="summaryDone">1</strong>
         </article>
         <aside class="summary-note">
           <strong>说明</strong>
@@ -55,6 +55,13 @@
       </section>
 
       <section class="airdrop-table-section" aria-label="空投项目表格">
+        <div class="airdrop-table-toolbar">
+          <div class="view-tabs" id="airdropViewTabs" role="tablist" aria-label="空投项目年份视图">
+            <button class="selected" type="button" data-view="2026">2026 重点项目</button>
+            <button type="button" data-view="2025">2025 历史项目</button>
+          </div>
+          <span class="page-size-note">一页最多显示 10 个项目</span>
+        </div>
         <div class="table-wrap">
           <table class="airdrop-table">
             <thead>
@@ -72,7 +79,7 @@
                 <th>备注</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="airdropTableBody">
               <tr>
                 <td><strong>Brevis（2025）</strong></td>
                 <td>待补充</td>
@@ -259,7 +266,10 @@
           </table>
         </div>
         <p class="table-disclaimer">本站仅提供信息参考，不构成任何投资建议，请自行研究。</p>
+              <div class="pagination" id="airdropPagination"></div>
       </section>
     </main>
+    <script src="./airdrops-data.js"></script>
+    <script src="./airdrops-page.js"></script>
   </body>
 </html>
