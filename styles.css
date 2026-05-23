@@ -66,10 +66,12 @@ a {
   height: 42px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
-  background: var(--ink);
+  border-radius: 999px;
+  background: #f7931a;
   color: #ffffff;
-  font-weight: 850;
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .brand strong,
