@@ -112,7 +112,7 @@ a {
 .community {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   justify-content: flex-end;
 }
 
@@ -134,8 +134,8 @@ a {
 }
 
 .community a {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   padding: 0;
   display: inline-grid;
   place-items: center;
@@ -161,8 +161,8 @@ a {
 }
 
 .community img {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   display: block;
   object-fit: contain;
 }
@@ -173,8 +173,8 @@ a {
 }
 
 .community .youtube {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   background: transparent;
 }
 

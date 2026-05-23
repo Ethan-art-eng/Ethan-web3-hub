@@ -1,17 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Discord">
-  <defs>
-    <filter id="discordGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="22" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.18 0 0 0 0 0.38 0 0 0 0 1 0 0 0 0.55 0"/>
-      <feMerge>
-        <feMergeNode/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-  <rect x="52" y="76" width="408" height="360" rx="86" fill="#5865f2" filter="url(#discordGlow)"/>
-  <path fill="#ffffff" d="M155 190c31-16 65-24 101-24s70 8 101 24c24 41 36 86 35 135-25 20-52 34-82 42-7-10-13-22-17-34 10-4 20-9 30-15-3-2-7-5-10-7-38 18-76 27-114 27s-76-9-114-27c-3 2-7 5-10 7 10 6 20 11 30 15-4 12-10 24-17 34-30-8-57-22-82-42-1-49 11-94 35-135z"/>
-  <circle cx="211" cy="264" r="25" fill="#5865f2"/>
-  <circle cx="301" cy="264" r="25" fill="#5865f2"/>
-  <path fill="none" stroke="#5865f2" stroke-linecap="round" stroke-width="20" d="M200 316c36 20 76 20 112 0"/>
+  <rect x="48" y="48" width="416" height="416" rx="88" fill="#5865f2"/>
+  <path fill="#ffffff" d="M140 186c35-18 74-27 116-27s81 9 116 27c27 46 40 96 39 151-28 22-58 38-92 47-8-12-15-25-20-38 12-5 23-10 34-17-4-3-8-5-12-8-43 20-86 30-129 30s-86-10-129-30c-4 3-8 5-12 8 11 7 22 12 34 17-5 13-12 26-20 38-34-9-64-25-92-47-1-55 12-105 39-151z"/>
+  <circle cx="205" cy="270" r="27" fill="#5865f2"/>
+  <circle cx="307" cy="270" r="27" fill="#5865f2"/>
+  <path fill="none" stroke="#5865f2" stroke-linecap="round" stroke-width="22" d="M192 332c41 23 87 23 128 0"/>
 </svg>
