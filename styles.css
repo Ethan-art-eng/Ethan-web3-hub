@@ -613,6 +613,77 @@ h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.campaign-section {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.section-heading {
+  padding: 24px 26px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 22px;
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+  background: #fbfdff;
+}
+
+.section-heading h2 {
+  margin-bottom: 0;
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.15;
+}
+
+.section-heading p:not(.eyebrow) {
+  margin-bottom: 0;
+  color: var(--body);
+  line-height: 1.7;
+}
+
+.campaign-table-wrap {
+  overflow-x: auto;
+}
+
+.campaign-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+}
+
+.campaign-table th,
+.campaign-table td {
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.campaign-table th {
+  background: #f8fbff;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.campaign-table td {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.campaign-table tbody tr:nth-child(even) {
+  background: #fbfdff;
+}
+
+.campaign-table tbody tr:hover {
+  background: #f2f7ff;
+}
+
 .comparison-section {
   padding: 26px;
 }
@@ -948,6 +1019,16 @@ h1 {
   background: var(--amber);
 }
 
+.status-pill.neutral {
+  border-color: rgba(0, 82, 255, 0.2);
+  background: var(--soft-blue);
+  color: var(--blue);
+}
+
+.status-pill.neutral::before {
+  background: var(--blue);
+}
+
 .airdrop-table .muted {
   color: var(--muted);
   font-weight: 700;
@@ -1151,6 +1232,100 @@ h1 {
 
   .comparison-table strong {
     border-bottom: 1px solid var(--line);
+  }
+
+  .campaign-section {
+    margin-top: 14px;
+  }
+
+  .section-heading {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .section-heading h2 {
+    font-size: 28px;
+  }
+
+  .campaign-table-wrap {
+    overflow-x: visible;
+  }
+
+  .campaign-table {
+    min-width: 0;
+    display: block;
+  }
+
+  .campaign-table thead {
+    display: none;
+  }
+
+  .campaign-table tbody,
+  .campaign-table tr,
+  .campaign-table td {
+    display: block;
+  }
+
+  .campaign-table tbody {
+    padding: 10px;
+  }
+
+  .campaign-table tr {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .campaign-table tbody tr:nth-child(even),
+  .campaign-table tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .campaign-table td {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 14px;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .campaign-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 850;
+  }
+
+  .campaign-table td:first-child {
+    grid-template-columns: 1fr;
+    background: #f8fbff;
+  }
+
+  .campaign-table td:first-child::before {
+    display: none;
+  }
+
+  .campaign-table .table-link {
+    width: fit-content;
+  }
+
+  .campaign-table td > * {
+    min-width: 0;
+  }
+
+  .campaign-table .status-pill {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .campaign-section .table-disclaimer {
+    padding: 16px 18px;
   }
 
   .tracker-page {
