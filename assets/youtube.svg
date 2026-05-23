@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="YouTube">
+  <defs>
+    <filter id="youtubeGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 1 0 0 0 0 0.02 0 0 0 0 0 0 0 0 0.45 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect x="54" y="138" width="404" height="236" rx="62" fill="#ff0000" filter="url(#youtubeGlow)"/>
+  <path fill="#ffffff" d="m226 200 122 56-122 56z"/>
+</svg>
