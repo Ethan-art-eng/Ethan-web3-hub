@@ -10,34 +10,40 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
-function getActivityMeta(activity) {
-  const text = String(activity || "");
+function getActivityMeta(activity, venue) {
+  const text = `${activity || ""} ${venue || ""}`;
   if (text.includes("Binance") || text.includes("币安")) {
-    return { code: "BN", className: "binance", venue: "Binance 主站 -> 活期" };
+    return { code: "BN", className: "binance" };
   }
   if (text.includes("OKX") || text.includes("欧易")) {
-    return { code: "OK", className: "okx", venue: "OKX 主站 -> Simple Earn" };
+    return { code: "OK", className: "okx" };
   }
   if (text.includes("Bybit")) {
-    return { code: "BY", className: "bybit", venue: "Bybit 主站 -> Earn" };
+    return { code: "BY", className: "bybit" };
   }
   if (text.includes("Bitget")) {
-    return { code: "BG", className: "bitget", venue: "Bitget 主站 -> Earn" };
+    return { code: "BG", className: "bitget" };
   }
   if (text.includes("Gate")) {
-    return { code: "GT", className: "gate", venue: "Gate 主站 -> Simple Earn" };
+    return { code: "GT", className: "gate" };
   }
-  return { code: "CE", className: "generic", venue: "CEX Earn" };
+  return { code: "CE", className: "generic" };
 }
 
-function renderNoteChips(note) {
-  return String(note || "")
-    .replaceAll("。", "")
-    .split(/[、，,；;]/)
-    .map((item) => item.trim())
-    .filter(Boolean)
-    .map((item, index) => `<span class="note-chip tone-${(index % 4) + 1}">${escapeHtml(item)}</span>`)
-    .join("");
+function parseLocalDate(value) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})$/);
+  if (!match) return null;
+  const [, year, month, day, hour, minute] = match.map(Number);
+  return new Date(year, month - 1, day, hour, minute);
+}
+
+function getDeadlineProgress(endTime) {
+  const end = parseLocalDate(endTime);
+  if (!end) return 42;
+  const now = new Date();
+  const windowMs = 45 * 24 * 60 * 60 * 1000;
+  const remaining = end.getTime() - now.getTime();
+  return Math.max(8, Math.min(100, Math.round((remaining / windowMs) * 100)));
 }
 
 async function fetchCampaigns() {
@@ -61,14 +67,15 @@ function renderCampaigns(data) {
   const campaigns = Array.isArray(data.campaigns) ? data.campaigns : [];
 
   if (!campaigns.length) {
-    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="4">暂无交易所理财活动记录</td></tr>`;
+    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="3">暂无交易所理财活动记录</td></tr>`;
     return;
   }
 
   campaignBody.innerHTML = campaigns
     .map(
       (item) => {
-        const meta = getActivityMeta(item.activity);
+        const meta = getActivityMeta(item.activity, item.venue);
+        const deadlineProgress = getDeadlineProgress(item.endTime);
         return `
         <tr class="campaign-row">
           <td data-label="活动">
@@ -76,22 +83,18 @@ function renderCampaigns(data) {
               <span class="exchange-mark ${meta.className}">${escapeHtml(meta.code)}</span>
               <span>
                 <strong>${escapeHtml(item.activity)}</strong>
-                <small>${escapeHtml(meta.venue)}</small>
+                <small>${escapeHtml(item.venue)}</small>
               </span>
             </div>
           </td>
           <td data-label="年利率">
             <strong class="apy-value">${escapeHtml(item.apy)}</strong>
-            <small class="apy-note">$10,000 本金预估收益需按官方页核算</small>
           </td>
-          <td data-label="到期时间">
+          <td data-label="到期时间（当地）">
             <div class="deadline-cell">
               <strong>${escapeHtml(item.endTime)}</strong>
-              <span class="deadline-track"><i></i></span>
+              <span class="deadline-track"><i style="width: ${deadlineProgress}%"></i></span>
             </div>
-          </td>
-          <td data-label="备注">
-            <div class="note-chip-row">${renderNoteChips(item.note)}</div>
           </td>
         </tr>
       `;
@@ -109,6 +112,6 @@ function renderCampaigns(data) {
 fetchCampaigns()
   .then(renderCampaigns)
   .catch((error) => {
-    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="4">${escapeHtml(error.message)}</td></tr>`;
+    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="3">${escapeHtml(error.message)}</td></tr>`;
     campaignDisclaimer.textContent = "数据加载失败，请稍后重试。";
   });

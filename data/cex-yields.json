@@ -1,36 +1,36 @@
 {
   "updatedAt": "2026-05-23",
-  "notice": "这里仅记录活动、年利率、到期时间和备注，不构成投资建议；最终以交易所官方页面、地区资格和账户实际显示为准。",
+  "notice": "这里仅记录活动、年利率和到期时间，不构成投资建议；最终以交易所官方页面、地区资格和账户实际显示为准。",
   "campaigns": [
     {
-      "activity": "币安 Binance｜USDT / USDC Simple Earn",
-      "apy": "实时浮动",
-      "endTime": "以官方活动页为准",
-      "note": "关注地区限制、额度分层、APR 是否含奖励。"
+      "activity": "USDT / USDC Simple Earn",
+      "venue": "Binance 主站 -> 活期",
+      "apy": "7.60%",
+      "endTime": "2026-06-03 07:59"
     },
     {
-      "activity": "欧易 OKX｜USDT / USDC Simple Earn",
-      "apy": "实时浮动",
-      "endTime": "以官方活动页为准",
-      "note": "关注赎回限制、资金用途、平台是否收取收益分成。"
+      "activity": "USDT / USDC Simple Earn",
+      "venue": "OKX 主站 -> Simple Earn",
+      "apy": "10.00%",
+      "endTime": "2026-05-31 07:59"
     },
     {
-      "activity": "Bybit｜USDT / BYUSDT Earn",
-      "apy": "实时浮动",
-      "endTime": "以官方活动页为准",
-      "note": "关注新用户活动限额、BYUSDT 规则和锁定期。"
+      "activity": "USDT / BYUSDT Earn",
+      "venue": "Bybit 主站 -> Earn",
+      "apy": "5.60%",
+      "endTime": "2026-06-15 07:59"
     },
     {
-      "activity": "Bitget｜USDT / USDC / USDGO Earn",
-      "apy": "实时浮动",
-      "endTime": "以官方活动页为准",
-      "note": "关注 APR voucher、任务积分、VIP 产品和普通产品差异。"
+      "activity": "USDGO Earn",
+      "venue": "Bitget 主站 -> Earn",
+      "apy": "4.30%",
+      "endTime": "2026-06-16 00:00"
     },
     {
-      "activity": "Gate｜USDT Simple Earn",
-      "apy": "实时浮动",
-      "endTime": "以官方活动页为准",
-      "note": "关注限时活动、先到先得额度、奖励是否为额外补贴。"
+      "activity": "USDD Simple Earn",
+      "venue": "Gate 主站 -> Simple Earn",
+      "apy": "5.00%",
+      "endTime": "2026-06-30 23:59"
     }
   ]
 }
