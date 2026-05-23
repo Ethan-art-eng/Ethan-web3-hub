@@ -47,7 +47,7 @@ function validatePayload(payload) {
     return "campaigns cannot contain more than 50 items";
   }
 
-  const required = ["exchange", "asset", "product", "redemption", "status", "risk", "href"];
+  const required = ["activity", "apy", "endTime", "note"];
   for (const item of payload.campaigns) {
     for (const key of required) {
       if (typeof item[key] !== "string" || !item[key].trim()) {

@@ -1,51 +1,36 @@
 {
   "updatedAt": "2026-05-23",
-  "notice": "这里是交易所稳定币理财活动入口和核验清单，不构成投资建议；最终以交易所官方页面、地区资格和账户实际显示为准。",
+  "notice": "这里仅记录活动、年利率、到期时间和备注，不构成投资建议；最终以交易所官方页面、地区资格和账户实际显示为准。",
   "campaigns": [
     {
-      "exchange": "币安 Binance",
-      "asset": "USDT / USDC",
-      "product": "Simple Earn / Flexible / Locked",
-      "redemption": "Flexible 可随时赎回，Locked 以页面规则为准",
-      "status": "实时浮动",
-      "risk": "地区限制、身份认证、额度分层、APR 是否含奖励",
-      "href": "https://www.binance.com/en/earn"
+      "activity": "币安 Binance｜USDT / USDC Simple Earn",
+      "apy": "实时浮动",
+      "endTime": "以官方活动页为准",
+      "note": "关注地区限制、额度分层、APR 是否含奖励。"
     },
     {
-      "exchange": "欧易 OKX",
-      "asset": "USDT / USDC",
-      "product": "Simple Earn Flexible / Fixed",
-      "redemption": "Flexible 按小时收益；Fixed 通常不可提前赎回",
-      "status": "官方页显示 USDT / USDC 活动",
-      "risk": "资金是否已借出、赎回限制、平台收取收益分成",
-      "href": "https://www.okx.com/en-us/earn/simple-earn"
+      "activity": "欧易 OKX｜USDT / USDC Simple Earn",
+      "apy": "实时浮动",
+      "endTime": "以官方活动页为准",
+      "note": "关注赎回限制、资金用途、平台是否收取收益分成。"
     },
     {
-      "exchange": "Bybit",
-      "asset": "USDT / BYUSDT",
-      "product": "Easy Earn / On-Chain Earn",
-      "redemption": "Flexible / Fixed，按产品详情确认",
-      "status": "USDT 活动页在线",
-      "risk": "新用户活动是否限额、BYUSDT 规则、锁定期",
-      "href": "https://www.bybit.com/en/earn/USDT"
+      "activity": "Bybit｜USDT / BYUSDT Earn",
+      "apy": "实时浮动",
+      "endTime": "以官方活动页为准",
+      "note": "关注新用户活动限额、BYUSDT 规则和锁定期。"
     },
     {
-      "exchange": "Bitget",
-      "asset": "USDT / USDC / USDGO",
-      "product": "Simple Earn / VIP Simple Earn / Earn tasks",
-      "redemption": "Flexible / Fixed，部分活动按任务规则",
-      "status": "USDT / USDC 收益产品在线",
-      "risk": "APR voucher、任务积分、VIP 产品和普通产品差异",
-      "href": "https://www.bitget.com/earning"
+      "activity": "Bitget｜USDT / USDC / USDGO Earn",
+      "apy": "实时浮动",
+      "endTime": "以官方活动页为准",
+      "note": "关注 APR voucher、任务积分、VIP 产品和普通产品差异。"
     },
     {
-      "exchange": "Gate",
-      "asset": "USDT 为主",
-      "product": "Simple Earn / HODL & Earn / Fixed-term campaigns",
-      "redemption": "Flexible / Fixed，活动型产品常有额度和期限",
-      "status": "需打开官方页核验",
-      "risk": "限时活动、先到先得额度、奖励是否为额外补贴",
-      "href": "https://www.gate.com/simple-earn"
+      "activity": "Gate｜USDT Simple Earn",
+      "apy": "实时浮动",
+      "endTime": "以官方活动页为准",
+      "note": "关注限时活动、先到先得额度、奖励是否为额外补贴。"
     }
   ]
 }

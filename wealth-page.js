@@ -31,7 +31,7 @@ function renderCampaigns(data) {
   const campaigns = Array.isArray(data.campaigns) ? data.campaigns : [];
 
   if (!campaigns.length) {
-    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="7">暂无交易所理财活动记录</td></tr>`;
+    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="4">暂无交易所理财活动记录</td></tr>`;
     return;
   }
 
@@ -39,13 +39,10 @@ function renderCampaigns(data) {
     .map(
       (item) => `
         <tr>
-          <td data-label="交易所"><strong>${escapeHtml(item.exchange)}</strong></td>
-          <td data-label="稳定币">${escapeHtml(item.asset)}</td>
-          <td data-label="产品类型">${escapeHtml(item.product)}</td>
-          <td data-label="赎回">${escapeHtml(item.redemption)}</td>
-          <td data-label="当前记录"><span class="status-pill neutral">${escapeHtml(item.status)}</span></td>
-          <td data-label="风险检查">${escapeHtml(item.risk)}</td>
-          <td data-label="入口"><a class="table-link" href="${escapeHtml(item.href)}" target="_blank" rel="noreferrer">打开</a></td>
+          <td data-label="活动"><strong>${escapeHtml(item.activity)}</strong></td>
+          <td data-label="年利率"><span class="rate-pill">${escapeHtml(item.apy)}</span></td>
+          <td data-label="到期时间">${escapeHtml(item.endTime)}</td>
+          <td data-label="备注">${escapeHtml(item.note)}</td>
         </tr>
       `
     )
@@ -61,6 +58,6 @@ function renderCampaigns(data) {
 fetchCampaigns()
   .then(renderCampaigns)
   .catch((error) => {
-    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="7">${escapeHtml(error.message)}</td></tr>`;
+    campaignBody.innerHTML = `<tr class="empty-row"><td colspan="4">${escapeHtml(error.message)}</td></tr>`;
     campaignDisclaimer.textContent = "数据加载失败，请稍后重试。";
   });
