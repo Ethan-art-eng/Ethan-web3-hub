@@ -609,6 +609,195 @@ h1 {
   line-height: 1.7;
 }
 
+.toolkit-essentials,
+.toolkit-directory {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.compact-heading {
+  padding: 28px;
+  grid-template-columns: minmax(260px, 0.82fr) minmax(0, 1.18fr);
+}
+
+.compact-heading h2 {
+  font-size: clamp(26px, 3vw, 36px);
+}
+
+.compact-heading p:not(.eyebrow) {
+  font-size: 16px;
+}
+
+.essential-grid {
+  padding: 22px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  background: #f8fbff;
+}
+
+.essential-card {
+  min-height: 280px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.essential-card span,
+.tool-category header span {
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.essential-card h3,
+.tool-category h3 {
+  margin: 12px 0 10px;
+  color: var(--ink);
+  line-height: 1.24;
+}
+
+.essential-card h3 {
+  font-size: 23px;
+}
+
+.essential-card p {
+  margin-bottom: 18px;
+  color: var(--body);
+  line-height: 1.65;
+}
+
+.essential-card dl {
+  margin: auto 0 18px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 10px;
+  align-items: center;
+}
+
+.essential-card dt {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.essential-card dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.tool-action {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #ffffff;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.tool-action:hover {
+  background: var(--blue-dark);
+}
+
+.tool-category-grid {
+  padding: 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  background: #f8fbff;
+}
+
+.tool-category {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.tool-category header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tool-category h3 {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.tool-list {
+  display: grid;
+}
+
+.tool-list a,
+.tool-static {
+  min-height: 70px;
+  padding: 14px 20px;
+  display: grid;
+  grid-template-columns: minmax(120px, 0.58fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.tool-list a:last-child,
+.tool-static:last-child {
+  border-bottom: 0;
+}
+
+.tool-list a:hover {
+  background: #f4f8ff;
+}
+
+.tool-list strong,
+.tool-static strong {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.tool-list small,
+.tool-static small {
+  color: var(--body);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.tool-risk-note {
+  margin: 0 22px 22px;
+  padding: 18px 20px;
+  border: 1px solid rgba(217, 119, 6, 0.28);
+  border-radius: 8px;
+  background: #fffaf0;
+}
+
+.tool-risk-note strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.tool-risk-note p {
+  margin-bottom: 0;
+  color: var(--body);
+  line-height: 1.7;
+}
+
 .yield-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -1278,7 +1467,9 @@ h1 {
   .proof-grid,
   .learning-path,
   .tool-grid,
-  .yield-grid {
+  .yield-grid,
+  .essential-grid,
+  .tool-category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1321,28 +1512,33 @@ h1 {
 
   .community {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) repeat(3, minmax(0, 44px));
+    grid-template-columns: repeat(3, 36px);
+    justify-content: start;
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    gap: 8px;
+    gap: 6px;
   }
 
   .community span {
+    grid-column: 1 / -1;
     justify-content: center;
     min-width: 0;
-    padding: 0 10px;
+    width: 100%;
+    padding: 0 8px;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .community a {
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
   }
 
   .community img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
   }
 
   .hero {
@@ -1359,6 +1555,28 @@ h1 {
     font-size: 16px;
   }
 
+  .page,
+  .page-hero,
+  .toolkit-essentials,
+  .toolkit-directory,
+  .section-heading,
+  .essential-card,
+  .tool-category,
+  .tool-risk-note {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .page p,
+  .page small,
+  .page strong,
+  .page h1,
+  .page h2,
+  .page h3 {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
   .hero-board,
   .home-note,
   .content-grid,
@@ -1367,6 +1585,8 @@ h1 {
   .learning-path,
   .tool-grid,
   .yield-grid,
+  .essential-grid,
+  .tool-category-grid,
   .hero-metrics {
     grid-template-columns: 1fr;
   }
@@ -1384,6 +1604,36 @@ h1 {
 
   .learning-path article {
     min-height: auto;
+  }
+
+  .compact-heading {
+    padding: 22px;
+  }
+
+  .essential-grid,
+  .tool-category-grid {
+    padding: 12px;
+  }
+
+  .essential-card {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .tool-category header {
+    padding: 18px 16px 12px;
+  }
+
+  .tool-list a,
+  .tool-static {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 14px 16px;
+  }
+
+  .tool-risk-note {
+    margin: 0 12px 12px;
   }
 
   .check-grid {
