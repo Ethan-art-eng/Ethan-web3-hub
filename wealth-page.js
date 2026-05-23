@@ -10,6 +10,36 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
+function getActivityMeta(activity) {
+  const text = String(activity || "");
+  if (text.includes("Binance") || text.includes("币安")) {
+    return { code: "BN", className: "binance", venue: "Binance 主站 -> 活期" };
+  }
+  if (text.includes("OKX") || text.includes("欧易")) {
+    return { code: "OK", className: "okx", venue: "OKX 主站 -> Simple Earn" };
+  }
+  if (text.includes("Bybit")) {
+    return { code: "BY", className: "bybit", venue: "Bybit 主站 -> Earn" };
+  }
+  if (text.includes("Bitget")) {
+    return { code: "BG", className: "bitget", venue: "Bitget 主站 -> Earn" };
+  }
+  if (text.includes("Gate")) {
+    return { code: "GT", className: "gate", venue: "Gate 主站 -> Simple Earn" };
+  }
+  return { code: "CE", className: "generic", venue: "CEX Earn" };
+}
+
+function renderNoteChips(note) {
+  return String(note || "")
+    .replaceAll("。", "")
+    .split(/[、，,；;]/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item, index) => `<span class="note-chip tone-${(index % 4) + 1}">${escapeHtml(item)}</span>`)
+    .join("");
+}
+
 async function fetchCampaigns() {
   const endpoints = ["/api/cex-yields", "../data/cex-yields.json"];
 
@@ -37,14 +67,35 @@ function renderCampaigns(data) {
 
   campaignBody.innerHTML = campaigns
     .map(
-      (item) => `
-        <tr>
-          <td data-label="活动"><strong>${escapeHtml(item.activity)}</strong></td>
-          <td data-label="年利率"><span class="rate-pill">${escapeHtml(item.apy)}</span></td>
-          <td data-label="到期时间">${escapeHtml(item.endTime)}</td>
-          <td data-label="备注">${escapeHtml(item.note)}</td>
+      (item) => {
+        const meta = getActivityMeta(item.activity);
+        return `
+        <tr class="campaign-row">
+          <td data-label="活动">
+            <div class="activity-cell">
+              <span class="exchange-mark ${meta.className}">${escapeHtml(meta.code)}</span>
+              <span>
+                <strong>${escapeHtml(item.activity)}</strong>
+                <small>${escapeHtml(meta.venue)}</small>
+              </span>
+            </div>
+          </td>
+          <td data-label="年利率">
+            <strong class="apy-value">${escapeHtml(item.apy)}</strong>
+            <small class="apy-note">$10,000 本金预估收益需按官方页核算</small>
+          </td>
+          <td data-label="到期时间">
+            <div class="deadline-cell">
+              <strong>${escapeHtml(item.endTime)}</strong>
+              <span class="deadline-track"><i></i></span>
+            </div>
+          </td>
+          <td data-label="备注">
+            <div class="note-chip-row">${renderNoteChips(item.note)}</div>
+          </td>
         </tr>
-      `
+      `;
+      }
     )
     .join("");
 
