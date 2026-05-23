@@ -115,15 +115,19 @@ a {
 }
 
 .community span {
-  min-height: 36px;
+  width: 58px;
+  height: 58px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   border-radius: 8px;
-  padding: 0 13px;
+  padding: 0 8px;
   background: var(--ink);
   color: #ffffff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
   white-space: nowrap;
 }
 
