@@ -1063,6 +1063,15 @@ h1 {
   line-height: 1.7;
 }
 
+.data-source {
+  margin: 0;
+  padding: 0 22px 18px;
+  background: #f8fbff;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
 .pagination {
   padding: 16px 18px;
   display: flex;
@@ -1326,6 +1335,10 @@ h1 {
 
   .campaign-section .table-disclaimer {
     padding: 16px 18px;
+  }
+
+  .campaign-section .data-source {
+    padding: 0 18px 16px;
   }
 
   .tracker-page {
