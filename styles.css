@@ -110,91 +110,29 @@ a {
 }
 
 .community {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.community span {
-  width: auto;
   min-height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0;
-  padding: 0;
-  background: transparent;
-  color: var(--ink);
-  font-size: 13px;
+  justify-self: end;
+  border-radius: 999px;
+  padding: 0 18px;
+  background: var(--soft-blue);
+  color: var(--blue);
+  border: 1px solid #d7e6ff;
+  box-shadow: 0 10px 24px rgba(0, 82, 255, 0.08);
+  font-size: 14px;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
   white-space: nowrap;
-}
-
-.community a {
-  width: 52px;
-  height: 52px;
-  padding: 0;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 0;
-  border: 0;
-  background: transparent;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 850;
-  line-height: 1;
   text-decoration: none;
 }
 
-.community a:hover {
+.community:hover {
   transform: translateY(-1px);
-  filter: brightness(0.96);
-}
-
-.community svg {
-  width: 22px;
-  height: 22px;
-  fill: currentColor;
-}
-
-.community img {
-  width: 52px;
-  height: 52px;
-  display: block;
-  object-fit: contain;
-}
-
-.community .cutout,
-.community .eye {
-  fill: #ffffff;
-}
-
-.community .youtube {
-  width: 52px;
-  height: 52px;
-  background: transparent;
-}
-
-.community .youtube svg {
-  width: 30px;
-  height: 22px;
-}
-
-.community .discord {
-  background: transparent;
-}
-
-.community .telegram {
-  background: transparent;
-}
-
-.community .youtube,
-.community .discord,
-.community .telegram {
-  box-shadow: none;
+  background: #e8f1ff;
+  border-color: #b8d2ff;
 }
 
 .hero {
@@ -1453,7 +1391,6 @@ h1 {
   .nav,
   .community {
     justify-content: flex-start;
-    flex-wrap: wrap;
   }
 
   .hero {
@@ -1517,34 +1454,14 @@ h1 {
   }
 
   .community {
-    display: grid;
-    grid-template-columns: repeat(3, 36px);
-    justify-content: start;
+    justify-self: stretch;
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    gap: 6px;
-  }
-
-  .community span {
-    grid-column: 1 / -1;
     justify-content: center;
-    min-width: 0;
-    width: 100%;
-    padding: 0 8px;
+    padding: 0 12px;
     overflow: hidden;
     white-space: nowrap;
-  }
-
-  .community a {
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
-  }
-
-  .community img {
-    width: 32px;
-    height: 32px;
   }
 
   .hero {

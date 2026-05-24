@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Discord">
-  <rect width="512" height="512" rx="112" fill="#5865F2"/>
-  <path fill="#FFFFFF" d="M131 167c38-23 80-35 125-35s87 12 125 35c31 52 46 110 44 172-30 27-65 46-103 57-9-13-17-28-23-44 13-5 26-11 38-19-4-3-8-6-12-9-46 24-92 36-138 36s-92-12-138-36c-4 3-8 6-12 9 12 8 25 14 38 19-6 16-14 31-23 44-38-11-73-30-103-57-2-62 13-120 44-172z"/>
-  <circle cx="203" cy="262" r="31" fill="#5865F2"/>
-  <circle cx="309" cy="262" r="31" fill="#5865F2"/>
-  <path fill="none" stroke="#5865F2" stroke-linecap="round" stroke-width="24" d="M190 330c43 24 89 24 132 0"/>
-</svg>
