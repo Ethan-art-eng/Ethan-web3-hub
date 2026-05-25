@@ -9,7 +9,7 @@ const tabs = document.getElementById("airdropViewTabs");
 const pagination = document.getElementById("airdropPagination");
 const searchInput = document.getElementById("airdropSearch");
 const statusSelect = document.getElementById("airdropStatusFilter");
-const labels = ["名称", "类别", "融资", "投资机构", "成本", "建议上号", "状态", "更新", "利润", "任务链接", "备注"];
+const labels = ["名称", "类别", "融资", "投资机构", "成本", "建议上号", "状态", "利润", "任务链接", "备注"];
 
 function escapeHtml(value) {
   return String(value || "")
@@ -39,7 +39,6 @@ function getFilteredItems() {
       item.cost,
       item.accounts,
       item.status,
-      item.update,
       item.profit,
       item.note,
     ]
@@ -90,7 +89,6 @@ function renderTable() {
             ${cell("成本", item.cost)}
             ${cell("建议上号", item.accounts)}
             <td data-label="状态"><span class="status-pill${doneClass}">${escapeHtml(item.status || "进行中")}</span></td>
-            ${cell("更新", item.update)}
             ${cell("利润", item.profit, item.profit && item.profit !== "待观察" ? "profit" : "")}
             <td data-label="任务链接">${link}</td>
             ${cell("备注", item.note)}
