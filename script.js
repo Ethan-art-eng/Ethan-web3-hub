@@ -127,7 +127,7 @@ function drawNetwork() {
     { x: 0.22, y: 0.26, r: 34, label: "DeFi", color: "#7dd3fc" },
     { x: 0.78, y: 0.27, r: 36, label: "Airdrop", color: "#c4b5fd" },
     { x: 0.2, y: 0.72, r: 32, label: "Wallet", color: "#86efac" },
-    { x: 0.78, y: 0.72, r: 34, label: "Course", color: "#fcd34d" },
+    { x: 0.78, y: 0.72, r: 34, label: "Tutorial", color: "#fcd34d" },
     { x: 0.5, y: 0.84, r: 28, label: "Risk", color: "#fda4af" },
   ];
 
