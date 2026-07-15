@@ -4848,3 +4848,809 @@ select {
     justify-content: center;
   }
 }
+
+/* Toolbox workspace v5: hybrid directory with featured recommendations. */
+.toolbox-page-v5 .page {
+  width: min(var(--data-width), calc(100% - 48px));
+  max-width: var(--data-width);
+}
+
+.toolbox-page-v5 .page-hero-compact {
+  padding-bottom: 30px;
+}
+
+.toolbox-page-v5 .tool-command-center {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-command-heading,
+.toolbox-page-v5 .tool-section-title {
+  padding: 22px 24px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbox-page-v5 .tool-command-heading h2,
+.toolbox-page-v5 .tool-section-title h2,
+.toolbox-page-v5 .tool-common-heading h2 {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.toolbox-page-v5 .tool-command-heading > p,
+.toolbox-page-v5 .tool-section-title > p {
+  max-width: 440px;
+  margin: 0;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.65;
+  text-align: right;
+}
+
+.toolbox-page-v5 .tool-search-toolbar,
+.toolbox-page-v5 .tool-command-center .tool-search-toolbar {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) 160px minmax(300px, 0.72fr);
+  align-items: stretch;
+  gap: 10px;
+  background: #f7f9fc;
+}
+
+.toolbox-page-v5 .tool-search-field {
+  min-height: 54px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cdd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-search-field::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin-left: 18px;
+  flex: none;
+  border: 2px solid #718096;
+  border-radius: 50%;
+}
+
+.toolbox-page-v5 .tool-search-field::after {
+  content: "";
+  width: 7px;
+  height: 2px;
+  position: absolute;
+  left: 29px;
+  top: 34px;
+  transform: rotate(45deg);
+  background: #718096;
+}
+
+.toolbox-page-v5 .tool-search-field input,
+.toolbox-page-v5 .tool-command-center .tool-search-field input {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  padding: 0 46px 0 13px;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.toolbox-page-v5 .tool-search-field:focus-within {
+  border-color: #8eb3ff;
+  box-shadow: 0 0 0 3px rgba(15, 91, 255, 0.11);
+}
+
+.toolbox-page-v5 .tool-search-field button {
+  width: 32px;
+  height: 32px;
+  right: 9px;
+  top: 10px;
+}
+
+.toolbox-page-v5 .tool-sort-field {
+  min-height: 54px;
+  display: flex;
+}
+
+.toolbox-page-v5 .tool-sort-field select {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid #cdd5e1;
+  border-radius: 6px;
+  padding: 0 36px 0 14px;
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.toolbox-page-v5 .tool-spotlight,
+.toolbox-page-v5 .tool-command-center .tool-spotlight {
+  min-height: 54px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  border: 1px solid #d9e0ea;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-spotlight-label {
+  min-width: 74px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-spotlight > a {
+  min-height: 52px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .tool-spotlight > a:hover,
+.toolbox-page-v5 .tool-spotlight > a:focus-visible {
+  background: var(--soft-blue);
+}
+
+.toolbox-page-v5 .tool-featured-panel {
+  margin-top: 26px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-featured-grid {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  background: #f8fafc;
+}
+
+.toolbox-page-v5 .tool-featured-card {
+  min-height: 226px;
+  padding: 18px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  border: 1px solid #d9e0ea;
+  border-radius: 7px;
+  background: #ffffff;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.toolbox-page-v5 .tool-featured-card:hover {
+  transform: translateY(-2px);
+  border-color: #a9bde4;
+}
+
+.toolbox-page-v5 .tool-featured-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toolbox-page-v5 .tool-featured-card-top > span:last-child {
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: #fff3df;
+  color: #9a5200;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-featured-card small,
+.toolbox-page-v5 .tool-directory-card .tool-card-category {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-featured-card h3 {
+  margin: 6px 0 7px;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.toolbox-page-v5 .tool-featured-card p {
+  margin: 0;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.toolbox-page-v5 .tool-featured-card > a {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-common-panel {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-common-heading {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--line);
+}
+
+.toolbox-page-v5 .tool-common-heading h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.toolbox-page-v5 .tool-common-heading span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.toolbox-page-v5 .tool-common-list {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.toolbox-page-v5 .tool-common-list > a {
+  min-width: 0;
+  min-height: 82px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 10px;
+  border-right: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.toolbox-page-v5 .tool-common-list > a:last-child {
+  border-right: 0;
+}
+
+.toolbox-page-v5 .tool-common-list > a:hover,
+.toolbox-page-v5 .tool-common-list > a:focus-visible {
+  background: #f7f9fc;
+}
+
+.toolbox-page-v5 .tool-common-list > a > span:not(.tool-logo) {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.toolbox-page-v5 .tool-common-list strong,
+.toolbox-page-v5 .tool-common-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toolbox-page-v5 .tool-common-list strong {
+  font-size: 13px;
+}
+
+.toolbox-page-v5 .tool-common-list small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.toolbox-page-v5 .tool-common-list b {
+  color: var(--blue);
+}
+
+.toolbox-page-v5 .tool-logo {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dfe5ed;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-logo img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  padding: 4px;
+  object-fit: contain;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-logo-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #edf3ff;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.toolbox-page-v5 .tool-logo.is-fallback img,
+.toolbox-page-v5 .tool-logo img[hidden] {
+  display: none;
+}
+
+.toolbox-page-v5 .tool-logo-featured {
+  width: 52px;
+  height: 52px;
+}
+
+.toolbox-page-v5 .tool-logo-common {
+  width: 42px;
+  height: 42px;
+}
+
+.toolbox-page-v5 .toolkit-essentials {
+  margin-top: 42px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .toolkit-essentials .compact-heading {
+  padding: 0 0 18px;
+  border: 0;
+}
+
+.toolbox-page-v5 .toolkit-essentials .essential-grid {
+  padding: 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .toolkit-essentials .essential-card {
+  min-height: 222px;
+}
+
+.toolbox-page-v5 .toolkit-directory {
+  margin-top: 56px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .toolkit-directory .tool-directory-heading {
+  padding: 0 0 18px;
+  border: 0;
+}
+
+.toolbox-page-v5 .tool-directory-shell {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.toolbox-page-v5 .tool-directory-sidebar {
+  position: sticky;
+  top: 88px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .tool-sidebar-heading {
+  min-height: 54px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbox-page-v5 .tool-sidebar-heading strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.toolbox-page-v5 .tool-sidebar-heading span {
+  min-width: 26px;
+  height: 22px;
+  padding: 0 6px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: #eef2f7;
+  color: var(--body);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-category-filters,
+.toolbox-page-v5 .tool-command-center .tool-category-filters {
+  padding: 7px;
+  display: grid;
+  gap: 3px;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .tool-category-filters button {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 0;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.toolbox-page-v5 .tool-category-filters button b {
+  min-width: 24px;
+  color: var(--muted);
+  font-size: 10px;
+  text-align: right;
+}
+
+.toolbox-page-v5 .tool-category-filters button.active b {
+  color: var(--blue);
+}
+
+.toolbox-page-v5 .tool-directory-main {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+}
+
+.toolbox-page-v5 .tool-results-heading {
+  min-height: 55px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+}
+
+.toolbox-page-v5 .tool-results-heading > span {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .toolkit-directory .tool-category-grid {
+  padding: 14px 0 0;
+  background: transparent;
+}
+
+.toolbox-page-v5 .tool-directory-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.toolbox-page-v5 .tool-directory-card {
+  min-width: 0;
+  min-height: 184px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  gap: 12px 14px;
+  border: 1px solid #dbe2eb;
+  border-radius: 7px;
+  background: #ffffff;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.toolbox-page-v5 .tool-directory-card:hover {
+  border-color: #b4c5e4;
+  box-shadow: 0 8px 20px rgba(14, 29, 55, 0.06);
+}
+
+.toolbox-page-v5 .tool-directory-card-top {
+  grid-row: 1;
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbox-page-v5 .tool-logo-card {
+  width: 48px;
+  height: 48px;
+}
+
+.toolbox-page-v5 .tool-favorite-button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #7a8798;
+  cursor: pointer;
+  font-size: 21px;
+}
+
+.toolbox-page-v5 .tool-favorite-button:hover,
+.toolbox-page-v5 .tool-favorite-button:focus-visible,
+.toolbox-page-v5 .tool-favorite-button.is-favorite {
+  background: #fff6d8;
+  color: #bd7b00;
+}
+
+.toolbox-page-v5 .tool-directory-card-copy {
+  min-width: 0;
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.toolbox-page-v5 .tool-directory-card h3 {
+  margin: 6px 0 7px;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.toolbox-page-v5 .tool-directory-card h3 a {
+  color: var(--ink);
+}
+
+.toolbox-page-v5 .tool-directory-card h3 a:hover,
+.toolbox-page-v5 .tool-directory-card h3 a:focus-visible {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.toolbox-page-v5 .tool-directory-card p {
+  margin: 0;
+  color: var(--body);
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.toolbox-page-v5 .tool-card-open,
+.toolbox-page-v5 .tool-card-unavailable {
+  min-height: 34px;
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-card-unavailable {
+  color: var(--muted);
+}
+
+.toolbox-page-v5 .tool-load-more-wrap {
+  min-height: 76px;
+  display: grid;
+  place-items: center;
+}
+
+.toolbox-page-v5 .tool-load-more {
+  min-width: 180px;
+  min-height: 42px;
+  border: 1px solid #b9c9e7;
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--blue);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.toolbox-page-v5 .tool-load-more:hover,
+.toolbox-page-v5 .tool-load-more:focus-visible {
+  background: var(--soft-blue);
+}
+
+.toolbox-page-v5 .tool-load-more[hidden] {
+  display: none;
+}
+
+.toolbox-page-v5 .tool-search-empty {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.toolbox-page-v5 .toolkit-directory .tool-risk-note {
+  margin-top: 18px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (max-width: 1080px) {
+  .toolbox-page-v5 .tool-search-toolbar,
+  .toolbox-page-v5 .tool-command-center .tool-search-toolbar {
+    grid-template-columns: minmax(0, 1fr) 160px;
+  }
+
+  .toolbox-page-v5 .tool-spotlight,
+  .toolbox-page-v5 .tool-command-center .tool-spotlight {
+    grid-column: 1 / span 2;
+  }
+
+  .toolbox-page-v5 .tool-common-list {
+    overflow-x: auto;
+    grid-template-columns: repeat(5, minmax(190px, 1fr));
+  }
+
+  .toolbox-page-v5 .tool-directory-shell {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 820px) {
+  .toolbox-page-v5 .tool-command-heading,
+  .toolbox-page-v5 .tool-section-title {
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .toolbox-page-v5 .tool-command-heading > p,
+  .toolbox-page-v5 .tool-section-title > p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .toolbox-page-v5 .tool-featured-grid {
+    overflow-x: auto;
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+  }
+
+  .toolbox-page-v5 .tool-common-panel {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+
+  .toolbox-page-v5 .tool-directory-shell {
+    display: block;
+  }
+
+  .toolbox-page-v5 .tool-directory-sidebar {
+    position: static;
+    margin-bottom: 16px;
+  }
+
+  .toolbox-page-v5 .tool-sidebar-heading {
+    display: none;
+  }
+
+  .toolbox-page-v5 .tool-category-filters {
+    padding: 8px;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .toolbox-page-v5 .tool-category-filters button {
+    width: auto;
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 680px) {
+  .toolbox-page-v5 .page {
+    width: min(100% - 28px, var(--data-width));
+    padding-top: 34px;
+  }
+
+  .toolbox-page-v5 .page-hero-compact {
+    padding-top: 8px;
+    padding-bottom: 24px;
+  }
+
+  .toolbox-page-v5 .tool-command-heading,
+  .toolbox-page-v5 .tool-section-title {
+    padding: 18px;
+  }
+
+  .toolbox-page-v5 .tool-search-toolbar,
+  .toolbox-page-v5 .tool-command-center .tool-search-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbox-page-v5 .tool-spotlight,
+  .toolbox-page-v5 .tool-command-center .tool-spotlight {
+    grid-column: 1;
+  }
+
+  .toolbox-page-v5 .tool-featured-grid {
+    padding: 10px;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+
+  .toolbox-page-v5 .tool-featured-card {
+    min-height: 210px;
+  }
+
+  .toolbox-page-v5 .tool-common-panel {
+    display: block;
+  }
+
+  .toolbox-page-v5 .tool-common-heading {
+    padding: 12px 14px;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toolbox-page-v5 .tool-common-list {
+    grid-template-columns: repeat(5, minmax(180px, 1fr));
+  }
+
+  .toolbox-page-v5 .toolkit-essentials {
+    margin-top: 36px;
+  }
+
+  .toolbox-page-v5 .toolkit-directory {
+    margin-top: 44px;
+  }
+
+  .toolbox-page-v5 .tool-directory-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbox-page-v5 .tool-directory-card {
+    min-height: 168px;
+  }
+
+  .toolbox-page-v5 .tool-results-heading > div {
+    display: flex;
+    align-items: baseline;
+  }
+}

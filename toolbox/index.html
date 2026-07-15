@@ -13,9 +13,9 @@
     <meta property="og:url" content="https://ethanweb3.com/toolbox/" />
     <meta name="twitter:card" content="summary" />
     <title>工具箱 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260715-toolbox-v4" />
+    <link rel="stylesheet" href="../styles.css?v=20260715-toolbox-v5" />
   </head>
-  <body>
+  <body class="toolbox-page-v5">
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../courses/">教程</a><a class="active" href="../toolbox/">工具箱</a><a href="../wealth/">币圈理财</a></nav>
@@ -34,12 +34,27 @@
         <p>按使用场景整理交易所、钱包、网络、空投、数据与安全工具，快速找到下一步需要的入口。</p>
       </section>
 
-      <section class="tool-command-center" aria-label="工具搜索与分类">
+      <section class="tool-command-center" aria-label="工具搜索与快速入口">
+        <div class="tool-command-heading">
+          <div>
+            <p class="eyebrow">Tool Workspace</p>
+            <h2>找到当前任务需要的工具</h2>
+          </div>
+          <p>搜索名称、用途或分类，也可从精选推荐快速开始。</p>
+        </div>
         <div class="tool-search-toolbar">
           <label class="tool-search-field" for="toolSearch">
             <span class="sr-only">搜索工具</span>
             <input id="toolSearch" type="search" placeholder="搜索工具名称、用途或分类" autocomplete="off" />
             <button id="toolSearchClear" type="button" aria-label="清除搜索" hidden>×</button>
+          </label>
+          <label class="tool-sort-field" for="toolSort">
+            <span class="sr-only">工具排序</span>
+            <select id="toolSort" aria-label="工具排序">
+              <option value="recommended">推荐排序</option>
+              <option value="name">按名称排序</option>
+              <option value="recent">最近使用优先</option>
+            </select>
           </label>
           <div class="tool-spotlight" id="toolSpotlight" aria-label="常用工具快速入口">
             <span class="tool-spotlight-label">快速入口</span>
@@ -49,9 +64,19 @@
             </a>
           </div>
         </div>
-        <div class="tool-category-filters" id="toolCategoryFilters" aria-label="工具分类">
-          <button class="active" type="button" data-tool-group="all">全部工具</button>
+      </section>
+
+      <section class="tool-featured-panel" aria-labelledby="toolFeaturedTitle">
+        <div class="tool-section-title">
+          <div><p class="eyebrow">Featured</p><h2 id="toolFeaturedTitle">精选推荐</h2></div>
+          <p>按交易、研究与安全场景筛选的高频工具。</p>
         </div>
+        <div class="tool-featured-grid" id="toolFeaturedGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="tool-common-panel" aria-labelledby="toolCommonTitle">
+        <div class="tool-common-heading"><h2 id="toolCommonTitle">常用工具</h2><span>快速直达</span></div>
+        <div class="tool-common-list" id="toolCommonList" aria-live="polite"></div>
       </section>
 
       <section class="toolkit-essentials" aria-label="必备入口">
@@ -94,14 +119,23 @@
         <div class="section-heading compact-heading tool-directory-heading">
           <div>
             <p class="eyebrow">Tool Directory</p>
-            <h2>实战工具目录</h2>
+            <h2>浏览全部工具</h2>
           </div>
         </div>
 
-        <div class="tool-results-heading">
-          <div><strong id="toolResultTitle">全部工具</strong><span id="toolResultCount">正在整理目录</span></div>
-          <span>每页 10 个</span>
-        </div>
+        <div class="tool-directory-shell">
+          <aside class="tool-directory-sidebar" aria-label="工具分类">
+            <div class="tool-sidebar-heading"><strong>工具分类</strong><span id="toolSidebarCount">0</span></div>
+            <div class="tool-category-filters" id="toolCategoryFilters">
+              <button class="active" type="button" data-tool-group="all">全部工具</button>
+            </div>
+          </aside>
+
+          <div class="tool-directory-main">
+            <div class="tool-results-heading">
+              <div><strong id="toolResultTitle">全部工具</strong><span id="toolResultCount">正在整理目录</span></div>
+              <span id="toolDisplayStatus">优先展示 8 个</span>
+            </div>
 
         <div class="tool-category-grid" id="toolCategoryGrid" aria-live="polite">
           <article class="tool-category">
@@ -176,11 +210,11 @@
           </article>
         </div>
 
-        <nav class="tool-pagination" id="toolPagination" aria-label="工具目录分页" hidden>
-          <button id="toolPagePrevious" type="button" aria-label="上一页">←</button>
-          <span id="toolPageStatus">第 1 / 1 页</span>
-          <button id="toolPageNext" type="button" aria-label="下一页">→</button>
-        </nav>
+            <div class="tool-load-more-wrap">
+              <button class="tool-load-more" id="toolLoadMore" type="button" hidden>显示更多工具</button>
+            </div>
+          </div>
+        </div>
 
         <aside class="tool-risk-note">
           <strong>使用前检查</strong>
@@ -190,6 +224,6 @@
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../toolbox-page.js?v=20260715-toolbox-v4"></script>
+    <script src="../toolbox-page.js?v=20260715-toolbox-v5"></script>
   </body>
 </html>

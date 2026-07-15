@@ -8,7 +8,7 @@ import {
 } from "../lib/public-render.js";
 
 const SECURITY_HEADERS = {
-  "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+  "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
   "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   "referrer-policy": "strict-origin-when-cross-origin",
   "strict-transport-security": "max-age=31536000; includeSubDomains",
