@@ -11,12 +11,20 @@ const toolSpotlight = document.getElementById("toolSpotlight");
 const toolSpotlightLink = document.getElementById("toolSpotlightLink");
 const toolSpotlightName = document.getElementById("toolSpotlightName");
 const toolSpotlightDescription = document.getElementById("toolSpotlightDescription");
+const toolResultTitle = document.getElementById("toolResultTitle");
+const toolResultCount = document.getElementById("toolResultCount");
+const toolPagination = document.getElementById("toolPagination");
+const toolPagePrevious = document.getElementById("toolPagePrevious");
+const toolPageNext = document.getElementById("toolPageNext");
+const toolPageStatus = document.getElementById("toolPageStatus");
 let toolboxData = null;
 let spotlightItems = [];
 let spotlightIndex = 0;
 let spotlightTimer = null;
 let activeToolGroup = "all";
+let currentToolPage = 1;
 const recentToolsStorageKey = "ethan-toolbox-recent";
+const toolsPerPage = 10;
 
 const spotlightPriority = ["GMGN 网页版", "RootData", "DefiLlama", "Revoke.cash", "Orbiter", "Galxe", "Arkham"];
 
@@ -138,7 +146,15 @@ function filterToolGroups(groups, query) {
       const visibleItems = !keyword || groupMatches
         ? items
         : items.filter((item) => normalizeToolText(`${item.name} ${item.description}`).includes(keyword));
-      return { ...group, key: String(index), items: visibleItems };
+      return {
+        ...group,
+        key: String(index),
+        items: visibleItems.map((item) => ({
+          ...item,
+          groupLabel: item.groupLabel || group.label,
+          groupTitle: item.groupTitle || group.title,
+        })),
+      };
     })
     .filter((group) => (activeToolGroup === "all" || activeToolGroup === "recent" || group.key === activeToolGroup) && group.items.length > 0);
 }
@@ -155,23 +171,38 @@ function renderCategoryFilters(groups) {
   ].join("");
 }
 
+function getToolResultTitle(groups, query) {
+  if (query) return `搜索“${query}”`;
+  if (activeToolGroup === "recent") return "最近使用";
+  if (activeToolGroup === "all") return "全部工具";
+  return groups[Number(activeToolGroup)]?.title || "工具目录";
+}
+
 function renderToolGroups(groups, query = "") {
   const sourceGroups = Array.isArray(groups) ? groups : [];
   const visibleGroups = filterToolGroups(sourceGroups, query);
+  const visibleItems = visibleGroups.flatMap((group) => group.items);
+  const totalPages = Math.max(1, Math.ceil(visibleItems.length / toolsPerPage));
+  currentToolPage = Math.min(Math.max(currentToolPage, 1), totalPages);
+  const pageStart = (currentToolPage - 1) * toolsPerPage;
+  const pageItems = visibleItems.slice(pageStart, pageStart + toolsPerPage);
 
-  if (!visibleGroups.length) {
+  toolResultTitle.textContent = getToolResultTitle(sourceGroups, query);
+  toolResultCount.textContent = `共 ${visibleItems.length} 个工具`;
+  toolPagination.hidden = visibleItems.length <= toolsPerPage;
+  toolPagePrevious.disabled = currentToolPage <= 1;
+  toolPageNext.disabled = currentToolPage >= totalPages;
+  toolPageStatus.textContent = `第 ${currentToolPage} / ${totalPages} 页`;
+
+  if (!visibleItems.length) {
     categoryGrid.innerHTML = `<div class="tool-search-empty"><strong>没有找到相关工具</strong><span>试试搜索“钱包”“空投”“跨链”或具体工具名称。</span></div>`;
     updateSearchControls(query);
     return;
   }
 
-  categoryGrid.innerHTML = visibleGroups.map((group) => `
-    <section class="tool-category">
-      <header><div><span>${escapeToolHtml(group.label)}</span><h3>${escapeToolHtml(group.title)}</h3></div><b>${group.items.length}</b></header>
-      <div class="tool-list">${group.items.map((item) => item.url
-        ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${escapeToolHtml(item.name)}" data-tool-name="${escapeToolHtml(item.name)}" data-tool-description="${escapeToolHtml(item.description)}"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small><b aria-hidden="true">↗</b></a>`
-        : `<div class="tool-static"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small></div>`).join("")}</div>
-    </section>`).join("");
+  categoryGrid.innerHTML = `<div class="tool-list tool-directory-list">${pageItems.map((item) => item.url
+    ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${escapeToolHtml(item.name)}" data-tool-name="${escapeToolHtml(item.name)}" data-tool-description="${escapeToolHtml(item.description)}" data-tool-group-label="${escapeToolHtml(item.groupLabel)}" data-tool-group-title="${escapeToolHtml(item.groupTitle)}"><span class="tool-row-category">${escapeToolHtml(item.groupTitle)}</span><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small><b aria-hidden="true">↗</b></a>`
+    : `<div class="tool-static"><span class="tool-row-category">${escapeToolHtml(item.groupTitle)}</span><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small></div>`).join("")}</div>`;
   updateSearchControls(query);
 }
 
@@ -189,7 +220,13 @@ function readStaticToolGroups() {
 
 function applyToolSearch() {
   const query = toolSearch.value.trim();
-  if (toolboxData) renderToolGroups(toolboxData.toolGroups, query);
+  currentToolPage = 1;
+  if (!toolboxData) return;
+  if (query && activeToolGroup !== "all") {
+    activeToolGroup = "all";
+    renderCategoryFilters(toolboxData.toolGroups);
+  }
+  renderToolGroups(toolboxData.toolGroups, query);
 }
 
 function renderToolbox(data) {
@@ -225,6 +262,8 @@ categoryGrid.addEventListener("click", (event) => {
     name: link.dataset.toolName,
     description: link.dataset.toolDescription || "工具入口",
     url: link.href,
+    groupLabel: link.dataset.toolGroupLabel || "工具",
+    groupTitle: link.dataset.toolGroupTitle || "最近使用",
   });
   renderCategoryFilters(toolboxData.toolGroups);
 });
@@ -233,8 +272,18 @@ toolCategoryFilters?.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-tool-group]");
   if (!button || !toolboxData) return;
   activeToolGroup = button.dataset.toolGroup || "all";
+  currentToolPage = 1;
   renderCategoryFilters(toolboxData.toolGroups);
   renderToolGroups(toolboxData.toolGroups, toolSearch.value.trim());
+});
+
+toolPagination.addEventListener("click", (event) => {
+  if (!toolboxData) return;
+  if (event.target.closest("#toolPagePrevious") && !toolPagePrevious.disabled) currentToolPage -= 1;
+  else if (event.target.closest("#toolPageNext") && !toolPageNext.disabled) currentToolPage += 1;
+  else return;
+  renderToolGroups(toolboxData.toolGroups, toolSearch.value.trim());
+  document.querySelector(".tool-results-heading")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
 });
 
 const toolUrlQuery = new URLSearchParams(window.location.search).get("q") || "";

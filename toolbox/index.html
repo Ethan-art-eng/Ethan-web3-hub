@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://ethanweb3.com/toolbox/" />
     <meta name="twitter:card" content="summary" />
     <title>工具箱 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260715-toolbox-v3" />
+    <link rel="stylesheet" href="../styles.css?v=20260715-toolbox-v4" />
   </head>
   <body>
     <header class="site-header">
@@ -98,6 +98,11 @@
           </div>
         </div>
 
+        <div class="tool-results-heading">
+          <div><strong id="toolResultTitle">全部工具</strong><span id="toolResultCount">正在整理目录</span></div>
+          <span>每页 10 个</span>
+        </div>
+
         <div class="tool-category-grid" id="toolCategoryGrid" aria-live="polite">
           <article class="tool-category">
             <header><span>网络</span><h3>VPN</h3></header>
@@ -171,6 +176,12 @@
           </article>
         </div>
 
+        <nav class="tool-pagination" id="toolPagination" aria-label="工具目录分页" hidden>
+          <button id="toolPagePrevious" type="button" aria-label="上一页">←</button>
+          <span id="toolPageStatus">第 1 / 1 页</span>
+          <button id="toolPageNext" type="button" aria-label="下一页">→</button>
+        </nav>
+
         <aside class="tool-risk-note">
           <strong>使用前检查</strong>
           <p>第三方工具、账号服务、代理服务和空投任务都可能存在风控、隐私、资金和钓鱼风险。重要资产不要放在任务钱包，交互前先核验域名、授权范围和官方公告。</p>
@@ -179,6 +190,6 @@
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../toolbox-page.js?v=20260715-toolbox-v3"></script>
+    <script src="../toolbox-page.js?v=20260715-toolbox-v4"></script>
   </body>
 </html>
