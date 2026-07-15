@@ -6,6 +6,7 @@ const essentialGrid = document.getElementById("essentialGrid");
 const categoryGrid = document.getElementById("toolCategoryGrid");
 const toolSearch = document.getElementById("toolSearch");
 const toolSearchClear = document.getElementById("toolSearchClear");
+const toolCategoryFilters = document.getElementById("toolCategoryFilters");
 const toolSpotlight = document.getElementById("toolSpotlight");
 const toolSpotlightLink = document.getElementById("toolSpotlightLink");
 const toolSpotlightName = document.getElementById("toolSpotlightName");
@@ -14,6 +15,7 @@ let toolboxData = null;
 let spotlightItems = [];
 let spotlightIndex = 0;
 let spotlightTimer = null;
+let activeToolGroup = "all";
 
 const spotlightPriority = ["GMGN 网页版", "RootData", "DefiLlama", "Revoke.cash", "Orbiter", "Galxe", "Arkham"];
 
@@ -69,27 +71,27 @@ function setSpotlightFromGroups(groups) {
   setSpotlightItems(items);
 }
 
-function setSpotlightFromStaticMarkup() {
-  const items = Array.from(categoryGrid.querySelectorAll(".tool-list a")).map((link) => ({
-    name: link.querySelector("strong")?.textContent?.trim() || "工具入口",
-    description: link.querySelector("small")?.textContent?.trim() || "打开工具",
-    url: link.href,
-  }));
-  setSpotlightItems(items);
-}
-
 function filterToolGroups(groups, query) {
   const keyword = normalizeToolText(query);
   return groups
-    .map((group) => {
+    .map((group, index) => {
       const items = Array.isArray(group.items) ? group.items : [];
       const groupMatches = normalizeToolText(`${group.label} ${group.title}`).includes(keyword);
       const visibleItems = !keyword || groupMatches
         ? items
         : items.filter((item) => normalizeToolText(`${item.name} ${item.description}`).includes(keyword));
-      return { ...group, items: visibleItems };
+      return { ...group, key: String(index), items: visibleItems };
     })
-    .filter((group) => group.items.length > 0);
+    .filter((group) => (activeToolGroup === "all" || group.key === activeToolGroup) && group.items.length > 0);
+}
+
+function renderCategoryFilters(groups) {
+  if (!toolCategoryFilters) return;
+  if (activeToolGroup !== "all" && !groups[Number(activeToolGroup)]) activeToolGroup = "all";
+  toolCategoryFilters.innerHTML = [
+    `<button class="${activeToolGroup === "all" ? "active" : ""}" type="button" data-tool-group="all" aria-pressed="${activeToolGroup === "all"}">全部工具</button>`,
+    ...groups.map((group, index) => `<button class="${activeToolGroup === String(index) ? "active" : ""}" type="button" data-tool-group="${index}" aria-pressed="${activeToolGroup === String(index)}">${escapeToolHtml(group.title)}</button>`),
+  ].join("");
 }
 
 function renderToolGroups(groups, query = "") {
@@ -103,41 +105,30 @@ function renderToolGroups(groups, query = "") {
   }
 
   categoryGrid.innerHTML = visibleGroups.map((group) => `
-    <article class="tool-category">
-      <header><span>${escapeToolHtml(group.label)}</span><h3>${escapeToolHtml(group.title)}</h3></header>
+    <section class="tool-category">
+      <header><div><span>${escapeToolHtml(group.label)}</span><h3>${escapeToolHtml(group.title)}</h3></div><b>${group.items.length}</b></header>
       <div class="tool-list">${group.items.map((item) => item.url
-        ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${escapeToolHtml(item.name)}"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small></a>`
+        ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${escapeToolHtml(item.name)}"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small><b aria-hidden="true">↗</b></a>`
         : `<div class="tool-static"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small></div>`).join("")}</div>
-    </article>`).join("");
+    </section>`).join("");
   updateSearchControls(query);
 }
 
-function filterStaticToolGroups(query) {
-  const keyword = normalizeToolText(query);
-  const groups = Array.from(categoryGrid.querySelectorAll(".tool-category"));
-
-  groups.forEach((group) => {
-    const heading = group.querySelector("header")?.textContent || "";
-    const groupMatches = normalizeToolText(heading).includes(keyword);
-    const items = Array.from(group.querySelectorAll(".tool-list > *"));
-    let groupVisible = 0;
-
-    items.forEach((item) => {
-      const matches = !keyword || groupMatches || normalizeToolText(item.textContent).includes(keyword);
-      item.hidden = !matches;
-      if (matches) groupVisible += 1;
-    });
-
-    group.hidden = groupVisible === 0;
-  });
-
-  updateSearchControls(query);
+function readStaticToolGroups() {
+  return Array.from(categoryGrid.querySelectorAll(".tool-category")).map((group) => ({
+    label: group.querySelector("header span")?.textContent?.trim() || "工具",
+    title: group.querySelector("header h3")?.textContent?.trim() || "工具分类",
+    items: Array.from(group.querySelectorAll(".tool-list > *")).map((item) => ({
+      name: item.querySelector("strong")?.textContent?.trim() || "工具入口",
+      description: item.querySelector("small")?.textContent?.trim() || "打开工具",
+      url: item.matches("a") ? item.href : "",
+    })),
+  }));
 }
 
 function applyToolSearch() {
   const query = toolSearch.value.trim();
   if (toolboxData) renderToolGroups(toolboxData.toolGroups, query);
-  else filterStaticToolGroups(query);
 }
 
 function renderToolbox(data) {
@@ -150,6 +141,7 @@ function renderToolbox(data) {
       ${item.code ? `<dl><dt>邀请码</dt><dd>${escapeToolHtml(item.code)}</dd></dl>` : ""}
       ${item.url ? `<a class="tool-action" href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer">链接直达</a>` : ""}
     </article>`).join("");
+  renderCategoryFilters(data.toolGroups);
   setSpotlightFromGroups(data.toolGroups);
   renderToolGroups(data.toolGroups, toolSearch.value.trim());
 }
@@ -161,10 +153,21 @@ toolSearchClear.addEventListener("click", () => {
   applyToolSearch();
 });
 
+toolCategoryFilters?.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-tool-group]");
+  if (!button || !toolboxData) return;
+  activeToolGroup = button.dataset.toolGroup || "all";
+  renderCategoryFilters(toolboxData.toolGroups);
+  renderToolGroups(toolboxData.toolGroups, toolSearch.value.trim());
+});
+
 const toolUrlQuery = new URLSearchParams(window.location.search).get("q") || "";
 toolSearch.value = toolUrlQuery;
-filterStaticToolGroups(toolUrlQuery);
-setSpotlightFromStaticMarkup();
+const staticToolGroups = readStaticToolGroups();
+toolboxData = { toolGroups: staticToolGroups };
+renderCategoryFilters(staticToolGroups);
+setSpotlightFromGroups(staticToolGroups);
+renderToolGroups(staticToolGroups, toolUrlQuery);
 
 toolSpotlight.addEventListener("mouseenter", stopSpotlight);
 toolSpotlight.addEventListener("mouseleave", startSpotlight);

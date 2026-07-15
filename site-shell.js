@@ -24,6 +24,42 @@
   openButton.setAttribute("aria-label", "打开全站搜索");
   actions.prepend(openButton);
 
+  const mobileToggle = document.createElement("button");
+  mobileToggle.className = "mobile-nav-toggle";
+  mobileToggle.type = "button";
+  mobileToggle.setAttribute("aria-label", "打开导航菜单");
+  mobileToggle.setAttribute("aria-expanded", "false");
+  mobileToggle.setAttribute("aria-controls", "mobileNavPanel");
+  mobileToggle.innerHTML = '<span aria-hidden="true"></span>';
+  actions.append(mobileToggle);
+
+  const mobilePanel = document.createElement("div");
+  mobilePanel.className = "mobile-nav-panel";
+  mobilePanel.id = "mobileNavPanel";
+  mobilePanel.hidden = true;
+  const mobileNav = header.querySelector(".nav")?.cloneNode(true);
+  const mobileCommunity = community.cloneNode(true);
+  mobileNav?.classList.add("mobile-nav");
+  mobileCommunity.classList.add("mobile-community");
+  if (mobileNav) mobilePanel.append(mobileNav);
+  mobilePanel.append(mobileCommunity);
+  header.append(mobilePanel);
+
+  function setMobileMenu(open) {
+    header.classList.toggle("menu-open", open);
+    mobilePanel.hidden = !open;
+    mobileToggle.setAttribute("aria-expanded", String(open));
+    mobileToggle.setAttribute("aria-label", open ? "关闭导航菜单" : "打开导航菜单");
+  }
+
+  mobileToggle.addEventListener("click", () => setMobileMenu(!header.classList.contains("menu-open")));
+  mobilePanel.addEventListener("click", (event) => {
+    if (event.target.closest("a")) setMobileMenu(false);
+  });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 900) setMobileMenu(false);
+  });
+
   const dialog = document.createElement("dialog");
   dialog.className = "global-search-dialog";
   dialog.id = "globalSearchDialog";
@@ -140,6 +176,7 @@
   }
 
   function openSearch() {
+    setMobileMenu(false);
     if (!dialog.open) dialog.showModal();
     loadIndex().then(() => renderResults(input.value));
     window.setTimeout(() => input.focus(), 0);
@@ -152,6 +189,7 @@
     if (event.target === dialog) dialog.close();
   });
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && header.classList.contains("menu-open")) setMobileMenu(false);
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
       openSearch();

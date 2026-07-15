@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://ethanweb3.com/toolbox/" />
     <meta name="twitter:card" content="summary" />
     <title>工具箱 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260715-foundation-v1" />
+    <link rel="stylesheet" href="../styles.css?v=20260715-ui-v2" />
   </head>
   <body>
     <header class="site-header">
@@ -28,16 +28,10 @@
     </header>
 
     <main class="page">
-      <section class="page-hero split-hero">
-        <div>
-          <p class="eyebrow">Toolbox</p>
-          <h1>Web3 工具箱</h1>
-          <p>把交易所、钱包、网络访问、一级市场、空投和安全工具按场景整理，减少新手在链接、邀请码和用途之间来回查找。</p>
-        </div>
-        <aside class="hero-panel">
-          <strong>收录标准</strong>
-          <p>优先保留有明确用途、能提高验证效率、能帮助完成入门和实战流程的工具。</p>
-        </aside>
+      <section class="page-hero page-hero-compact">
+        <p class="eyebrow">Toolbox</p>
+        <h1>Web3 工具箱</h1>
+        <p>按使用场景整理交易所、钱包、网络、空投、数据与安全工具，快速找到下一步需要的入口。</p>
       </section>
 
       <section class="toolkit-essentials" aria-label="必备入口">
@@ -103,7 +97,11 @@
           </div>
         </div>
 
-        <div class="tool-category-grid" id="toolCategoryGrid">
+        <div class="tool-category-filters" id="toolCategoryFilters" aria-label="工具分类">
+          <button class="active" type="button" data-tool-group="all">全部工具</button>
+        </div>
+
+        <div class="tool-category-grid" id="toolCategoryGrid" aria-live="polite">
           <article class="tool-category">
             <header><span>网络</span><h3>VPN</h3></header>
             <div class="tool-list">
@@ -183,7 +181,7 @@
       </section>
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
-    <script src="../site-shell.js?v=20260715-search-v1"></script>
-    <script src="../toolbox-page.js?v=20260715-search-v1"></script>
+    <script src="../site-shell.js?v=20260715-ui-v2"></script>
+    <script src="../toolbox-page.js?v=20260715-ui-v2"></script>
   </body>
 </html>
