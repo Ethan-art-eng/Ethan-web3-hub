@@ -1,0 +1,10 @@
+name = "ethan-yield-monitor"
+main = "src/index.js"
+compatibility_date = "2026-07-11"
+
+[triggers]
+crons = ["0 */6 * * *"]
+
+[[kv_namespaces]]
+binding = "CEX_YIELDS"
+id = "3a7989585dd144f9a984c5cbb1abdfdc"

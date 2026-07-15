@@ -1,36 +1,75 @@
 {
-  "updatedAt": "2026-05-23",
-  "notice": "这里仅记录活动、年利率和到期时间，不构成投资建议；最终以交易所官方页面、地区资格和账户实际显示为准。",
+  "updatedAt": "2026-07-11 09:00 (UTC+8)",
+  "notice": "仅展示已核验且尚未到期的公开活动或明确收益规则。利率、额度、地区资格与产品可用性会变化；下单前必须以交易所账户内的官方页面为准。",
+  "source": "official",
+  "exchanges": [
+    {
+      "name": "Binance",
+      "shortName": "币安",
+      "logo": "/assets/exchanges/binance.svg",
+      "url": "https://www.binance.com/en/earn"
+    },
+    {
+      "name": "OKX",
+      "shortName": "欧易",
+      "logo": "/assets/exchanges/okx.svg",
+      "url": "https://www.okx.com/en-us/earn/simple-earn"
+    },
+    {
+      "name": "Bybit",
+      "shortName": "Bybit",
+      "logo": "/assets/exchanges/bybit.svg",
+      "url": "https://www.bybit.com/en/earn/easy-earn/"
+    },
+    {
+      "name": "Bitget",
+      "shortName": "Bitget",
+      "logo": "/assets/exchanges/bitget.svg",
+      "url": "https://www.bitget.com/earn"
+    },
+    {
+      "name": "Gate",
+      "shortName": "Gate",
+      "logo": "/assets/exchanges/gate.svg",
+      "url": "https://www.gate.com/simple-earn"
+    }
+  ],
   "campaigns": [
     {
+      "id": "okx-usdt-usdc-simple-earn",
+      "exchange": "OKX",
       "activity": "USDT / USDC Simple Earn",
-      "venue": "Binance 主站 -> 活期",
-      "apy": "7.60%",
-      "endTime": "2026-06-03 07:59"
-    },
-    {
-      "activity": "USDT / USDC Simple Earn",
-      "venue": "OKX 主站 -> Simple Earn",
+      "venue": "欧易 · Flexible",
       "apy": "10.00%",
-      "endTime": "2026-05-31 07:59"
+      "apyValue": 10,
+      "productType": "Flexible",
+      "eligibility": "普通用户",
+      "region": "以账户页面为准",
+      "cap": "以账户页面为准",
+      "published": true,
+      "startsAt": null,
+      "endTime": "首次申购后 180 天",
+      "endAt": null,
+      "lastVerifiedAt": "2026-07-11T01:00:00Z",
+      "sourceUrl": "https://www.okx.com/en-gb/help/simple-earn-bonus-rules-change-announcement"
     },
     {
-      "activity": "USDT / BYUSDT Earn",
-      "venue": "Bybit 主站 -> Earn",
-      "apy": "5.60%",
-      "endTime": "2026-06-15 07:59"
-    },
-    {
-      "activity": "USDGO Earn",
-      "venue": "Bitget 主站 -> Earn",
-      "apy": "4.30%",
-      "endTime": "2026-06-16 00:00"
-    },
-    {
-      "activity": "USDD Simple Earn",
-      "venue": "Gate 主站 -> Simple Earn",
-      "apy": "5.00%",
-      "endTime": "2026-06-30 23:59"
+      "id": "bybit-usdt-easy-earn-new-user",
+      "exchange": "Bybit",
+      "activity": "USDT Easy Earn（指定地区新用户）",
+      "venue": "Bybit · Fixed 2 天",
+      "apy": "777.00%",
+      "apyValue": 777,
+      "productType": "Fixed",
+      "eligibility": "指定地区新用户",
+      "region": "指定地区",
+      "cap": "以活动页面为准",
+      "published": true,
+      "startsAt": null,
+      "endTime": "2026-08-31 10:00 (UTC)",
+      "endAt": "2026-08-31T10:00:00Z",
+      "lastVerifiedAt": "2026-07-11T01:00:00Z",
+      "sourceUrl": "https://announcements.bybit.com/ru-RU/article/-usdt-apr-777--blt80b6facd6234775b/"
     }
   ]
 }

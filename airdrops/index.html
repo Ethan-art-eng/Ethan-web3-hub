@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>空投项目 | 躺赚笔记</title>
     <meta name="description" content="躺赚笔记空投项目追踪表，整理项目状态、融资、成本、建议上号和任务入口。" />
-    <link rel="stylesheet" href="../styles.css?v=20260524-community-text" />
+    <link rel="canonical" href="https://ethanweb3.com/airdrops/" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="空投项目 | 躺赚笔记" />
+    <meta property="og:description" content="追踪 Web3 空投项目状态、融资、成本和任务入口。" />
+    <meta property="og:url" content="https://ethanweb3.com/airdrops/" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="stylesheet" href="../styles.css?v=20260715-foundation-v1" />
   </head>
   <body>
     <header class="site-header">
@@ -19,7 +27,12 @@
         <a href="../toolbox/">工具箱</a>
         <a href="../wealth/">币圈理财</a>
       </nav>
-      <a class="community" href="#" aria-label="加入社群，获得更多信息资源">加入我们，获得更多信息资源</a>
+      <div class="community-links" aria-label="加入我们">
+        <span class="community-label">加入我们</span>
+        <a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../assets/social/discord.svg" alt="" /></a>
+        <a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../assets/social/telegram.svg" alt="" /></a>
+        <a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../assets/social/youtube.svg" alt="" /></a>
+      </div>
     </header>
 
     <main class="tracker-page">
@@ -46,6 +59,11 @@
         <aside class="summary-note">
           <strong>说明</strong>
           <p>数据整理自 Ethan 社区 Google Sheet。这里只做信息追踪，不构成投资建议。</p>
+          <div class="data-freshness" id="airdropDataFreshness">
+            <span>数据状态</span>
+            <strong>正在读取维护时间</strong>
+            <small>页面会自动加载最新记录</small>
+          </div>
         </aside>
       </section>
 
@@ -262,7 +280,9 @@
               <div class="pagination" id="airdropPagination"></div>
       </section>
     </main>
+    <script id="airdropInitialData" type="application/json">{"updatedAt":"","projects":[]}</script>
+    <script src="../site-shell.js?v=20260715-search-v1"></script>
     <script src="../airdrops-data.js"></script>
-    <script src="../airdrops-page.js"></script>
+    <script src="../airdrops-page.js?v=20260715-edge-v1"></script>
   </body>
 </html>

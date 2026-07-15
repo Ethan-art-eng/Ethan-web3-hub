@@ -1,0 +1,319 @@
+{
+  "updatedAt": "2026-07-15T07:59:39Z",
+  "essentials": [
+    {
+      "id": "essential-01",
+      "type": "交易所",
+      "name": "币安 Binance",
+      "description": "适合现货、Earn、Web3 钱包入口和新手基础账户。",
+      "code": "76380W",
+      "url": "https://www.marketwebb.systems/join?ref=76380W"
+    },
+    {
+      "id": "essential-02",
+      "type": "交易所",
+      "name": "欧易 OKX",
+      "description": "适合交易、Web3 钱包、链上交互和新手任务。",
+      "code": "51196449",
+      "url": "https://okx.com/join/51196449"
+    },
+    {
+      "id": "essential-03",
+      "type": "钱包",
+      "name": "币安 Web3 钱包",
+      "description": "适合 App 内创建钱包、参与链上活动和手续费减免。",
+      "code": "TUDSIGH2",
+      "url": "https://web3.binance.com/m/referral?ref=TUDSIGH2"
+    },
+    {
+      "id": "essential-04",
+      "type": "钱包",
+      "name": "欧易 Web3 钱包",
+      "description": "适合多链钱包、DApp 交互、空投任务和手续费减免。",
+      "code": "ETHAN888",
+      "url": "https://web3.okx.com/join/ETHAN888"
+    }
+  ],
+  "toolGroups": [
+    {
+      "id": "group-01",
+      "label": "网络",
+      "title": "VPN",
+      "items": [
+        {
+          "id": "tool-01-01",
+          "name": "奶昔",
+          "description": "质量较好，价格略高",
+          "url": "https://nxonearth.com/signupbyemail.aspx?MemberCode=45cadae678304a98953ec64311c656a320260405161528"
+        },
+        {
+          "id": "tool-01-02",
+          "name": "肥宅猫",
+          "description": "价格较低，稳定性一般",
+          "url": "https://inv02.fcweba.cc/register?aff=HRmlWorZ"
+        }
+      ]
+    },
+    {
+      "id": "group-02",
+      "label": "Meme",
+      "title": "一级市场工具",
+      "items": [
+        {
+          "id": "tool-02-01",
+          "name": "GMGN 网页版",
+          "description": "Meme 交易工具",
+          "url": "https://gmgn.ai/?ref=26e2SQJD"
+        },
+        {
+          "id": "tool-02-02",
+          "name": "GMGN Bot",
+          "description": "Telegram 交易机器人",
+          "url": "https://t.me/gmgnaibot?start=i_26e2SQJD"
+        },
+        {
+          "id": "tool-02-03",
+          "name": "Debot",
+          "description": "AI 警报交易工具",
+          "url": "https://debot.ai/?inviteCode=215180"
+        },
+        {
+          "id": "tool-02-04",
+          "name": "Chain.fm",
+          "description": "聪明钱频道",
+          "url": "https://chain.fm/"
+        },
+        {
+          "id": "tool-02-05",
+          "name": "Pump News",
+          "description": "AI 分析 Meme 币",
+          "url": "https://www.pump.news/en/rank"
+        },
+        {
+          "id": "tool-02-06",
+          "name": "CryptoHunt",
+          "description": "Web3 智能投研平台",
+          "url": "https://www.cryptohunt.ai/zh-CN"
+        },
+        {
+          "id": "tool-02-07",
+          "name": "Arkham",
+          "description": "大型资金持仓和流向",
+          "url": "https://intel.arkm.com/"
+        },
+        {
+          "id": "tool-02-08",
+          "name": "DeBank",
+          "description": "鲸鱼钱包投资组合",
+          "url": "https://debank.com/"
+        },
+        {
+          "id": "tool-02-09",
+          "name": "Bubblemaps",
+          "description": "地址关系和筹码图谱",
+          "url": "https://bubblemaps.io/"
+        }
+      ]
+    },
+    {
+      "id": "group-03",
+      "label": "空投",
+      "title": "账号与环境",
+      "items": [
+        {
+          "id": "tool-03-01",
+          "name": "MoreLogin",
+          "description": "指纹浏览器",
+          "url": "https://www.morelogin.com/?from=AAHykfrPmIMC"
+        },
+        {
+          "id": "tool-03-02",
+          "name": "Web3Serve",
+          "description": "账号购买",
+          "url": "http://web3serve.com/?from=9083"
+        },
+        {
+          "id": "tool-03-03",
+          "name": "CryptoServe",
+          "description": "账户购买，有 K 选项",
+          "url": "https://www.cryptoserve.org/"
+        },
+        {
+          "id": "tool-03-04",
+          "name": "Kookeey",
+          "description": "IP 工具",
+          "url": "https://www.kookeey.com/register.html?aff=11228441"
+        },
+        {
+          "id": "tool-03-05",
+          "name": "985Proxy",
+          "description": "IP 工具",
+          "url": "https://www.985proxy.com/?invite=0DVARQ"
+        },
+        {
+          "id": "tool-03-06",
+          "name": "地址生成器",
+          "description": "地址资料生成",
+          "url": "https://www.addrproof.top/?referrerCode=9489079498"
+        }
+      ]
+    },
+    {
+      "id": "group-04",
+      "label": "信息源",
+      "title": "空投网站",
+      "items": [
+        {
+          "id": "tool-04-01",
+          "name": "Airdrops.io",
+          "description": "空投项目聚合",
+          "url": "https://airdrops.io/"
+        },
+        {
+          "id": "tool-04-02",
+          "name": "DropsEarn",
+          "description": "即将开始活动",
+          "url": "https://dropsearn.com/events/upcom"
+        },
+        {
+          "id": "tool-04-03",
+          "name": "AlphaDrops",
+          "description": "Alpha 空投资讯",
+          "url": "https://www.alphadrops.net/alpha"
+        },
+        {
+          "id": "tool-04-04",
+          "name": "Followin",
+          "description": "潜在空投频道",
+          "url": "https://followin.io/zh-Hans/channel/potential_airdrop"
+        },
+        {
+          "id": "tool-04-05",
+          "name": "RabbitHole",
+          "description": "链上任务平台",
+          "url": "https://rabbithole.gg/"
+        },
+        {
+          "id": "tool-04-06",
+          "name": "Galxe",
+          "description": "任务和凭证平台",
+          "url": "https://galxe.com/zh"
+        }
+      ]
+    },
+    {
+      "id": "group-05",
+      "label": "数据",
+      "title": "研究与查询",
+      "items": [
+        {
+          "id": "tool-05-01",
+          "name": "RootData",
+          "description": "项目融资和团队信息",
+          "url": "https://www.rootdata.com/"
+        },
+        {
+          "id": "tool-05-02",
+          "name": "DefiLlama",
+          "description": "DeFi 数据和空投查询",
+          "url": "https://defillama.com/"
+        },
+        {
+          "id": "tool-05-03",
+          "name": "Earn.fi",
+          "description": "空投查询",
+          "url": "https://earni.fi/account"
+        },
+        {
+          "id": "tool-05-04",
+          "name": "Revoke.cash",
+          "description": "取消代币授权",
+          "url": "https://revoke.cash/zh"
+        }
+      ]
+    },
+    {
+      "id": "group-06",
+      "label": "执行",
+      "title": "接码、跨链与测试水",
+      "items": [
+        {
+          "id": "tool-06-01",
+          "name": "SMS-Bus",
+          "description": "接码平台",
+          "url": "https://sms-bus.com/"
+        },
+        {
+          "id": "tool-06-02",
+          "name": "5SIM",
+          "description": "接码平台",
+          "url": "https://5sim.net/zh"
+        },
+        {
+          "id": "tool-06-03",
+          "name": "Orbiter",
+          "description": "跨链桥",
+          "url": "https://www.orbiter.finance/"
+        },
+        {
+          "id": "tool-06-04",
+          "name": "Uniswap",
+          "description": "DEX 和跨链入口",
+          "url": "https://app.uniswap.org/"
+        },
+        {
+          "id": "tool-06-05",
+          "name": "Goerli Faucet",
+          "description": "测试水领取",
+          "url": "https://goerlifaucet.com/"
+        },
+        {
+          "id": "tool-06-06",
+          "name": "Paradigm Faucet",
+          "description": "测试水领取",
+          "url": "https://faucet.paradigm.xyz/"
+        },
+        {
+          "id": "tool-06-07",
+          "name": "Chainstack Faucet",
+          "description": "Sepolia 测试水",
+          "url": "https://faucet.chainstack.com/sepolia"
+        }
+      ]
+    }
+  ],
+  "tutorials": [
+    {
+      "id": "tutorial-01",
+      "stage": "01",
+      "title": "钱包安全",
+      "description": "助记词、私钥、硬件钱包、授权撤销、钓鱼识别。",
+      "audience": "适合完全新手",
+      "url": "/courses/wallet-security/"
+    },
+    {
+      "id": "tutorial-02",
+      "stage": "02",
+      "title": "链上基础",
+      "description": "Gas、区块浏览器、跨链桥、合约交互和交易确认。",
+      "audience": "建立操作能力",
+      "url": "/courses/onchain-basics/"
+    },
+    {
+      "id": "tutorial-03",
+      "stage": "03",
+      "title": "DeFi 入门",
+      "description": "DEX、借贷、质押、流动性池、收益来源和退出。",
+      "audience": "理解资金流向",
+      "url": "/courses/defi-basics/"
+    },
+    {
+      "id": "tutorial-04",
+      "stage": "04",
+      "title": "项目研究",
+      "description": "代币经济、融资、团队、审计、社区和风险复盘。",
+      "audience": "形成判断框架",
+      "url": "/courses/project-research/"
+    }
+  ]
+}

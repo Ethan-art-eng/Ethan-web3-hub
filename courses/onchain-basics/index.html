@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>链上基础 | 躺赚笔记教程</title>
+    <meta name="description" content="理解网络、Gas、交易状态、区块浏览器、跨链桥与合约交互，建立链上操作能力。" />
+    <link rel="canonical" href="https://ethanweb3.com/courses/onchain-basics/" />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="链上基础 | 躺赚笔记教程" />
+    <meta property="og:description" content="理解网络、Gas、区块浏览器、跨链桥和交易状态。" />
+    <meta property="og:url" content="https://ethanweb3.com/courses/onchain-basics/" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="stylesheet" href="../../styles.css?v=20260715-foundation-v1" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a><nav class="nav"><a href="../../airdrops/">空投项目</a><a class="active" href="../">教程</a><a href="../../toolbox/">工具箱</a><a href="../../wealth/">币圈理财</a></nav><div class="community-links" aria-label="加入我们"><span class="community-label">加入我们</span><a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../../assets/social/discord.svg" alt="" /></a><a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../../assets/social/telegram.svg" alt="" /></a><a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../../assets/social/youtube.svg" alt="" /></a></div>
+    </header>
+    <main class="tutorial-page">
+      <nav class="tutorial-breadcrumb" aria-label="面包屑"><a href="../">教程</a><span>/</span><strong>链上基础</strong></nav>
+      <header class="tutorial-hero"><p class="eyebrow">02 · Onchain Basics</p><h1>链上基础</h1><p>链上操作的重点不是记住按钮位置，而是看懂一笔交易从钱包发出、进入网络、被验证并最终写入区块的过程。</p></header>
+      <div class="tutorial-layout">
+        <aside class="tutorial-toc"><strong>本章目录</strong><a href="#network">网络与地址</a><a href="#gas">Gas</a><a href="#explorer">区块浏览器</a><a href="#bridge">跨链与合约</a><a href="#failure">故障处理</a></aside>
+        <article class="tutorial-article">
+          <section id="network"><p class="tutorial-step">01</p><h2>先确认网络，再确认地址</h2><p>同一个钱包可以出现在多条网络上，但资产和 Gas 并不自动互通。转账前必须同时确认发送网络、接收网络、代币合约和地址。第一次向新地址转账时先发送小额测试。</p><div class="tutorial-callout"><strong>不要只看代币名称</strong><p>同名代币可能有不同合约。优先从项目官方文档或可信区块浏览器获取合约地址。</p></div></section>
+          <section id="gas"><p class="tutorial-step">02</p><h2>Gas 是网络执行费用</h2><p>Gas 由网络拥堵、交易复杂度和费用设置共同决定。失败交易也可能消耗 Gas，因为验证者已经执行了计算。钱包显示的预估值不是最终保证，应为原生 Gas 代币保留余量。</p></section>
+          <section id="explorer"><p class="tutorial-step">03</p><h2>用区块浏览器核验结果</h2><p>复制交易哈希到对应网络的区块浏览器，检查状态、区块确认数、发送方、接收方、代币变化和手续费。不要只依赖网站弹出的“成功”提示。</p><ul><li><strong>Pending：</strong>交易仍在等待打包。</li><li><strong>Success：</strong>交易已执行，但仍需核对资产变化是否符合预期。</li><li><strong>Failed：</strong>执行失败，查看错误原因并避免盲目重复。</li></ul></section>
+          <section id="bridge"><p class="tutorial-step">04</p><h2>跨链桥和合约交互要分两次核验</h2><p>跨链包含源链锁定或销毁、消息传递、目标链释放或铸造。先确认桥的官方入口、支持网络和到账时间，再小额测试。合约交互则要核对授权对象、调用方法和预期资产变化。</p></section>
+          <section id="failure"><p class="tutorial-step">05</p><h2>交易卡住时先诊断，不要连续提交</h2><ol class="tutorial-checklist"><li>在区块浏览器确认交易是否真的发出。</li><li>检查 nonce、Gas 设置和钱包当前网络。</li><li>使用钱包提供的加速或取消功能，而不是重复发起同一操作。</li><li>跨链未到账时保留交易哈希，按官方支持流程查询。</li></ol></section>
+          <section class="tutorial-sources"><h2>延伸阅读</h2><a href="https://ethereum.org/developers/docs/transactions/" target="_blank" rel="noopener noreferrer">Ethereum 交易说明</a><a href="https://ethereum.org/developers/docs/gas/" target="_blank" rel="noopener noreferrer">Ethereum Gas 说明</a><a href="https://ethereum.org/developers/docs/data-and-analytics/" target="_blank" rel="noopener noreferrer">区块链数据与浏览器</a></section>
+        </article>
+      </div>
+      <nav class="tutorial-next" aria-label="教程导航"><a href="../wallet-security/"><span>上一篇</span><strong>← 钱包安全</strong></a><a href="../defi-basics/"><span>下一篇</span><strong>DeFi 入门 →</strong></a></nav>
+    </main>
+    <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer><script src="../../site-shell.js?v=20260715-search-v1"></script>
+  </body>
+</html>

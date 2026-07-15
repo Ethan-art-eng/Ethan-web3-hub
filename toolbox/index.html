@@ -4,14 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="躺赚笔记 Web3 工具箱，整理交易所、钱包、网络访问、Meme、空投、数据和安全工具。" />
+    <link rel="canonical" href="https://ethanweb3.com/toolbox/" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Web3 工具箱 | 躺赚笔记" />
+    <meta property="og:description" content="按真实使用场景整理交易所、钱包、空投、数据和安全工具。" />
+    <meta property="og:url" content="https://ethanweb3.com/toolbox/" />
+    <meta name="twitter:card" content="summary" />
     <title>工具箱 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260524-community-text" />
+    <link rel="stylesheet" href="../styles.css?v=20260715-foundation-v1" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../courses/">教程</a><a class="active" href="../toolbox/">工具箱</a><a href="../wealth/">币圈理财</a></nav>
-      <a class="community" href="#" aria-label="加入社群，获得更多信息资源">加入我们，获得更多信息资源</a>
+      <div class="community-links" aria-label="加入我们">
+        <span class="community-label">加入我们</span>
+        <a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../assets/social/discord.svg" alt="" /></a>
+        <a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../assets/social/telegram.svg" alt="" /></a>
+        <a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../assets/social/youtube.svg" alt="" /></a>
+      </div>
     </header>
 
     <main class="page">
@@ -35,48 +48,62 @@
           </div>
           <p>用 Ethan 专属邀请码注册，享受永久手续费减免和新用户赠金。</p>
         </div>
-        <div class="essential-grid">
+        <div class="essential-grid" id="essentialGrid">
           <article class="essential-card">
             <span>交易所</span>
             <h3>币安 Binance</h3>
             <p>适合现货、Earn、Web3 钱包入口和新手基础账户。</p>
             <dl><dt>邀请码</dt><dd>76380W</dd></dl>
-            <a class="tool-action" href="https://www.marketwebb.systems/join?ref=76380W" target="_blank" rel="noopener noreferrer">打开链接</a>
+            <a class="tool-action" href="https://www.marketwebb.systems/join?ref=76380W" target="_blank" rel="noopener noreferrer">链接直达</a>
           </article>
           <article class="essential-card">
             <span>交易所</span>
             <h3>欧易 OKX</h3>
             <p>适合交易、Web3 钱包、链上交互和新手任务。</p>
             <dl><dt>邀请码</dt><dd>51196449</dd></dl>
-            <a class="tool-action" href="https://okx.com/join/51196449" target="_blank" rel="noopener noreferrer">打开链接</a>
+            <a class="tool-action" href="https://okx.com/join/51196449" target="_blank" rel="noopener noreferrer">链接直达</a>
           </article>
           <article class="essential-card">
             <span>钱包</span>
             <h3>币安 Web3 钱包</h3>
             <p>适合 App 内创建钱包、参与链上活动和手续费减免。</p>
             <dl><dt>邀请码</dt><dd>TUDSIGH2</dd></dl>
-            <a class="tool-action" href="https://web3.binance.com/m/referral?ref=TUDSIGH2" target="_blank" rel="noopener noreferrer">打开链接</a>
+            <a class="tool-action" href="https://web3.binance.com/m/referral?ref=TUDSIGH2" target="_blank" rel="noopener noreferrer">链接直达</a>
           </article>
           <article class="essential-card">
             <span>钱包</span>
             <h3>欧易 Web3 钱包</h3>
             <p>适合多链钱包、DApp 交互、空投任务和手续费减免。</p>
             <dl><dt>邀请码</dt><dd>ETHAN888</dd></dl>
-            <a class="tool-action" href="https://web3.okx.com/join/ETHAN888" target="_blank" rel="noopener noreferrer">打开链接</a>
+            <a class="tool-action" href="https://web3.okx.com/join/ETHAN888" target="_blank" rel="noopener noreferrer">链接直达</a>
           </article>
         </div>
       </section>
 
       <section class="toolkit-directory" aria-label="Web3 工具目录">
-        <div class="section-heading compact-heading">
+        <div class="section-heading compact-heading tool-directory-heading">
           <div>
             <p class="eyebrow">Tool Directory</p>
             <h2>实战工具目录</h2>
           </div>
-          <p>按真实使用场景分组：先解决网络和账户环境，再做一级市场、空投、数据验证和安全检查。</p>
         </div>
 
-        <div class="tool-category-grid">
+        <div class="tool-search-toolbar">
+          <label class="tool-search-field" for="toolSearch">
+            <span class="sr-only">搜索工具</span>
+            <input id="toolSearch" type="search" placeholder="搜索工具名称、用途或分类" autocomplete="off" />
+            <button id="toolSearchClear" type="button" aria-label="清除搜索" hidden>×</button>
+          </label>
+          <div class="tool-spotlight" id="toolSpotlight" aria-label="常用工具快速入口">
+            <span class="tool-spotlight-label">快速入口</span>
+            <a id="toolSpotlightLink" href="https://gmgn.ai/?ref=26e2SQJD" target="_blank" rel="noopener noreferrer">
+              <span><strong id="toolSpotlightName">GMGN 网页版</strong><small id="toolSpotlightDescription">Meme 交易工具</small></span>
+              <b aria-hidden="true">↗</b>
+            </a>
+          </div>
+        </div>
+
+        <div class="tool-category-grid" id="toolCategoryGrid">
           <article class="tool-category">
             <header><span>网络</span><h3>VPN</h3></header>
             <div class="tool-list">
@@ -156,5 +183,7 @@
       </section>
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
+    <script src="../site-shell.js?v=20260715-search-v1"></script>
+    <script src="../toolbox-page.js?v=20260715-search-v1"></script>
   </body>
 </html>

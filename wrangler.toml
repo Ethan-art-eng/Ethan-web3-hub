@@ -1,3 +1,10 @@
 name = "ethan-web3-hub"
 compatibility_date = "2026-05-23"
 pages_build_output_dir = "."
+
+[vars]
+ACCESS_AUTH_ENABLED = "true"
+
+[[kv_namespaces]]
+binding = "CEX_YIELDS"
+id = "3a7989585dd144f9a984c5cbb1abdfdc"

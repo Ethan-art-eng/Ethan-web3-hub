@@ -4,37 +4,80 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="躺赚笔记币圈理财页，整理稳定币、质押、DeFi 和 RWA 收益项目的风险检查框架。" />
+    <link rel="canonical" href="https://ethanweb3.com/wealth/" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="币圈理财 | 躺赚笔记" />
+    <meta property="og:description" content="追踪五家交易所已核验的稳定币理财活动。" />
+    <meta property="og:url" content="https://ethanweb3.com/wealth/" />
+    <meta name="twitter:card" content="summary" />
     <title>币圈理财 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260524-community-text" />
+    <link rel="stylesheet" href="../styles.css?v=20260715-foundation-v1" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../courses/">教程</a><a href="../toolbox/">工具箱</a><a class="active" href="../wealth/">币圈理财</a></nav>
-      <a class="community" href="#" aria-label="加入社群，获得更多信息资源">加入我们，获得更多信息资源</a>
+      <div class="community-links" aria-label="加入我们">
+        <span class="community-label">加入我们</span>
+        <a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../assets/social/discord.svg" alt="" /></a>
+        <a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../assets/social/telegram.svg" alt="" /></a>
+        <a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../assets/social/youtube.svg" alt="" /></a>
+      </div>
     </header>
 
-    <main class="page">
-      <section class="page-hero split-hero">
-        <div>
-          <p class="eyebrow">Crypto Yield</p>
-          <h1>币圈理财项目</h1>
-          <p>整理稳定币、质押、DeFi 收益和 RWA 项目，但每个项目都必须先写清收益来源、退出条件和主要风险。</p>
+    <main class="page wealth-page">
+      <section class="wealth-hero">
+        <div class="wealth-hero-copy">
+          <p class="eyebrow">CEX Stable Earn</p>
+          <h1>稳定币理财看板</h1>
+          <p>只追踪 Binance、OKX、Bybit、Bitget、Gate 的公开稳定币收益机会。先核验资格和到期时间，再比较年利率。</p>
+          <div class="wealth-hero-actions">
+            <a class="primary-action" href="#campaigns">查看可核验活动</a>
+            <a class="secondary-action" href="#how-to-read">查看核验方法</a>
+          </div>
         </div>
-        <aside class="risk-panel">
-          <strong>风险优先</strong>
-          <p>任何收益项目都先看资金托管、锁定期、合约风险和退出成本，再看 APY。</p>
+        <aside class="wealth-principle">
+          <span class="principle-icon" aria-hidden="true">!</span>
+          <div>
+            <strong>收益不是唯一指标</strong>
+            <p>额度、锁定期、地区资格与赎回规则，都会改变实际结果。</p>
+          </div>
         </aside>
       </section>
 
-      <section class="campaign-section" aria-label="交易所稳定币理财活动">
-        <div class="section-heading">
+      <section class="yield-summary" aria-label="数据概览">
+        <article><span>已核验活动</span><strong id="verifiedCount">—</strong><small>未到期且有公开规则</small></article>
+        <article><span>覆盖交易所</span><strong id="exchangeCount">5</strong><small>仅追踪指定五个平台</small></article>
+        <article><span>最近核验</span><strong class="summary-date" id="updatedAt">—</strong><small>信息随平台规则变化</small></article>
+      </section>
+
+      <div class="data-freshness wealth-data-freshness" id="wealthDataFreshness">
+        <span>数据状态</span>
+        <strong>正在读取维护时间</strong>
+        <small>页面会自动加载最新记录</small>
+      </div>
+
+      <section class="campaign-section wealth-watchlist" id="campaigns" aria-label="交易所稳定币理财活动">
+        <div class="section-heading wealth-section-heading">
           <div>
-            <p class="eyebrow">CEX Stable Earn</p>
-            <h2>交易所稳定币理财活动</h2>
+            <p class="eyebrow">Live Watchlist</p>
+            <h2>可核验活动</h2>
           </div>
-          <p>只追踪 Binance、OKX、Bybit、Bitget、Gate 五个交易所。APY 会随地区、额度、锁定期和活动规则变化，参与前必须回到官方页面核验。</p>
+          <p>页面默认隐藏已过期活动。选择交易所后，点击活动名称即可回到官方规则页核验你的账户是否符合资格。</p>
         </div>
+
+        <div class="campaign-toolbar">
+          <div class="exchange-filters" id="exchangeFilters" aria-label="按交易所筛选"></div>
+          <div class="campaign-controls">
+            <label class="campaign-search"><span class="sr-only">搜索活动</span><input id="campaignSearch" type="search" placeholder="搜索活动或币种" autocomplete="off" /></label>
+            <label class="campaign-audience"><span class="sr-only">用户资格</span><select id="campaignAudience"><option value="all">全部用户</option><option value="new">新用户活动</option></select></label>
+            <label class="campaign-term"><span class="sr-only">产品期限</span><select id="campaignTerm"><option value="all">全部期限</option><option value="flexible">活期</option><option value="fixed">定期</option></select></label>
+            <label class="campaign-sort"><span class="sr-only">排序方式</span><select id="campaignSort"><option value="deadline">按到期时间</option><option value="apy">按年利率</option></select></label>
+          </div>
+        </div>
+
         <div class="campaign-table-wrap">
           <table class="campaign-table">
             <thead>
@@ -45,18 +88,32 @@
               </tr>
             </thead>
             <tbody id="campaignTableBody">
-              <tr>
-                <td colspan="3">正在加载交易所理财数据</td>
-              </tr>
+              <tr><td colspan="3">正在加载交易所理财数据</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="table-disclaimer" id="campaignDisclaimer">数据加载中。</p>
-        <p class="data-source" id="campaignSource" aria-live="polite"></p>
+        <p class="campaign-empty" id="campaignEmpty" hidden>该筛选条件下暂无可核验活动。请直接到对应交易所的 Earn 页面查看最新规则。</p>
+        <div class="campaign-footnote">
+          <p class="table-disclaimer" id="campaignDisclaimer">数据加载中。</p>
+          <p class="data-source" id="campaignSource" aria-live="polite"></p>
+        </div>
       </section>
 
+      <section class="yield-reading" id="how-to-read" aria-labelledby="readingTitle">
+        <div>
+          <p class="eyebrow">Read Before Subscribe</p>
+          <h2 id="readingTitle">怎样读这张表</h2>
+        </div>
+        <ol>
+          <li><strong>活动</strong><span>只记录公开规则明确、可回到官方页核验的产品或活动。</span></li>
+          <li><strong>年利率</strong><span>Flexible 产品可随时变动，显示数字不等于你的全部资金都能获得该利率。</span></li>
+          <li><strong>到期时间</strong><span>固定日期按活动页面展示；若写“首次申购后”，以你的实际申购时间为起点。</span></li>
+        </ol>
+      </section>
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
-    <script src="../wealth-page.js?v=20260523-yield-board-2"></script>
+    <script id="campaignInitialData" type="application/json">{"updatedAt":"","exchanges":[],"campaigns":[]}</script>
+    <script src="../site-shell.js?v=20260715-search-v1"></script>
+    <script src="../wealth-page.js?v=20260715-edge-v1"></script>
   </body>
 </html>

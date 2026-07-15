@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <title>内容管理后台 | 躺赚笔记</title>
+    <link rel="stylesheet" href="./admin.css?v=20260711-unified-v1" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <a class="admin-brand" href="../../"><span>₿</span><strong>躺赚笔记</strong><small>内容管理后台</small></a>
+      <div class="admin-header-actions">
+        <a href="../../" target="_blank" rel="noreferrer">查看网站</a>
+        <button id="disconnectButton" type="button" hidden>退出管理</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="login-panel" id="loginPanel">
+        <p class="eyebrow">Private Console</p>
+        <h1>内容管理后台</h1>
+        <p>Cloudflare Access 验证后会自动进入。管理员令牌仅作为本地测试和紧急备用。</p>
+        <form id="loginForm">
+          <label for="adminToken">备用管理员令牌</label>
+          <div class="token-row">
+            <input id="adminToken" name="token" type="password" autocomplete="current-password" required />
+            <button type="submit">连接数据</button>
+          </div>
+          <p class="form-status" id="loginStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="admin-workspace" id="adminWorkspace" hidden>
+        <div class="admin-shell">
+          <aside class="admin-sidebar" aria-label="后台导航">
+            <div class="sidebar-heading"><strong>管理中心</strong><small>全站数据</small></div>
+            <nav class="admin-nav">
+              <button class="active" type="button" data-admin-panel="overview">工作台</button>
+              <button type="button" data-admin-panel="airdrops">空投项目</button>
+              <button type="button" data-admin-panel="wealth">稳定币理财</button>
+              <button type="button" data-admin-panel="toolbox">工具箱</button>
+              <button type="button" data-admin-panel="tutorials">教程</button>
+            </nav>
+            <div class="sidebar-note"><span>权限状态</span><strong>Cloudflare 已验证</strong></div>
+          </aside>
+
+          <div class="admin-content">
+            <section class="admin-panel active" data-panel="overview">
+              <div class="workspace-heading">
+                <div><p class="eyebrow">Control Center</p><h1>全站内容工作台</h1><p>在一个后台维护空投项目、理财活动、工具入口和教程内容。</p></div>
+              </div>
+              <div class="overview-grid" aria-label="全站数据概览">
+                <button type="button" data-jump-panel="airdrops"><span>空投项目</span><strong id="overviewAirdropCount">—</strong><small>项目状态和任务入口</small></button>
+                <button type="button" data-jump-panel="wealth"><span>理财活动</span><strong id="overviewWealthCount">0</strong><small>五家交易所稳定币收益</small></button>
+                <button type="button" data-jump-panel="toolbox"><span>工具入口</span><strong id="overviewToolCount">—</strong><small>必备入口与实战工具</small></button>
+                <button type="button" data-jump-panel="tutorials"><span>教程阶段</span><strong id="overviewTutorialCount">—</strong><small>新手学习路线</small></button>
+              </div>
+              <div class="overview-status">
+                <div><p class="eyebrow">Publishing</p><h2>修改保存后立即更新</h2><p>所有内容统一写入 Cloudflare KV，公开页无需重新部署。</p></div>
+                <a href="../../" target="_blank" rel="noreferrer">查看公开网站</a>
+              </div>
+            </section>
+
+            <section class="admin-panel" data-panel="airdrops">
+              <div class="workspace-heading">
+                <div><p class="eyebrow">Airdrop Tracker</p><h1>空投项目</h1><p>已融合 Sites 项目表，保留融资、机构、成本、建议上号、利润和任务链接。</p></div>
+                <div class="workspace-actions"><a class="button-link" href="../../airdrops/" target="_blank" rel="noreferrer">公开页</a><button class="primary-button" id="addAirdropButton" type="button">新增项目</button></div>
+              </div>
+              <div class="admin-summary three" aria-label="空投数据状态">
+                <div><span>项目总数</span><strong id="airdropAdminTotal">0</strong></div>
+                <div><span>进行中</span><strong id="airdropAdminActive">0</strong></div>
+                <div><span>已空投</span><strong id="airdropAdminDone">0</strong></div>
+              </div>
+              <div class="admin-filter-bar">
+                <label>搜索<input id="airdropAdminSearch" type="search" placeholder="项目、机构、类别" /></label>
+                <label>年份<select id="airdropAdminYear"><option value="2026">2026 重点项目</option><option value="2025">2025 历史项目</option></select></label>
+                <label>状态<select id="airdropAdminStatus"><option value="全部">全部</option><option value="进行中">进行中</option><option value="已空投">已空投</option></select></label>
+              </div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>项目</th><th>融资 / 机构</th><th>成本 / 上号</th><th>状态 / 利润</th><th>操作</th></tr></thead><tbody id="airdropAdminBody"></tbody></table><p class="admin-empty" id="airdropAdminEmpty" hidden>没有匹配的项目。</p></div>
+              <p class="save-status" id="airdropSaveStatus" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="admin-panel" data-panel="wealth">
+              <div class="workspace-heading">
+                <div><p class="eyebrow">Stablecoin Earn</p><h1>稳定币理财</h1><p>维护五家交易所的实时活动、发布状态和核验时间。</p></div>
+                <div class="workspace-actions"><button id="historyButton" type="button">版本记录</button><button class="primary-button" id="addCampaignButton" type="button">新增活动</button></div>
+              </div>
+              <div class="admin-summary" aria-label="理财数据状态"><div><span>活动总数</span><strong id="adminCampaignCount">0</strong></div><div><span>已发布</span><strong id="adminPublishedCount">0</strong></div><div><span>待核验草稿</span><strong id="adminDraftCount">0</strong></div><div><span>最后保存</span><strong id="adminUpdatedAt">—</strong></div></div>
+              <section class="monitor-panel" aria-labelledby="monitorTitle"><div class="monitor-heading"><div><p class="eyebrow">Official Source Monitor</p><h2 id="monitorTitle">官方页面监控</h2><p id="monitorSummary">正在读取监控状态…</p></div><button id="runMonitorButton" type="button">立即检查</button></div><div class="monitor-grid" id="monitorGrid"></div><p class="form-status" id="monitorStatus" role="status" aria-live="polite"></p></section>
+              <div class="admin-notice"><div><label for="noticeInput">公开风险提示</label><textarea id="noticeInput" rows="3" maxlength="800"></textarea></div><button id="saveNoticeButton" type="button">保存风险提示</button></div>
+              <div class="admin-table-toolbar"><label for="adminStatusFilter">显示范围</label><select id="adminStatusFilter"><option value="all">全部活动</option><option value="published">已发布</option><option value="draft">草稿</option><option value="stale">需要复核</option></select></div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>交易所 / 活动</th><th>年利率</th><th>到期时间</th><th>操作</th></tr></thead><tbody id="adminCampaignBody"></tbody></table><p class="admin-empty" id="adminEmpty" hidden>暂时没有活动，点击“新增活动”开始录入。</p></div>
+              <p class="save-status" id="saveStatus" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="admin-panel" data-panel="toolbox">
+              <div class="workspace-heading">
+                <div><p class="eyebrow">Tool Directory</p><h1>工具箱</h1><p>维护必备交易所、钱包和实战工具的名称、用途、邀请码与链接。</p></div>
+                <div class="workspace-actions"><a class="button-link" href="../../toolbox/" target="_blank" rel="noreferrer">公开页</a><button class="primary-button" id="addToolButton" type="button">新增工具</button></div>
+              </div>
+              <div class="admin-summary three"><div><span>必备入口</span><strong id="essentialAdminCount">0</strong></div><div><span>实战工具</span><strong id="toolAdminCount">0</strong></div><div><span>分类</span><strong id="toolGroupAdminCount">0</strong></div></div>
+              <div class="admin-filter-bar"><label>搜索<input id="toolAdminSearch" type="search" placeholder="名称、用途、分类" /></label><label>分类<select id="toolAdminGroup"><option value="all">全部分类</option></select></label></div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>工具</th><th>分类</th><th>用途</th><th>链接</th><th>操作</th></tr></thead><tbody id="toolAdminBody"></tbody></table><p class="admin-empty" id="toolAdminEmpty" hidden>没有匹配的工具。</p></div>
+              <p class="save-status" id="toolSaveStatus" role="status"></p>
+            </section>
+
+            <section class="admin-panel" data-panel="tutorials">
+              <div class="workspace-heading">
+                <div><p class="eyebrow">Learning Path</p><h1>教程</h1><p>维护教程阶段、学习目标、适合人群和后续详细教程链接。</p></div>
+                <div class="workspace-actions"><a class="button-link" href="../../courses/" target="_blank" rel="noreferrer">公开页</a><button class="primary-button" id="addTutorialButton" type="button">新增教程</button></div>
+              </div>
+              <div class="tutorial-admin-grid" id="tutorialAdminGrid"></div>
+              <p class="save-status" id="tutorialSaveStatus" role="status"></p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="airdropDialog"><form id="airdropForm"><div class="dialog-heading"><div><p class="eyebrow">Airdrop Project</p><h2 id="airdropDialogTitle">新增项目</h2></div><button class="icon-button" id="closeAirdropDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>年份<select id="airdropYear" required><option value="2026">2026</option><option value="2025">2025</option></select></label><label>状态<select id="airdropStatus" required><option value="进行中">进行中</option><option value="已空投">已空投</option></select></label>
+      <label>名称<input id="airdropName" maxlength="120" required /></label><label>类别<input id="airdropCategory" maxlength="500" /></label><label>融资<input id="airdropFunding" maxlength="500" /></label><label>投资机构<input id="airdropInvestors" maxlength="800" /></label><label>成本<input id="airdropCost" maxlength="500" /></label><label>建议上号<input id="airdropAccounts" maxlength="500" /></label><label>利润<input id="airdropProfit" maxlength="500" /></label><label>任务链接<input id="airdropLink" type="url" maxlength="1500" placeholder="https://" /></label><label class="full-width">备注<textarea id="airdropNote" rows="3" maxlength="1200"></textarea></label>
+    </div><div class="dialog-actions"><button id="cancelAirdropDialog" type="button">取消</button><button class="primary-button" type="submit">保存项目</button></div></form></dialog>
+
+    <dialog id="campaignDialog"><form id="campaignForm"><div class="dialog-heading"><div><p class="eyebrow">Campaign</p><h2 id="dialogTitle">新增活动</h2></div><button class="icon-button" id="closeDialogButton" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>交易所<select id="campaignExchange" required></select></label><label>币种或活动名称<input id="campaignActivity" maxlength="300" required /></label><label>活动说明<input id="campaignVenue" maxlength="300" required /></label><label>产品期限<select id="campaignProductType"><option value="Flexible">活期 Flexible</option><option value="Fixed">定期 Fixed</option><option value="">其他</option></select></label><label>用户资格<input id="campaignEligibility" maxlength="300" /></label><label>地区限制<input id="campaignRegion" maxlength="300" /></label><label>活动额度<input id="campaignCap" maxlength="300" /></label><label>年利率显示<input id="campaignApy" maxlength="40" required /></label><label>年利率数值<input id="campaignApyValue" type="number" min="0" max="100000" step="0.01" required /></label><label>开始时间<input id="campaignStartsAt" type="datetime-local" /></label><label>到期时间显示<input id="campaignEndTime" maxlength="300" required /></label><label>自动过期时间<input id="campaignEndAt" type="datetime-local" /></label><label>最后核验时间<input id="campaignLastVerifiedAt" type="datetime-local" required /></label><label class="full-width">官方活动链接<input id="campaignSourceUrl" type="url" maxlength="500" required /></label><label class="publish-option full-width"><input id="campaignPublished" type="checkbox" /><span><strong>发布到公开页面</strong><small>新活动建议先保存为草稿。</small></span></label>
+    </div><div class="dialog-actions"><button id="cancelDialogButton" type="button">取消</button><button class="primary-button" type="submit">保存活动</button></div></form></dialog>
+
+    <dialog id="toolDialog"><form id="toolForm"><div class="dialog-heading"><div><p class="eyebrow">Tool Record</p><h2 id="toolDialogTitle">新增工具</h2></div><button class="icon-button" id="closeToolDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>入口类型<select id="toolPlacement"><option value="directory">实战工具</option><option value="essential">必备入口</option></select></label><label id="toolGroupLabel">所属分类<select id="toolGroup"></select></label><label id="toolTypeLabel" hidden>类型标签<input id="toolType" maxlength="40" /></label><label>名称<input id="toolName" maxlength="120" required /></label><label class="full-width">用途说明<textarea id="toolDescription" rows="3" maxlength="600"></textarea></label><label id="toolCodeLabel" hidden>邀请码<input id="toolCode" maxlength="120" /></label><label>链接<input id="toolUrl" type="url" maxlength="1500" placeholder="https://" /></label>
+    </div><div class="dialog-actions"><button id="cancelToolDialog" type="button">取消</button><button class="primary-button" type="submit">保存工具</button></div></form></dialog>
+
+    <dialog id="tutorialDialog"><form id="tutorialForm"><div class="dialog-heading"><div><p class="eyebrow">Tutorial</p><h2 id="tutorialDialogTitle">新增教程</h2></div><button class="icon-button" id="closeTutorialDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>阶段<input id="tutorialStage" maxlength="20" placeholder="05" required /></label><label>标题<input id="tutorialTitle" maxlength="160" required /></label><label class="full-width">学习内容<textarea id="tutorialDescription" rows="3" maxlength="800"></textarea></label><label>适合人群<input id="tutorialAudience" maxlength="160" /></label><label>详细教程链接<input id="tutorialUrl" type="url" maxlength="1500" placeholder="https://" /></label>
+    </div><div class="dialog-actions"><button id="cancelTutorialDialog" type="button">取消</button><button class="primary-button" type="submit">保存教程</button></div></form></dialog>
+
+    <dialog id="historyDialog" class="history-dialog"><div class="history-content"><div class="dialog-heading"><div><p class="eyebrow">Revision History</p><h2>理财版本记录</h2></div><button class="icon-button" id="closeHistoryButton" type="button" aria-label="关闭">×</button></div><p class="history-help">每次保存前会自动备份上一版本，备份保留 60 天。</p><div id="historyList" class="history-list"></div><p class="form-status" id="historyStatus" role="status"></p></div></dialog>
+
+    <script src="./admin.js?v=20260711-unified-v1"></script>
+    <script src="./airdrop-admin.js?v=20260711-unified-v1"></script>
+    <script src="./content-admin.js?v=20260711-unified-v1"></script>
+  </body>
+</html>

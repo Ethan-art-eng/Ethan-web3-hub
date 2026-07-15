@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /wealth/admin/
+Disallow: /api/
+
+Sitemap: https://ethanweb3.com/sitemap.xml

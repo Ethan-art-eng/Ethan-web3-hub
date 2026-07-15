@@ -1,0 +1,105 @@
+import {
+  getFreshness,
+  getVisibleCampaigns,
+  renderAirdropRows,
+  renderCampaignRows,
+  renderExchangeFilters,
+  renderInitialDataScript,
+} from "../lib/public-render.js";
+
+const SECURITY_HEADERS = {
+  "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+  "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "DENY",
+};
+
+function secureResponse(response, pathname) {
+  const headers = new Headers(response.headers);
+  Object.entries(SECURITY_HEADERS).forEach(([name, value]) => headers.set(name, value));
+  if (pathname.startsWith("/api/") || pathname.startsWith("/wealth/admin/")) {
+    headers.set("cache-control", "no-store");
+  } else if (/\.(?:css|js|svg|png|webp|jpg|jpeg)$/i.test(pathname) || pathname.startsWith("/assets/")) {
+    headers.set("cache-control", "public, max-age=31536000, immutable");
+  } else if (headers.get("content-type")?.includes("text/html")) {
+    headers.set("cache-control", "public, max-age=0, must-revalidate");
+  }
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
+async function loadData(context, key, seedPath) {
+  const stored = context.env.CEX_YIELDS ? await context.env.CEX_YIELDS.get(key, "json") : null;
+  if (stored) return { ...stored, source: "kv" };
+  const response = await context.env.ASSETS.fetch(new URL(seedPath, context.request.url));
+  if (!response.ok) throw new Error(`Missing seed data: ${seedPath}`);
+  return { ...(await response.json()), source: "seed" };
+}
+
+function setContent(content, html = false) {
+  return { element(element) { element.setInnerContent(content, { html }); } };
+}
+
+function setFreshness(freshness) {
+  return {
+    element(element) {
+      element.setAttribute("class", `data-freshness${freshness.stale ? " stale" : ""}`);
+      element.setInnerContent(`<span>${freshness.stale ? "需要复核" : "数据已维护"}</span><strong>${freshness.label}</strong><small>${freshness.detail}</small>`, { html: true });
+    },
+  };
+}
+
+async function renderAirdropPage(context, response) {
+  const data = await loadData(context, "airdrop-projects", "/data/airdrop-projects.json");
+  const current = (data.projects || []).filter((item) => item.year === "2026");
+  const done = current.filter((item) => item.status === "已空投").length;
+  const freshness = getFreshness(data.updatedAt);
+  return new HTMLRewriter()
+    .on("#airdropTableBody", setContent(renderAirdropRows(data.projects || []), true))
+    .on("#summaryTotal", setContent(String(current.length)))
+    .on("#summaryActive", setContent(String(current.length - done)))
+    .on("#summaryDone", setContent(String(done)))
+    .on("#airdropDataFreshness", setFreshness(freshness))
+    .on("#airdropInitialData", setContent(renderInitialDataScript(data), true))
+    .transform(response);
+}
+
+async function renderWealthPage(context, response) {
+  const data = await loadData(context, "cex-yields", "/data/cex-yields.json");
+  const visible = getVisibleCampaigns(data);
+  const freshness = getFreshness(data.updatedAt);
+  const rows = renderCampaignRows(data);
+  return new HTMLRewriter()
+    .on("#exchangeFilters", setContent(renderExchangeFilters(data.exchanges), true))
+    .on("#campaignTableBody", setContent(rows || '<tr class="empty-row"><td colspan="3">暂无未到期且已核验的活动</td></tr>', true))
+    .on("#verifiedCount", setContent(String(visible.length)))
+    .on("#exchangeCount", setContent(String((data.exchanges || []).length || 5)))
+    .on("#updatedAt", setContent(freshness.label))
+    .on("#wealthDataFreshness", setFreshness(freshness))
+    .on("#campaignDisclaimer", setContent(data.notice || "数据仅供研究，不构成投资建议。"))
+    .on("#campaignSource", setContent("来源：交易所公开规则页 · 点击活动名称核验"))
+    .on("#campaignInitialData", setContent(renderInitialDataScript(data), true))
+    .transform(response);
+}
+
+export async function onRequest(context) {
+  const url = new URL(context.request.url);
+  if (url.hostname === "www.ethanweb3.com") {
+    url.hostname = "ethanweb3.com";
+    return secureResponse(Response.redirect(url.toString(), 301), url.pathname);
+  }
+  if (url.pathname === "/admin" || url.pathname === "/admin/") {
+    url.pathname = "/wealth/admin/";
+    return secureResponse(Response.redirect(url.toString(), 302), url.pathname);
+  }
+  const response = await context.next();
+  if (context.request.method !== "GET" || !response.headers.get("content-type")?.includes("text/html")) return secureResponse(response, url.pathname);
+  try {
+    if (url.pathname === "/airdrops/" || url.pathname === "/airdrops") return secureResponse(await renderAirdropPage(context, response), url.pathname);
+    if (url.pathname === "/wealth/" || url.pathname === "/wealth") return secureResponse(await renderWealthPage(context, response), url.pathname);
+  } catch (error) {
+    console.warn("Public page edge rendering failed; serving static fallback.", error);
+  }
+  return secureResponse(response, url.pathname);
+}

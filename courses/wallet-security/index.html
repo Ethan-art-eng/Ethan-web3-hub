@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>钱包安全 | 躺赚笔记教程</title>
+    <meta name="description" content="从助记词、授权管理、钓鱼识别到钱包分层，建立可执行的 Web3 钱包安全习惯。" />
+    <link rel="canonical" href="https://ethanweb3.com/courses/wallet-security/" />
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="钱包安全 | 躺赚笔记教程" />
+    <meta property="og:description" content="建立钱包分层、密钥保管、钓鱼识别和授权管理习惯。" />
+    <meta property="og:url" content="https://ethanweb3.com/courses/wallet-security/" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="stylesheet" href="../../styles.css?v=20260715-foundation-v1" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
+      <nav class="nav"><a href="../../airdrops/">空投项目</a><a class="active" href="../">教程</a><a href="../../toolbox/">工具箱</a><a href="../../wealth/">币圈理财</a></nav>
+      <div class="community-links" aria-label="加入我们"><span class="community-label">加入我们</span><a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../../assets/social/discord.svg" alt="" /></a><a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../../assets/social/telegram.svg" alt="" /></a><a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../../assets/social/youtube.svg" alt="" /></a></div>
+    </header>
+    <main class="tutorial-page">
+      <nav class="tutorial-breadcrumb" aria-label="面包屑"><a href="../">教程</a><span>/</span><strong>钱包安全</strong></nav>
+      <header class="tutorial-hero">
+        <p class="eyebrow">01 · Wallet Security</p>
+        <h1>钱包安全</h1>
+        <p>钱包不是普通账户。助记词、私钥或恶意授权一旦失控，通常没有客服可以撤回交易。安全的关键是分层、核验和限制损失范围。</p>
+      </header>
+      <div class="tutorial-layout">
+        <aside class="tutorial-toc"><strong>本章目录</strong><a href="#boundaries">建立边界</a><a href="#secrets">保管密钥</a><a href="#phishing">识别钓鱼</a><a href="#approvals">管理授权</a><a href="#checklist">操作清单</a></aside>
+        <article class="tutorial-article">
+          <section id="boundaries"><p class="tutorial-step">01</p><h2>先把钱包按用途分开</h2><p>不要让一个钱包同时承担长期资产、日常交互和高风险测试。建议至少分成三层：</p><ul><li><strong>冷钱包：</strong>保存长期资产，尽量不连接陌生网站。</li><li><strong>日常钱包：</strong>用于常见 DeFi 和可信应用，只保留必要资金。</li><li><strong>任务钱包：</strong>用于空投、测试网和新项目，余额控制在可承受损失内。</li></ul><div class="tutorial-callout"><strong>核心原则</strong><p>分层不是为了防止所有风险，而是让一次错误不会影响全部资产。</p></div></section>
+          <section id="secrets"><p class="tutorial-step">02</p><h2>助记词和私钥只离线保存</h2><p>助记词等同于钱包最高权限。不要截图、不要上传网盘、不要发送给任何“客服”，也不要输入到不明网页。纸质或金属备份应放在至少两个安全位置，并定期确认仍可读取。</p><p>创建新钱包后，先用小额资金完成一次收款、转账和恢复测试，再转入主要资产。</p></section>
+          <section id="phishing"><p class="tutorial-step">03</p><h2>连接前核对域名，签名前读懂请求</h2><p>从官方账号、官方文档或可靠书签进入网站。搜索广告、私信链接和群聊中的“紧急入口”都应视为高风险。签名时重点确认：</p><ul><li>连接的是哪个域名和网络；</li><li>请求是登录签名、代币授权还是资产转移；</li><li>授权额度是否无限，接收地址是否正确；</li><li>钱包弹窗是否出现与当前操作无关的内容。</li></ul></section>
+          <section id="approvals"><p class="tutorial-step">04</p><h2>定期清理代币授权</h2><p>完成一次性活动后，撤销不再使用的合约授权。授权撤销本身也需要 Gas，操作前仍要核对网络、代币和合约。可在工具箱中使用 Revoke.cash，并通过区块浏览器复核交易结果。</p></section>
+          <section id="checklist"><p class="tutorial-step">05</p><h2>每次交互前后的检查清单</h2><ol class="tutorial-checklist"><li>确认域名、网络和官方来源。</li><li>使用任务钱包，小额试操作。</li><li>逐项阅读签名或授权内容。</li><li>确认交易成功后再进行下一步。</li><li>活动结束后撤销不必要授权并记录结果。</li></ol></section>
+          <section class="tutorial-sources"><h2>延伸阅读</h2><a href="https://ethereum.org/security/" target="_blank" rel="noopener noreferrer">Ethereum 安全指南</a><a href="https://ethereum.org/wallets/" target="_blank" rel="noopener noreferrer">Ethereum 钱包说明</a></section>
+        </article>
+      </div>
+      <nav class="tutorial-next" aria-label="教程导航"><a class="disabled" href="../">返回教程目录</a><a href="../onchain-basics/"><span>下一篇</span><strong>链上基础 →</strong></a></nav>
+    </main>
+    <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
+    <script src="../../site-shell.js?v=20260715-search-v1"></script>
+  </body>
+</html>
