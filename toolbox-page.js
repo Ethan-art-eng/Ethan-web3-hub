@@ -16,6 +16,7 @@ let spotlightItems = [];
 let spotlightIndex = 0;
 let spotlightTimer = null;
 let activeToolGroup = "all";
+const recentToolsStorageKey = "ethan-toolbox-recent";
 
 const spotlightPriority = ["GMGN 网页版", "RootData", "DefiLlama", "Revoke.cash", "Orbiter", "Galxe", "Arkham"];
 
@@ -25,6 +26,58 @@ function normalizeToolText(value) {
 
 function updateSearchControls(query) {
   toolSearchClear.hidden = !query;
+}
+
+function getEssentialLogo(name) {
+  const normalizedName = normalizeToolText(name);
+  if (normalizedName.includes("币安") || normalizedName.includes("binance")) return "../assets/exchanges/binance.svg";
+  if (normalizedName.includes("欧易") || normalizedName.includes("okx")) return "../assets/exchanges/okx.svg";
+  return "../favicon.svg";
+}
+
+function readRecentTools() {
+  try {
+    const items = JSON.parse(window.localStorage.getItem(recentToolsStorageKey) || "[]");
+    return Array.isArray(items) ? items.filter((item) => item && item.name && item.url).slice(0, 6) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveRecentTool(item) {
+  if (!item?.name || !item?.url) return;
+  const recentItems = readRecentTools().filter((recentItem) => recentItem.url !== item.url);
+  recentItems.unshift(item);
+  try {
+    window.localStorage.setItem(recentToolsStorageKey, JSON.stringify(recentItems.slice(0, 6)));
+  } catch (error) {
+    console.warn("无法保存最近使用的工具。", error);
+  }
+}
+
+async function copyToolCode(button) {
+  const code = button.dataset.copyCode || "";
+  if (!code) return;
+  try {
+    await navigator.clipboard.writeText(code);
+  } catch (error) {
+    const input = document.createElement("textarea");
+    input.value = code;
+    input.setAttribute("readonly", "");
+    input.style.position = "fixed";
+    input.style.opacity = "0";
+    document.body.append(input);
+    input.select();
+    document.execCommand("copy");
+    input.remove();
+  }
+  const originalLabel = button.textContent;
+  button.textContent = "已复制";
+  button.classList.add("is-copied");
+  window.setTimeout(() => {
+    button.textContent = originalLabel;
+    button.classList.remove("is-copied");
+  }, 1400);
 }
 
 function renderSpotlight(animate = true) {
@@ -73,23 +126,31 @@ function setSpotlightFromGroups(groups) {
 
 function filterToolGroups(groups, query) {
   const keyword = normalizeToolText(query);
-  return groups
+  const sourceGroups = activeToolGroup === "recent"
+    ? [{ label: "快捷入口", title: "最近使用", items: readRecentTools() }]
+    : groups;
+  return sourceGroups
     .map((group, index) => {
       const items = Array.isArray(group.items) ? group.items : [];
-      const groupMatches = normalizeToolText(`${group.label} ${group.title}`).includes(keyword);
+      const groupLabel = normalizeToolText(group.label);
+      const groupTitle = normalizeToolText(group.title);
+      const groupMatches = groupLabel === keyword || groupTitle === keyword || groupTitle.startsWith(keyword);
       const visibleItems = !keyword || groupMatches
         ? items
         : items.filter((item) => normalizeToolText(`${item.name} ${item.description}`).includes(keyword));
       return { ...group, key: String(index), items: visibleItems };
     })
-    .filter((group) => (activeToolGroup === "all" || group.key === activeToolGroup) && group.items.length > 0);
+    .filter((group) => (activeToolGroup === "all" || activeToolGroup === "recent" || group.key === activeToolGroup) && group.items.length > 0);
 }
 
 function renderCategoryFilters(groups) {
   if (!toolCategoryFilters) return;
-  if (activeToolGroup !== "all" && !groups[Number(activeToolGroup)]) activeToolGroup = "all";
+  const recentTools = readRecentTools();
+  if (activeToolGroup === "recent" && !recentTools.length) activeToolGroup = "all";
+  if (activeToolGroup !== "all" && activeToolGroup !== "recent" && !groups[Number(activeToolGroup)]) activeToolGroup = "all";
   toolCategoryFilters.innerHTML = [
     `<button class="${activeToolGroup === "all" ? "active" : ""}" type="button" data-tool-group="all" aria-pressed="${activeToolGroup === "all"}">全部工具</button>`,
+    recentTools.length ? `<button class="${activeToolGroup === "recent" ? "active" : ""}" type="button" data-tool-group="recent" aria-pressed="${activeToolGroup === "recent"}">最近使用</button>` : "",
     ...groups.map((group, index) => `<button class="${activeToolGroup === String(index) ? "active" : ""}" type="button" data-tool-group="${index}" aria-pressed="${activeToolGroup === String(index)}">${escapeToolHtml(group.title)}</button>`),
   ].join("");
 }
@@ -108,7 +169,7 @@ function renderToolGroups(groups, query = "") {
     <section class="tool-category">
       <header><div><span>${escapeToolHtml(group.label)}</span><h3>${escapeToolHtml(group.title)}</h3></div><b>${group.items.length}</b></header>
       <div class="tool-list">${group.items.map((item) => item.url
-        ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${escapeToolHtml(item.name)}"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small><b aria-hidden="true">↗</b></a>`
+        ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${escapeToolHtml(item.name)}" data-tool-name="${escapeToolHtml(item.name)}" data-tool-description="${escapeToolHtml(item.description)}"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small><b aria-hidden="true">↗</b></a>`
         : `<div class="tool-static"><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small></div>`).join("")}</div>
     </section>`).join("");
   updateSearchControls(query);
@@ -135,11 +196,10 @@ function renderToolbox(data) {
   toolboxData = data;
   essentialGrid.innerHTML = data.essentials.map((item) => `
     <article class="essential-card">
-      <span>${escapeToolHtml(item.type || "入口")}</span>
+      <div class="essential-card-top"><img src="${getEssentialLogo(item.name)}" alt="" /><span>${escapeToolHtml(item.type || "入口")}</span></div>
       <h3>${escapeToolHtml(item.name)}</h3>
-      <p>${escapeToolHtml(item.description)}</p>
-      ${item.code ? `<dl><dt>邀请码</dt><dd>${escapeToolHtml(item.code)}</dd></dl>` : ""}
-      ${item.url ? `<a class="tool-action" href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer">链接直达</a>` : ""}
+      ${item.code ? `<div class="essential-code"><span>邀请码</span><strong>${escapeToolHtml(item.code)}</strong><button type="button" data-copy-code="${escapeToolHtml(item.code)}">复制</button></div>` : ""}
+      ${item.url ? `<a class="tool-action" href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer"><span>链接直达</span><b aria-hidden="true">↗</b></a>` : ""}
     </article>`).join("");
   renderCategoryFilters(data.toolGroups);
   setSpotlightFromGroups(data.toolGroups);
@@ -151,6 +211,22 @@ toolSearchClear.addEventListener("click", () => {
   toolSearch.value = "";
   toolSearch.focus();
   applyToolSearch();
+});
+
+essentialGrid.addEventListener("click", (event) => {
+  const copyButton = event.target.closest("button[data-copy-code]");
+  if (copyButton) copyToolCode(copyButton);
+});
+
+categoryGrid.addEventListener("click", (event) => {
+  const link = event.target.closest("a[data-tool-name]");
+  if (!link || !toolboxData) return;
+  saveRecentTool({
+    name: link.dataset.toolName,
+    description: link.dataset.toolDescription || "工具入口",
+    url: link.href,
+  });
+  renderCategoryFilters(toolboxData.toolGroups);
 });
 
 toolCategoryFilters?.addEventListener("click", (event) => {
