@@ -1,5 +1,6 @@
 import {
   getFreshness,
+  getAirdropDisplayStatus,
   getVisibleCampaigns,
   renderAirdropRows,
   renderCampaignRows,
@@ -53,13 +54,17 @@ function setFreshness(freshness) {
 async function renderAirdropPage(context, response) {
   const data = await loadData(context, "airdrop-projects", "/data/airdrop-projects.json");
   const current = (data.projects || []).filter((item) => item.year === "2026");
-  const done = current.filter((item) => item.status === "已空投").length;
+  const statusCounts = current.reduce((counts, item) => {
+    counts[getAirdropDisplayStatus(item)] += 1;
+    return counts;
+  }, { "进行中": 0, "已空投": 0, "待核验": 0 });
   const freshness = getFreshness(data.updatedAt);
   return new HTMLRewriter()
     .on("#airdropTableBody", setContent(renderAirdropRows(data.projects || []), true))
     .on("#summaryTotal", setContent(String(current.length)))
-    .on("#summaryActive", setContent(String(current.length - done)))
-    .on("#summaryDone", setContent(String(done)))
+    .on("#summaryActive", setContent(String(statusCounts["进行中"])))
+    .on("#summaryDone", setContent(String(statusCounts["已空投"])))
+    .on("#summaryPending", setContent(String(statusCounts["待核验"])))
     .on("#airdropDataFreshness", setFreshness(freshness))
     .on("#airdropInitialData", setContent(renderInitialDataScript(data), true))
     .transform(response);

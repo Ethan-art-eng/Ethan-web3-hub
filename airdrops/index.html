@@ -13,7 +13,7 @@
     <meta property="og:description" content="追踪 Web3 空投项目状态、融资、成本和任务入口。" />
     <meta property="og:url" content="https://ethanweb3.com/airdrops/" />
     <meta name="twitter:card" content="summary" />
-    <link rel="stylesheet" href="../styles.css?v=20260715-ui-v2" />
+    <link rel="stylesheet" href="../styles.css?v=20260716-airdrop-v4" />
   </head>
   <body>
     <header class="site-header">
@@ -38,53 +38,63 @@
     <main class="tracker-page">
       <section class="tracker-hero">
         <div>
-          <p class="eyebrow">Airdrop Tracker</p>
-          <h1>空投项目追踪表</h1>
-          <p>集中查看项目状态、融资、成本和任务入口，减少在多个信息源之间重复查找。</p>
+          <h1>空投项目</h1>
         </div>
       </section>
 
       <section class="tracker-summary" aria-label="空投统计">
-        <article class="summary-card">
-          <span>总项目</span>
-          <strong id="summaryTotal">14</strong>
-        </article>
-        <article class="summary-card active">
+        <button class="summary-card active selected" type="button" data-summary-status="进行中" aria-pressed="true">
           <span>进行中</span>
           <strong id="summaryActive">13</strong>
-        </article>
-        <article class="summary-card warning">
-          <span>已结束</span>
+          <small aria-hidden="true">›</small>
+        </button>
+        <button class="summary-card done" type="button" data-summary-status="已空投" aria-pressed="false">
+          <span>已空投</span>
           <strong id="summaryDone">1</strong>
-        </article>
-        <aside class="summary-note">
-          <strong>说明</strong>
-          <p>数据整理自 Ethan 社区 Google Sheet。这里只做信息追踪，不构成投资建议。</p>
+          <small aria-hidden="true">›</small>
+        </button>
+        <button class="summary-card pending" type="button" data-summary-status="待核验" aria-pressed="false">
+          <span>待核验</span>
+          <strong id="summaryPending">0</strong>
+          <small aria-hidden="true">›</small>
+        </button>
+      </section>
+
+      <section class="airdrop-table-section" aria-label="空投项目表格">
+        <div class="airdrop-table-meta">
+          <span class="airdrop-total"><b id="summaryTotal">14</b> 个项目</span>
           <div class="data-freshness" id="airdropDataFreshness">
             <span>数据状态</span>
             <strong>正在读取维护时间</strong>
             <small>页面会自动加载最新记录</small>
           </div>
-        </aside>
-      </section>
-
-      <section class="airdrop-table-section" aria-label="空投项目表格">
+        </div>
         <div class="airdrop-table-toolbar">
-          <div class="view-tabs" id="airdropViewTabs" role="tablist" aria-label="空投项目年份视图">
-            <button class="selected" type="button" data-view="2026">2026 重点项目</button>
-            <button type="button" data-view="2025">2025 历史项目</button>
-          </div>
           <div class="table-controls" aria-label="空投项目筛选">
             <label class="search-control">
               <span>搜索</span>
-              <input id="airdropSearch" type="search" placeholder="项目、机构、类别" autocomplete="off" />
+              <input id="airdropSearch" type="search" placeholder="搜索项目名称或关键词" autocomplete="off" />
             </label>
+            <div class="view-tabs" id="airdropViewTabs" role="tablist" aria-label="空投项目年份视图">
+              <button class="selected" type="button" data-view="2026">2026 重点项目</button>
+              <button type="button" data-view="2025">2025 历史项目</button>
+            </div>
             <label class="select-control">
               <span>状态</span>
               <select id="airdropStatusFilter">
                 <option value="全部">全部</option>
                 <option value="进行中">进行中</option>
                 <option value="已空投">已空投</option>
+                <option value="待核验">待核验</option>
+              </select>
+            </label>
+            <label class="select-control">
+              <span>排序</span>
+              <select id="airdropSort">
+                <option value="default">默认顺序</option>
+                <option value="name">名称 A–Z</option>
+                <option value="funding">融资从高到低</option>
+                <option value="status">状态排序</option>
               </select>
             </label>
           </div>
@@ -278,12 +288,28 @@
           </table>
         </div>
         <p class="table-disclaimer">本站仅提供信息参考，不构成任何投资建议，请自行研究。</p>
-              <div class="pagination" id="airdropPagination"></div>
+        <div class="pagination" id="airdropPagination"></div>
       </section>
     </main>
+
+    <dialog class="airdrop-detail-dialog" id="airdropDetailDialog" aria-labelledby="airdropDetailTitle">
+      <div class="airdrop-detail-shell">
+        <header class="airdrop-detail-head">
+          <div class="airdrop-detail-identity">
+            <div id="airdropDetailLogo" aria-hidden="true"></div>
+            <div>
+              <span class="detail-category" id="airdropDetailCategory">项目详情</span>
+              <h2 id="airdropDetailTitle">空投项目</h2>
+            </div>
+          </div>
+          <button class="detail-close" id="airdropDetailClose" type="button" aria-label="关闭项目详情">×</button>
+        </header>
+        <div class="airdrop-detail-content" id="airdropDetailContent"></div>
+      </div>
+    </dialog>
     <script id="airdropInitialData" type="application/json">{"updatedAt":"","projects":[]}</script>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
     <script src="../airdrops-data.js"></script>
-    <script src="../airdrops-page.js?v=20260715-edge-v1"></script>
+    <script src="../airdrops-page.js?v=20260716-airdrop-v4"></script>
   </body>
 </html>

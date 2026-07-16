@@ -13,9 +13,9 @@
     <meta property="og:url" content="https://ethanweb3.com/wealth/" />
     <meta name="twitter:card" content="summary" />
     <title>币圈理财 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260715-ui-v2" />
+    <link rel="stylesheet" href="../styles.css?v=20260716-wealth-v2" />
   </head>
-  <body>
+  <body class="wealth-page-v2">
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../courses/">教程</a><a href="../toolbox/">工具箱</a><a class="active" href="../wealth/">币圈理财</a></nav>
@@ -29,19 +29,9 @@
 
     <main class="page wealth-page">
       <section class="wealth-hero">
-        <div class="wealth-hero-copy">
-          <p class="eyebrow">CEX Stable Earn</p>
-          <h1>稳定币理财看板</h1>
-          <p>只追踪 Binance、OKX、Bybit、Bitget、Gate 的公开稳定币收益机会。先核验资格和到期时间，再比较年利率。</p>
-          <div class="wealth-hero-actions">
-            <a class="primary-action" href="#campaigns">查看可核验活动</a>
-            <a class="secondary-action" href="#how-to-read">查看核验方法</a>
-          </div>
-          <div class="wealth-inline-note">
-            <strong>核验重点</strong>
-            <span>额度、锁定期、地区资格与赎回规则都会改变实际结果。</span>
-          </div>
-        </div>
+        <p class="eyebrow">Stablecoin Earn</p>
+        <h1>币圈理财</h1>
+        <p>集中追踪币安、欧易、Bybit、Bitget、Gate 的公开稳定币活动。</p>
       </section>
 
       <section class="yield-summary" aria-label="数据概览">
@@ -50,19 +40,17 @@
         <article><span>最近核验</span><strong class="summary-date" id="updatedAt">—</strong><small>信息随平台规则变化</small></article>
       </section>
 
-      <div class="data-freshness wealth-data-freshness" id="wealthDataFreshness">
-        <span>数据状态</span>
-        <strong>正在读取维护时间</strong>
-        <small>页面会自动加载最新记录</small>
-      </div>
-
       <section class="campaign-section wealth-watchlist" id="campaigns" aria-label="交易所稳定币理财活动">
         <div class="section-heading wealth-section-heading">
           <div>
             <p class="eyebrow">Live Watchlist</p>
-            <h2>可核验活动</h2>
+            <h2>稳定币活动</h2>
           </div>
-          <p>页面默认隐藏已过期活动。选择交易所后，点击活动名称即可回到官方规则页核验你的账户是否符合资格。</p>
+          <div class="data-freshness wealth-data-freshness" id="wealthDataFreshness">
+            <span>数据状态</span>
+            <strong>正在读取维护时间</strong>
+            <small>页面会自动加载最新记录</small>
+          </div>
         </div>
 
         <div class="campaign-toolbar">
@@ -111,6 +99,6 @@
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script id="campaignInitialData" type="application/json">{"updatedAt":"","exchanges":[],"campaigns":[]}</script>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../wealth-page.js?v=20260715-edge-v1"></script>
+    <script src="../wealth-page.js?v=20260716-wealth-v2"></script>
   </body>
 </html>
