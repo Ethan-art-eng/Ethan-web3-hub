@@ -77,6 +77,7 @@ function getToolLogoHost(item) {
 }
 
 function getToolLogoSource(item) {
+  if (item?.logo) return { src: item.logo, stage: "local" };
   const host = getToolLogoHost(item);
   if (!host) return null;
   const key = host.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
@@ -219,6 +220,7 @@ function setSpotlightFromGroups(groups) {
 }
 
 function renderFeaturedTools(groups) {
+  if (!toolFeaturedGrid) return;
   const items = findPriorityItems(groups, featuredToolPriority, 3);
   toolFeaturedGrid.innerHTML = items.map((item, index) => {
     const meta = featuredToolMeta[item.name] || { badge: index === 0 ? "精选工具" : "值得关注", summary: item.description || "实战工具入口。" };
@@ -231,6 +233,7 @@ function renderFeaturedTools(groups) {
 }
 
 function renderCommonTools(groups) {
+  if (!toolCommonList) return;
   const items = findPriorityItems(groups, commonToolPriority, 5);
   toolCommonList.innerHTML = items.map((item) => `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-tool-link data-tool-name="${escapeToolHtml(item.name)}" data-tool-description="${escapeToolHtml(item.description)}" data-tool-group-label="${escapeToolHtml(item.groupLabel)}" data-tool-group-title="${escapeToolHtml(item.groupTitle)}">${renderToolLogo(item, "tool-logo-common")}<span><strong>${escapeToolHtml(item.name)}</strong><small>${escapeToolHtml(item.description)}</small></span><b aria-hidden="true">↗</b></a>`).join("");
 }
@@ -296,7 +299,7 @@ function renderDirectoryCard(item, favorites) {
       ${renderToolLogo(item, "tool-logo-card")}
       ${item.url ? `<button class="tool-favorite-button ${isFavorite ? "is-favorite" : ""}" type="button" data-favorite-url="${escapeToolHtml(item.url)}" aria-label="${isFavorite ? `取消收藏 ${name}` : `收藏 ${name}`}" aria-pressed="${isFavorite}"><span aria-hidden="true">${isFavorite ? "★" : "☆"}</span></button>` : ""}
     </div>
-    <div class="tool-directory-card-copy"><span class="tool-card-category">${escapeToolHtml(item.groupTitle)}</span><h3>${item.url ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-tool-link ${dataAttributes}>${name}</a>` : name}</h3><p>${description}</p></div>
+    <div class="tool-directory-card-copy"><span class="tool-card-category">${escapeToolHtml(item.groupTitle)}</span><h3>${item.url ? `<a href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-tool-link ${dataAttributes}>${name}</a>` : name}</h3><p>${description}</p>${item.code ? `<div class="tool-referral-code"><span>邀请码</span><strong>${escapeToolHtml(item.code)}</strong><button type="button" data-copy-code="${escapeToolHtml(item.code)}">复制</button></div>` : ""}</div>
     ${item.url ? `<a class="tool-card-open" href="${escapeToolHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-tool-link ${dataAttributes}><span>打开工具</span><b aria-hidden="true">↗</b></a>` : `<span class="tool-card-unavailable">暂无入口</span>`}
   </article>`;
 }
@@ -343,9 +346,17 @@ function applyToolFilters() {
 }
 
 function renderToolbox(data) {
-  const toolGroups = Array.isArray(data.toolGroups) ? data.toolGroups : [];
+  const essentialItems = (Array.isArray(data.essentials) ? data.essentials : []).map((item) => ({
+    ...item,
+    description: item.description || `${item.type || "入口"}链接直达`,
+    logo: getEssentialLogo(item.name),
+  }));
+  const toolGroups = [
+    ...(essentialItems.length ? [{ id: "group-essential", label: "直达", title: "交易所与钱包", items: essentialItems }] : []),
+    ...(Array.isArray(data.toolGroups) ? data.toolGroups : []),
+  ];
   toolboxData = { ...data, toolGroups };
-  if (Array.isArray(data.essentials) && data.essentials.length) {
+  if (essentialGrid && Array.isArray(data.essentials) && data.essentials.length) {
     essentialGrid.innerHTML = data.essentials.map((item) => `
       <article class="essential-card">
         <div class="essential-card-top"><img src="${getEssentialLogo(item.name)}" alt="" /><span>${escapeToolHtml(item.type || "入口")}</span></div>
@@ -357,7 +368,6 @@ function renderToolbox(data) {
   renderCategoryFilters(toolGroups);
   setSpotlightFromGroups(toolGroups);
   renderFeaturedTools(toolGroups);
-  renderCommonTools(toolGroups);
   renderToolGroups(toolGroups, toolSearch.value.trim());
 }
 
@@ -381,12 +391,17 @@ toolSearchClear.addEventListener("click", () => {
 });
 toolSort.addEventListener("change", applyToolFilters);
 
-essentialGrid.addEventListener("click", (event) => {
+essentialGrid?.addEventListener("click", (event) => {
   const copyButton = event.target.closest("button[data-copy-code]");
   if (copyButton) copyToolCode(copyButton);
 });
 
 document.addEventListener("click", (event) => {
+  const copyButton = event.target.closest("button[data-copy-code]");
+  if (copyButton) {
+    copyToolCode(copyButton);
+    return;
+  }
   const favoriteButton = event.target.closest("button[data-favorite-url]");
   if (favoriteButton && toolboxData) {
     const favorites = readFavoriteTools();

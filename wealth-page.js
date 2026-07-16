@@ -11,6 +11,12 @@ const verifiedCount = document.getElementById("verifiedCount");
 const exchangeCount = document.getElementById("exchangeCount");
 const updatedAt = document.getElementById("updatedAt");
 const wealthDataFreshness = document.getElementById("wealthDataFreshness");
+const campaignDetailDialog = document.getElementById("campaignDetailDialog");
+const campaignDetailClose = document.getElementById("campaignDetailClose");
+const campaignDetailLogo = document.getElementById("campaignDetailLogo");
+const campaignDetailExchange = document.getElementById("campaignDetailExchange");
+const campaignDetailTitle = document.getElementById("campaignDetailTitle");
+const campaignDetailContent = document.getElementById("campaignDetailContent");
 
 const state = {
   data: null,
@@ -86,6 +92,20 @@ function getRemainingLabel(item) {
   const remainingDays = Math.ceil((timestamp - Date.now()) / (24 * 60 * 60 * 1000));
   if (remainingDays <= 1) return "即将结束";
   return `剩余 ${remainingDays} 天`;
+}
+
+function formatCampaignEndTime(item) {
+  const timestamp = getDateTimestamp(item.endAt);
+  if (!Number.isFinite(timestamp)) return item.endTime || "长期";
+  return `${new Date(timestamp).toLocaleString("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })} 北京时间`;
 }
 
 function getActivityStatus(item) {
@@ -167,27 +187,44 @@ function renderCampaigns() {
       const meta = getActivityMeta(item.exchange);
       const status = getActivityStatus(item);
       const verification = getVerificationMeta(item);
-      const activityContent = `<span class="activity-title-line"><strong>${escapeHtml(item.activity)}</strong><span class="campaign-status ${status.className}">${status.label}</span></span><small>${escapeHtml(item.venue)}</small><small class="verification-label${verification.stale ? " stale" : ""}">${escapeHtml(verification.label)}</small>`;
-      const activity = item.sourceUrl
-        ? `<a class="activity-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noreferrer">${activityContent}</a>`
-        : `<span>${activityContent}</span>`;
+      const activityContent = `<span class="activity-title-line"><strong>${escapeHtml(item.activity)}</strong><span class="campaign-status ${status.className}">${status.label}</span></span><small>${escapeHtml(item.venue)}</small><small class="verification-label${verification.stale ? " stale" : ""}">${escapeHtml(verification.label)} · 查看详情</small>`;
 
       return `
-        <tr class="campaign-row">
+        <tr class="campaign-row" data-campaign-id="${escapeHtml(item.id)}" tabindex="0" aria-label="查看 ${escapeHtml(item.activity)} 详情">
           <td data-label="活动">
             <div class="activity-cell">
               ${renderExchangeLogo(meta)}
-              ${activity}
+              <span class="activity-link">${activityContent}</span>
             </div>
           </td>
           <td data-label="年利率"><strong class="apy-value">${escapeHtml(item.apy)}</strong></td>
-          <td data-label="到期时间（当地）">
-            <div class="deadline-cell"><strong>${escapeHtml(item.endTime)}</strong><small>${escapeHtml(getRemainingLabel(item))}</small></div>
+          <td data-label="到期时间">
+            <div class="deadline-cell"><strong>${escapeHtml(formatCampaignEndTime(item))}</strong><small>${escapeHtml(getRemainingLabel(item))}</small></div>
           </td>
         </tr>
       `;
     })
     .join("");
+}
+
+function openCampaignDetail(item) {
+  if (!item || !campaignDetailDialog) return;
+  const meta = getActivityMeta(item.exchange);
+  const verification = getVerificationMeta(item);
+  campaignDetailLogo.innerHTML = renderExchangeLogo(meta, "campaign-detail-logo");
+  campaignDetailExchange.textContent = `${meta.shortName || meta.name} · ${item.venue || "理财活动"}`;
+  campaignDetailTitle.textContent = item.activity;
+  campaignDetailContent.innerHTML = `
+    <div class="campaign-detail-rate"><span>当前年利率</span><strong>${escapeHtml(item.apy)}</strong><small>${escapeHtml(verification.label)}</small></div>
+    <dl class="campaign-detail-grid">
+      <div><dt>到期时间</dt><dd>${escapeHtml(formatCampaignEndTime(item))}</dd></div>
+      <div><dt>产品期限</dt><dd>${escapeHtml(item.productType || "以活动页面为准")}</dd></div>
+      <div><dt>参与资格</dt><dd>${escapeHtml(item.eligibility || "以账户页面为准")}</dd></div>
+      <div><dt>参考额度</dt><dd>${escapeHtml(item.cap || "以账户页面为准")}</dd></div>
+    </dl>
+    <div class="campaign-detail-note"><strong>参与前核验</strong><p>利率、额度、地区资格和产品可用性可能变化，请以交易所账户内的官方页面为准。</p></div>
+    ${item.sourceUrl ? `<a class="campaign-source-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">打开官方活动页 <span aria-hidden="true">↗</span></a>` : ""}`;
+  if (!campaignDetailDialog.open) campaignDetailDialog.showModal();
 }
 
 function renderSummary(data) {
@@ -215,6 +252,25 @@ exchangeFilters.addEventListener("click", (event) => {
   if (!button) return;
   state.exchange = button.dataset.exchange || "all";
   render();
+});
+
+campaignBody.addEventListener("click", (event) => {
+  const row = event.target.closest("[data-campaign-id]");
+  if (!row) return;
+  openCampaignDetail(state.data?.campaigns?.find((item) => item.id === row.dataset.campaignId));
+});
+
+campaignBody.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  const row = event.target.closest("[data-campaign-id]");
+  if (!row) return;
+  event.preventDefault();
+  openCampaignDetail(state.data?.campaigns?.find((item) => item.id === row.dataset.campaignId));
+});
+
+campaignDetailClose?.addEventListener("click", () => campaignDetailDialog.close());
+campaignDetailDialog?.addEventListener("click", (event) => {
+  if (event.target === campaignDetailDialog) campaignDetailDialog.close();
 });
 
 campaignSearch.addEventListener("input", (event) => {

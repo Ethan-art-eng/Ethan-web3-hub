@@ -1,45 +1,55 @@
-# 链上笔记 Web3 Hub
+# 躺赚笔记 Web3 Hub
 
-这是一个 Web3 内容导航网站。当前主站仍可静态托管，币圈理财数据已经预留 Cloudflare Pages Functions 动态接口，用于整理：
+躺赚笔记是一个面向 Ethan 社区的 Web3 内容导航站，包含空投项目、教程、工具箱和币圈理财四个公开板块。
 
-- 理财项目
-- 空投项目
-- 教程路线
-- 教程文章
-- 风险清单
+## 日常维护
 
-## 文件说明
+访问 `https://ethanweb3.com/admin/`，通过 Cloudflare Access 验证后，可以直接维护：
 
-- `index.html`：页面结构。
-- `styles.css`：视觉样式。
-- `content.js`：项目、空投和教程数据。以后主要更新这里。
-- `script.js`：筛选、搜索和视觉网络图。
-- `data/cex-yields.json`：交易所稳定币理财默认数据。
-- `wealth-page.js`：币圈理财页动态渲染逻辑。
-- `functions/api/cex-yields.js`：Cloudflare Pages 动态 API，可读取 KV 数据。
-- `DYNAMIC.md`：Cloudflare Pages + KV 部署说明。
+- 空投项目：新增、编辑、删除项目及任务入口。
+- 币圈理财：维护活动、年利率、到期时间、发布状态和官方来源。
+- 工具箱：新增工具、分类、用途、Logo、邀请码和链接。
+- 教程目录：新增或调整教程阶段、标题、说明和详情链接。
 
-## 更新内容
+这些内容保存到 Cloudflare KV，公开页会立即读取新数据，不需要重新部署网站。
 
-新增项目：编辑 `content.js` 里的 `projects`。
+## 需要改文件的内容
 
-新增空投：编辑 `airdrops`。
+- 首页文案与四个板块入口：`index.html`
+- 教程正文：`courses/*/index.html`
+- 全站统一视觉与手机布局：`ui-system.css`
+- 公共搜索、顶部导航和手机菜单：`site-shell.js`
+- 默认数据：`data/`
 
-新增教程路线：编辑 `courses`。
+页面专属脚本：
 
-新增教程：编辑 `tutorials`。
+- 空投项目：`airdrops-page.js`
+- 教程目录与学习进度：`courses-page.js`、`course-detail.js`
+- 工具箱搜索、收藏、分类和推荐：`toolbox-page.js`
+- 币圈理财筛选、时间状态和详情：`wealth-page.js`
 
-更新交易所理财数据：先编辑 `data/cex-yields.json`。迁移到 Cloudflare Pages + KV 后，可以通过 `/api/cex-yields` 更新，不需要重新提交网页代码。
+旧版样式集中在 `styles.css`，新调整优先写入 `ui-system.css`，不要继续把新规则分散到多个页面。
+
+## 动态数据
+
+- 空投数据：`/api/airdrop-projects`
+- 工具与教程目录：`/api/site-content`
+- 币圈理财：`/api/cex-yields`
+
+接口优先读取 Cloudflare KV；KV 尚无数据时回退到 `data/` 中的默认 JSON。详细部署和权限说明见 `DYNAMIC.md`。
+
+## 发布流程
+
+1. 本地检查首页和四个公开板块。
+2. 检查手机宽度下没有横向溢出。
+3. 提交并推送到 GitHub `main`。
+4. Cloudflare Pages 自动部署。
+5. 部署后检查 `https://ethanweb3.com/` 和 `https://ethanweb3.com/admin/`。
 
 ## 内容原则
 
-所有内容都应该记录：
-
-- 参与规则
-- 收益来源
-- 资金路径
-- 退出条件
-- 主要风险
-- 信息来源
-
-不要写成收益承诺或投资建议。
+- 重要信息保留官方来源。
+- 金融活动记录核验时间和到期时间。
+- 过期活动自动从公开页隐藏。
+- 第三方工具和任务入口需要提示授权、钓鱼和资金风险。
+- 内容仅用于研究和教育，不构成投资建议。

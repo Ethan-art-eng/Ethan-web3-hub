@@ -14,8 +14,9 @@
     <meta name="twitter:card" content="summary" />
     <title>教程 | 躺赚笔记</title>
     <link rel="stylesheet" href="../styles.css?v=20260716-courses-v2" />
+    <link rel="stylesheet" href="../ui-system.css?v=20260716-ui4" />
   </head>
-  <body class="courses-page-v2">
+  <body class="ui-v3 courses-page-v2">
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a class="active" href="../courses/">教程</a><a href="../toolbox/">工具箱</a><a href="../wealth/">币圈理财</a></nav>
@@ -28,50 +29,35 @@
     </header>
 
     <main class="page courses-page">
-      <section class="course-hero">
-        <p class="eyebrow">Tutorials</p>
-        <h1>教程</h1>
-        <p>按顺序建立安全操作、链上交互、DeFi 使用和项目判断能力。</p>
-      </section>
-
-      <section class="course-route-summary" aria-label="教程路线概览">
-        <div><span>01</span><strong>安全</strong><small>保护钱包与账户</small></div>
-        <div><span>02</span><strong>操作</strong><small>理解链上交易</small></div>
-        <div><span>03</span><strong>应用</strong><small>进入 DeFi 场景</small></div>
-        <div><span>04</span><strong>判断</strong><small>建立研究框架</small></div>
+      <section class="workspace-head course-workspace-head">
+        <div>
+          <h1>教程</h1>
+          <p>从钱包安全开始，逐步建立链上操作、DeFi 使用和项目判断能力。</p>
+        </div>
+        <div class="course-progress-card" aria-label="学习进度">
+          <div><span>学习进度</span><strong id="courseProgressText">0 / 4</strong></div>
+          <div class="course-progress-track" role="progressbar" aria-label="教程完成进度" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i id="courseProgressBar"></i></div>
+          <button id="courseProgressReset" type="button" hidden>重置进度</button>
+        </div>
       </section>
 
       <section class="course-directory" aria-labelledby="courseDirectoryTitle">
         <header class="course-directory-heading">
           <div>
-            <p class="eyebrow">Learning Path</p>
             <h2 id="courseDirectoryTitle">学习路线</h2>
           </div>
-          <p>建议从第 1 课开始，完成基础安全后再进行资金交互。</p>
+          <p>建议按顺序学习，也可以直接打开需要的主题。</p>
         </header>
         <div class="learning-path" id="learningPath" aria-label="Web3 教程路线">
-          <article><a class="course-row" href="./wallet-security/"><span class="course-step">01</span><div class="course-copy"><small>基础安全</small><h3>钱包安全</h3><p>助记词、私钥、硬件钱包、授权撤销、钓鱼识别。</p></div><em>适合完全新手</em><b>开始学习 <i aria-hidden="true">→</i></b></a></article>
-          <article><a class="course-row" href="./onchain-basics/"><span class="course-step">02</span><div class="course-copy"><small>链上操作</small><h3>链上基础</h3><p>Gas、区块浏览器、跨链桥、合约交互和交易确认。</p></div><em>建立操作能力</em><b>开始学习 <i aria-hidden="true">→</i></b></a></article>
-          <article><a class="course-row" href="./defi-basics/"><span class="course-step">03</span><div class="course-copy"><small>DeFi 应用</small><h3>DeFi 入门</h3><p>DEX、借贷、质押、流动性池、收益来源和退出。</p></div><em>理解资金流向</em><b>开始学习 <i aria-hidden="true">→</i></b></a></article>
-          <article><a class="course-row" href="./project-research/"><span class="course-step">04</span><div class="course-copy"><small>研究判断</small><h3>项目研究</h3><p>代币经济、融资、团队、审计、社区和风险复盘。</p></div><em>形成判断框架</em><b>开始学习 <i aria-hidden="true">→</i></b></a></article>
-        </div>
-      </section>
-
-      <section class="course-standard">
-        <div>
-          <p class="eyebrow">Tutorial Standard</p>
-          <h2>每节课只解决一个核心问题</h2>
-        </div>
-        <div class="check-grid">
-          <span>适合谁</span>
-          <span>学完能做什么</span>
-          <span>常见风险</span>
-          <span>推荐工具</span>
+          <article class="course-row" data-course-id="tutorial-01"><span class="course-step">01</span><div class="course-copy"><small>基础安全</small><h3>钱包安全</h3><p>助记词、私钥、硬件钱包、授权撤销、钓鱼识别。</p></div><em>适合完全新手</em><a class="course-open" href="./wallet-security/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
+          <article class="course-row" data-course-id="tutorial-02"><span class="course-step">02</span><div class="course-copy"><small>链上操作</small><h3>链上基础</h3><p>Gas、区块浏览器、跨链桥、合约交互和交易确认。</p></div><em>建立操作能力</em><a class="course-open" href="./onchain-basics/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
+          <article class="course-row" data-course-id="tutorial-03"><span class="course-step">03</span><div class="course-copy"><small>DeFi 应用</small><h3>DeFi 入门</h3><p>DEX、借贷、质押、流动性池、收益来源和退出。</p></div><em>理解资金流向</em><a class="course-open" href="./defi-basics/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
+          <article class="course-row" data-course-id="tutorial-04"><span class="course-step">04</span><div class="course-copy"><small>研究判断</small><h3>项目研究</h3><p>代币经济、融资、团队、审计、社区和风险复盘。</p></div><em>形成判断框架</em><a class="course-open" href="./project-research/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
         </div>
       </section>
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../courses-page.js?v=20260716-courses-v2"></script>
+    <script src="../courses-page.js?v=20260716-courses-v3"></script>
   </body>
 </html>
