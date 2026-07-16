@@ -42,9 +42,9 @@
 
 1. 本地检查首页和四个公开板块。
 2. 检查手机宽度下没有横向溢出。
-3. 提交并推送到 GitHub `main`。
-4. Cloudflare Pages 自动部署。
-5. 部署后检查 `https://ethanweb3.com/` 和 `https://ethanweb3.com/admin/`。
+3. 提交并推送到 GitHub `main`，保留版本记录。
+4. 使用 Cloudflare Pages 直接发布已提交的版本；当前项目不会仅因 GitHub 推送而自动部署。
+5. 部署后检查 `https://ethanweb3.com/`、四个公开板块和 `https://ethanweb3.com/admin/`。
 
 ## 内容原则
 
