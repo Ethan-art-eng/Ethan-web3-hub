@@ -80,16 +80,16 @@ button { font: inherit; }
 .signal-chart { position: relative; min-height: 380px; overflow: hidden; background: #f8fafc; }
 #signalCanvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cross-labels { position: absolute; inset: 0; pointer-events: none; }
-.cross-label { position: absolute; min-width: 126px; padding: 10px 12px; border: 1px solid #cbd5e1; background: rgba(255, 255, 255, .94); box-shadow: 0 8px 24px rgba(30, 48, 76, .08); transition: opacity .25s ease, transform .25s ease; }
+.cross-label { position: absolute; display: flex; align-items: center; gap: 9px; min-width: 90px; min-height: 42px; padding: 8px 11px; border: 1px solid #cbd5e1; background: rgba(255, 255, 255, .94); box-shadow: 0 8px 24px rgba(30, 48, 76, .08); transition: opacity .25s ease, transform .25s ease; }
 .cross-label:nth-child(1) { top: 16%; left: 8%; }
 .cross-label:nth-child(2) { top: 19%; right: 8%; }
 .cross-label:nth-child(3) { bottom: 16%; left: 22%; }
 .cross-label:nth-child(4) { right: 16%; bottom: 12%; }
-.cross-label small { display: block; color: #718096; font: 700 8px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
-.cross-label strong { display: block; margin-top: 6px; color: #152033; font-size: 13px; }
-.cross-label i { display: block; width: 28px; height: 2px; margin-top: 8px; background: var(--home-blue); }
-.cross-label:nth-child(2) i, .cross-label:nth-child(3) i { background: var(--home-green); }
-.cross-label:nth-child(4) i { background: var(--home-amber); }
+.cross-label > img { width: 24px; height: 24px; object-fit: contain; }
+.cross-label strong { color: #152033; font: 800 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+.cross-label-group { min-width: 190px; }
+.asset-stack { display: flex; align-items: center; padding-left: 6px; }
+.asset-stack img { width: 24px; height: 24px; margin-left: -6px; padding: 3px; border: 1px solid #d8e0eb; border-radius: 50%; background: #fff; object-fit: contain; }
 .signal-board[data-view="crypto"] .cross-label[data-series="equity"],
 .signal-board[data-view="equity"] .cross-label[data-series="crypto"] { opacity: .15; transform: translateY(5px); }
 .chart-status { position: absolute; right: 18px; bottom: 12px; display: flex; gap: 16px; color: #718096; font: 700 8px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }

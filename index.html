@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://ethanweb3.com/" />
     <meta name="twitter:card" content="summary" />
     <title>躺赚笔记 | 捕捉前沿信息</title>
-    <link rel="stylesheet" href="./home-intelligence.css?v=20260716-v1" />
+    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v2" />
   </head>
   <body class="intelligence-home">
     <div class="intel-shell">
@@ -82,10 +82,23 @@
           <div class="signal-chart">
             <canvas id="signalCanvas" aria-hidden="true"></canvas>
             <div class="cross-labels">
-              <div class="cross-label" data-series="crypto"><small>CRYPTO / LIQUIDITY</small><strong>BTC 市场核心</strong><i></i></div>
-              <div class="cross-label" data-series="equity"><small>AI / COMPUTE</small><strong>NVDA 算力链</strong><i></i></div>
-              <div class="cross-label" data-series="crypto"><small>ONCHAIN / ACTIVITY</small><strong>ETH 生态活动</strong><i></i></div>
-              <div class="cross-label" data-series="equity"><small>MEGA CAP / AI</small><strong>美股科技矩阵</strong><i></i></div>
+              <div class="cross-label" data-series="crypto">
+                <img src="./assets/markets/btc.svg" alt="" /><strong>BTC</strong>
+              </div>
+              <div class="cross-label" data-series="equity">
+                <img src="./assets/markets/nvda.svg" alt="" /><strong>NVDA</strong>
+              </div>
+              <div class="cross-label" data-series="crypto">
+                <img src="./assets/markets/eth.svg" alt="" /><strong>ETH</strong>
+              </div>
+              <div class="cross-label cross-label-group" data-series="equity">
+                <span class="asset-stack" aria-hidden="true">
+                  <img src="./assets/markets/aapl.svg" alt="" />
+                  <img src="./assets/markets/googl.svg" alt="" />
+                  <img src="./assets/markets/meta.svg" alt="" />
+                </span>
+                <strong>AAPL · GOOGL · META</strong>
+              </div>
             </div>
             <div class="chart-status"><span>INFORMATION RELATIONSHIPS</span><span>LOCAL TIME <b data-last-sync>--:--:--</b></span></div>
           </div>
