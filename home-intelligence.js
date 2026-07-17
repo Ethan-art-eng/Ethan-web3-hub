@@ -233,22 +233,68 @@ if (canvas) {
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   };
 
-  const waveY = (x, baseline, amplitude, frequency, phase) =>
-    baseline + Math.sin(x * frequency + phase) * amplitude + Math.sin(x * frequency * 0.43 - phase * 0.7) * amplitude * 0.24;
+  const bezierPoint = (start, controlA, controlB, end, progress) => {
+    const inverse = 1 - progress;
+    return {
+      x: inverse ** 3 * start.x + 3 * inverse ** 2 * progress * controlA.x + 3 * inverse * progress ** 2 * controlB.x + progress ** 3 * end.x,
+      y: inverse ** 3 * start.y + 3 * inverse ** 2 * progress * controlA.y + 3 * inverse * progress ** 2 * controlB.y + progress ** 3 * end.y,
+    };
+  };
 
-  const drawWave = ({ baseline, amplitude, frequency, phase, color }) => {
+  const drawFlowPath = (start, controlA, controlB, end, color, alpha = 0.34, widthValue = 1) => {
     context.beginPath();
-    for (let x = -8; x <= width + 8; x += 6) {
-      const y = waveY(x, baseline, amplitude, frequency, phase);
-      if (x === -8) context.moveTo(x, y);
-      else context.lineTo(x, y);
-    }
-    context.strokeStyle = color;
-    context.lineWidth = 2.1;
-    context.shadowColor = color;
-    context.shadowBlur = 6;
+    context.moveTo(start.x, start.y);
+    context.bezierCurveTo(controlA.x, controlA.y, controlB.x, controlB.y, end.x, end.y);
+    context.strokeStyle = color.replace("1)", `${alpha})`);
+    context.lineWidth = widthValue;
     context.stroke();
-    context.shadowBlur = 0;
+  };
+
+  const drawFlowField = (time) => {
+    const hasCampaign = visual?.classList.contains("has-campaign");
+    const core = { x: width * (hasCampaign ? 0.34 : 0.5), y: height * (hasCampaign ? 0.5 : 0.5) };
+    const sources = [
+      { start: { x: -30, y: height * 0.35 }, bend: -54, color: "rgba(11, 92, 255, 1)", phase: 0.05 },
+      { start: { x: width * 0.64, y: -24 }, bend: 78, color: "rgba(8, 169, 129, 1)", phase: 0.31 },
+      { start: { x: width * 0.68, y: height + 28 }, bend: -74, color: "rgba(245, 158, 11, 1)", phase: 0.59 },
+      { start: { x: width * 0.08, y: height + 18 }, bend: 52, color: "rgba(12, 159, 190, 1)", phase: 0.82 },
+    ];
+
+    sources.forEach((source, sourceIndex) => {
+      for (let strand = 0; strand < 7; strand += 1) {
+        const offset = (strand - 3) * 7;
+        const start = { x: source.start.x, y: source.start.y + offset };
+        const controlA = {
+          x: start.x + (core.x - start.x) * 0.42,
+          y: start.y + source.bend + Math.sin(time * 0.00045 + strand) * 8,
+        };
+        const controlB = {
+          x: core.x - (sourceIndex === 0 ? 90 : 62),
+          y: core.y + offset * 0.35,
+        };
+        drawFlowPath(start, controlA, controlB, core, source.color, 0.08 + (strand === 3 ? 0.23 : 0.05), strand === 3 ? 1.25 : 0.7);
+
+        const progress = reduceMotion
+          ? (strand + 1) / 8
+          : (time * (0.000045 + sourceIndex * 0.000004) + strand * 0.14 + source.phase) % 1;
+        const particle = bezierPoint(start, controlA, controlB, core, progress);
+        context.beginPath();
+        context.arc(particle.x, particle.y, strand === 3 ? 3 : 1.7, 0, Math.PI * 2);
+        context.fillStyle = source.color;
+        context.globalAlpha = 0.48 + (strand === 3 ? 0.34 : 0);
+        context.fill();
+        context.globalAlpha = 1;
+      }
+    });
+
+    const outputEnd = { x: width + 35, y: height * 0.48 };
+    for (let strand = 0; strand < 8; strand += 1) {
+      const offset = (strand - 3.5) * 8;
+      const controlA = { x: core.x + 80, y: core.y + offset * 0.25 };
+      const controlB = { x: width * 0.78, y: outputEnd.y + offset + Math.sin(time * 0.0004 + strand) * 6 };
+      const color = strand % 3 === 0 ? "rgba(8, 169, 129, 1)" : strand % 3 === 1 ? "rgba(11, 92, 255, 1)" : "rgba(245, 158, 11, 1)";
+      drawFlowPath(core, controlA, controlB, { x: outputEnd.x, y: outputEnd.y + offset }, color, strand === 4 ? 0.24 : 0.07, strand === 4 ? 1.25 : 0.7);
+    }
   };
 
   const drawNetwork = (time) => {
@@ -258,24 +304,11 @@ if (canvas) {
       ...seed,
     }));
 
-    context.lineWidth = 0.8;
-    points.forEach((point, index) => {
-      const partner = points[(index * 7 + 5) % points.length];
-      const distance = Math.hypot(point.x - partner.x, point.y - partner.y);
-      if (distance < Math.max(width, height) * 0.34) {
-        context.beginPath();
-        context.moveTo(point.x, point.y);
-        context.lineTo(partner.x, partner.y);
-        context.strokeStyle = "rgba(76, 126, 218, 0.16)";
-        context.stroke();
-      }
-    });
-
     points.forEach((point, index) => {
       const pulse = 0.55 + Math.sin(time * 0.002 + point.phase) * 0.3;
       context.beginPath();
       context.arc(point.x, point.y, point.radius + pulse, 0, Math.PI * 2);
-      context.fillStyle = index % 5 === 0 ? "rgba(8, 169, 129, 0.72)" : "rgba(11, 92, 255, 0.58)";
+      context.fillStyle = index % 5 === 0 ? "rgba(8, 169, 129, 0.5)" : "rgba(11, 92, 255, 0.38)";
       context.fill();
     });
   };
@@ -294,38 +327,13 @@ if (canvas) {
     context.fillRect(scannerX, 0, 1, height);
   };
 
-  const drawParticles = (time, waves) => {
-    waves.forEach((wave, waveIndex) => {
-      for (let index = 0; index < 4; index += 1) {
-        const progress = reduceMotion
-          ? (index + 1) / 5
-          : ((time * (0.000035 + waveIndex * 0.000004) + index * 0.27 + waveIndex * 0.13) % 1);
-        const x = progress * width;
-        const y = waveY(x, wave.baseline, wave.amplitude, wave.frequency, wave.phase);
-        context.beginPath();
-        context.arc(x, y, index === 0 ? 3.2 : 2, 0, Math.PI * 2);
-        context.fillStyle = wave.color;
-        context.shadowColor = wave.color;
-        context.shadowBlur = 10;
-        context.fill();
-        context.shadowBlur = 0;
-      }
-    });
-  };
-
   const render = (time) => {
     context.clearRect(0, 0, width, height);
     const elapsed = reduceMotion ? 2800 : time - startTime;
-    const waves = [
-      { baseline: height * 0.36, amplitude: Math.max(20, height * 0.07), frequency: 0.009, phase: elapsed * 0.00032, color: colors.blue },
-      { baseline: height * 0.57, amplitude: Math.max(18, height * 0.06), frequency: 0.008, phase: elapsed * 0.00025 + 1.8, color: colors.green },
-      { baseline: height * 0.73, amplitude: Math.max(14, height * 0.045), frequency: 0.01, phase: elapsed * 0.00021 + 3.3, color: colors.amber },
-    ];
 
     drawScanner(elapsed);
     drawNetwork(elapsed);
-    waves.forEach(drawWave);
-    drawParticles(elapsed, waves);
+    drawFlowField(elapsed);
 
     if (!reduceMotion) animationFrame = window.requestAnimationFrame(render);
   };
@@ -349,3 +357,4 @@ if (canvas) {
     }
   });
 }
+
