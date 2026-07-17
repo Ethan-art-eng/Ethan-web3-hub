@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://ethanweb3.com/" />
     <meta name="twitter:card" content="summary" />
     <title>躺赚笔记 | 捕捉前沿信息</title>
-    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v4" />
+    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v5" />
   </head>
   <body class="intelligence-home">
     <div class="intel-shell">
@@ -68,62 +68,39 @@
           </div>
         </section>
 
-        <section class="signal-board intelligence-center" aria-label="站内实时情报中枢">
+        <section class="signal-board visual-stage" aria-label="AI 与跨市场动态视觉">
           <header class="signal-board-head">
-            <span><strong>AI 情报中枢</strong><i></i>自动更新</span>
-            <div class="board-controls" role="group" aria-label="情报分类">
-              <button class="active" type="button" data-event-filter="all" aria-pressed="true">全部</button>
-              <button type="button" data-event-filter="airdrop" aria-pressed="false">空投</button>
-              <button type="button" data-event-filter="wealth" aria-pressed="false">理财</button>
-              <button type="button" data-event-filter="toolbox" aria-pressed="false">工具</button>
-              <button type="button" data-event-filter="courses" aria-pressed="false">教程</button>
-            </div>
+            <span>AI × CROSS-MARKET SIGNAL FIELD</span>
+            <div class="visual-live"><i></i><strong>GENERATIVE VISUAL</strong></div>
           </header>
 
-          <div class="center-overview">
-            <article class="daily-briefing">
-              <header><span class="briefing-ai">AI</span><strong>今日情报</strong><small>基于站内数据生成</small></header>
-              <p data-ai-briefing>正在汇总站内项目、活动、工具与教程数据。</p>
-              <footer><span class="verified-source">来源已核验</span><span>最后同步 <b data-last-sync>--:--:--</b></span></footer>
-            </article>
+          <div class="signal-visual">
+            <canvas id="signalCanvas" aria-hidden="true"></canvas>
 
-            <nav class="section-metrics" aria-label="站内板块数据">
-              <a class="metric-card metric-airdrop" href="./airdrops/">
-                <span class="metric-icon" aria-hidden="true">✦</span><span><small>空投项目</small><strong data-node-value="airdrop">--</strong><em data-node-detail="airdrop">正在同步</em></span><b aria-hidden="true">→</b>
-              </a>
-              <a class="metric-card metric-wealth" href="./wealth/">
-                <span class="metric-icon" aria-hidden="true">%</span><span><small>币圈理财</small><strong data-node-value="wealth">--</strong><em data-node-detail="wealth">正在同步</em></span><b aria-hidden="true">→</b>
-              </a>
-              <a class="metric-card metric-toolbox" href="./toolbox/">
-                <span class="metric-icon" aria-hidden="true">⌕</span><span><small>工具箱</small><strong data-node-value="toolbox">--</strong><em data-node-detail="toolbox">正在同步</em></span><b aria-hidden="true">→</b>
-              </a>
-              <a class="metric-card metric-courses" href="./courses/">
-                <span class="metric-icon" aria-hidden="true">▣</span><span><small>教程</small><strong data-node-value="courses">--</strong><em data-node-detail="courses">正在同步</em></span><b aria-hidden="true">→</b>
-              </a>
-            </nav>
+            <div class="visual-focus" aria-hidden="true">
+              <span>ETHAN AI</span>
+              <b>SIGNAL NETWORK</b>
+              <i></i>
+            </div>
+
+            <div class="asset-field" aria-hidden="true">
+              <div class="asset-node asset-btc"><img src="./assets/markets/btc.svg" alt="" /><span>BTC</span></div>
+              <div class="asset-node asset-eth"><img src="./assets/markets/eth.svg" alt="" /><span>ETH</span></div>
+              <div class="asset-node asset-sol"><img src="./assets/markets/sol.svg" alt="" /><span>SOL</span></div>
+              <div class="asset-node asset-nvda"><img src="./assets/markets/nvda.svg" alt="" /><span>NVDA</span></div>
+              <div class="asset-node asset-aapl"><img src="./assets/markets/aapl.svg" alt="" /><span>AAPL</span></div>
+              <div class="asset-node asset-googl"><img src="./assets/markets/googl.svg" alt="" /><span>GOOGL</span></div>
+            </div>
+
+            <div class="visual-axis visual-axis-x" aria-hidden="true"><span>WEB3</span><span>AI</span><span>MARKETS</span></div>
+            <div class="visual-status" aria-hidden="true"><span><i></i>NETWORK ACTIVE</span><span>LOCAL TIME <b data-local-time>--:--:--</b></span></div>
           </div>
 
-          <div class="center-workspace">
-            <section class="event-timeline" aria-label="实时事件流">
-              <header class="workspace-panel-head"><span><small>LIVE INTELLIGENCE</small><strong>实时事件流</strong></span><b data-data-source>同步中</b></header>
-              <div class="timeline-list" data-timeline-list>
-                <div class="timeline-loading"><i></i><span>正在读取最新内容</span></div>
-              </div>
-            </section>
-
-            <aside class="intelligence-sidebar">
-              <section class="ai-summary">
-                <header class="workspace-panel-head"><span><small>AI PRIORITY</small><strong>AI 摘要</strong></span></header>
-                <ol data-ai-summary>
-                  <li><b>1</b><span><strong>正在分析站内内容</strong><small>完成同步后显示优先观察事项。</small></span></li>
-                </ol>
-              </section>
-              <section class="deadline-panel">
-                <header class="workspace-panel-head"><span><small>DEADLINES</small><strong>即将到期</strong></span><a href="./wealth/">查看全部 →</a></header>
-                <div data-deadline-list><div class="deadline-empty">正在读取到期时间</div></div>
-              </section>
-              <div class="source-health"><span><i></i>来源连接正常</span><span>公开数据 · 独立核验</span></div>
-            </aside>
+          <div class="visual-legend" aria-hidden="true">
+            <span><i class="legend-blue"></i>链上信号</span>
+            <span><i class="legend-green"></i>AI 科技</span>
+            <span><i class="legend-amber"></i>跨市场关联</span>
+            <strong>持续生成 · 无行情含义</strong>
           </div>
         </section>
       </main>
@@ -138,6 +115,6 @@
         </div>
       </footer>
     </div>
-    <script src="./home-intelligence.js?v=20260717-v4"></script>
+    <script src="./home-intelligence.js?v=20260717-v5"></script>
   </body>
 </html>
