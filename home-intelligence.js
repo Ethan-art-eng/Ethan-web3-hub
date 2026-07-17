@@ -51,6 +51,152 @@ const updateClock = () => {
 updateClock();
 window.setInterval(updateClock, 1000);
 
+const featuredCard = document.querySelector("[data-featured-campaign]");
+
+if (featuredCard) {
+  const featuredVisual = featuredCard.closest(".signal-visual");
+  const featuredElements = {
+    logo: featuredCard.querySelector("[data-featured-logo]"),
+    platform: featuredCard.querySelector("[data-featured-platform]"),
+    status: featuredCard.querySelector("[data-featured-status]"),
+    activity: featuredCard.querySelector("[data-featured-activity]"),
+    task: featuredCard.querySelector("[data-featured-task]"),
+    description: featuredCard.querySelector("[data-featured-description]"),
+    tags: featuredCard.querySelector("[data-featured-tags]"),
+    link: featuredCard.querySelector("[data-featured-link]"),
+    controls: featuredCard.querySelector("[data-featured-controls]"),
+    dots: featuredCard.querySelector("[data-featured-dots]"),
+    previous: featuredCard.querySelector("[data-featured-previous]"),
+    next: featuredCard.querySelector("[data-featured-next]"),
+  };
+  const featuredState = { allCampaigns: [], campaigns: [], index: 0, timer: 0, paused: false };
+  const platformNames = { binance: "Binance", okx: "OKX", bybit: "Bybit", bitget: "Bitget", gate: "Gate" };
+
+  const validExternalUrl = (value) => {
+    try {
+      const url = new URL(value, window.location.href);
+      return ["https:", "http:"].includes(url.protocol) ? url.href : "";
+    } catch {
+      return "";
+    }
+  };
+
+  const isCurrentCampaign = (campaign, now = Date.now()) => {
+    if (campaign.published === false) return false;
+    const start = Date.parse(campaign.startsAt || "");
+    const end = Date.parse(campaign.endAt || "");
+    return (Number.isNaN(start) || start <= now) && (Number.isNaN(end) || end > now) && Boolean(validExternalUrl(campaign.sourceUrl));
+  };
+
+  const campaignStatus = (campaign) => {
+    const end = Date.parse(campaign.endAt || "");
+    if (Number.isNaN(end)) return "进行中";
+    const days = Math.max(1, Math.ceil((end - Date.now()) / (24 * 60 * 60 * 1000)));
+    return days <= 3 ? "即将结束" : `${days} 天后结束`;
+  };
+
+  const renderFeaturedCampaign = () => {
+    const campaign = featuredState.campaigns[featuredState.index];
+    if (!campaign) {
+      featuredCard.hidden = true;
+      featuredVisual?.classList.remove("has-campaign");
+      return;
+    }
+    const platformKey = String(campaign.platformKey || "").toLowerCase();
+    const platform = campaign.platform || platformNames[platformKey] || platformKey;
+    const description = String(campaign.description || "").trim();
+    const tags = [campaign.audience, ...(Array.isArray(campaign.tags) ? campaign.tags : [])]
+      .map((tag) => String(tag || "").trim())
+      .filter((tag, index, all) => tag && all.indexOf(tag) === index)
+      .slice(0, 4);
+
+    featuredElements.logo.src = `./assets/exchanges/${platformKey}.svg`;
+    featuredElements.logo.alt = `${platform} Logo`;
+    featuredElements.platform.textContent = platform;
+    featuredElements.status.textContent = campaignStatus(campaign);
+    featuredElements.activity.textContent = campaign.activity || "平台活动";
+    featuredElements.task.textContent = campaign.task || "查看活动详情";
+    featuredElements.description.textContent = description;
+    featuredElements.description.hidden = !description;
+    featuredElements.tags.replaceChildren(...tags.map((tag) => {
+      const element = document.createElement("span");
+      element.textContent = tag;
+      return element;
+    }));
+    featuredElements.link.href = validExternalUrl(campaign.sourceUrl);
+    featuredElements.controls.hidden = featuredState.campaigns.length < 2;
+    featuredElements.dots.replaceChildren(...featuredState.campaigns.map((_, index) => {
+      const dot = document.createElement("i");
+      dot.classList.toggle("active", index === featuredState.index);
+      return dot;
+    }));
+    featuredCard.hidden = false;
+    featuredVisual?.classList.add("has-campaign");
+  };
+
+  const stopFeaturedRotation = () => {
+    window.clearInterval(featuredState.timer);
+    featuredState.timer = 0;
+  };
+
+  const startFeaturedRotation = () => {
+    stopFeaturedRotation();
+    if (reduceMotion || featuredState.paused || featuredState.campaigns.length < 2) return;
+    featuredState.timer = window.setInterval(() => {
+      featuredState.index = (featuredState.index + 1) % featuredState.campaigns.length;
+      renderFeaturedCampaign();
+    }, 7000);
+  };
+
+  const moveFeaturedCampaign = (direction) => {
+    if (!featuredState.campaigns.length) return;
+    featuredState.index = (featuredState.index + direction + featuredState.campaigns.length) % featuredState.campaigns.length;
+    renderFeaturedCampaign();
+    startFeaturedRotation();
+  };
+
+  const refreshCurrentFeaturedCampaigns = () => {
+    const currentId = featuredState.campaigns[featuredState.index]?.id;
+    featuredState.campaigns = featuredState.allCampaigns.filter((campaign) => isCurrentCampaign(campaign));
+    const preservedIndex = featuredState.campaigns.findIndex((campaign) => campaign.id === currentId);
+    featuredState.index = preservedIndex >= 0 ? preservedIndex : 0;
+    renderFeaturedCampaign();
+    startFeaturedRotation();
+  };
+
+  featuredElements.previous.addEventListener("click", () => moveFeaturedCampaign(-1));
+  featuredElements.next.addEventListener("click", () => moveFeaturedCampaign(1));
+  featuredCard.addEventListener("pointerenter", () => { featuredState.paused = true; stopFeaturedRotation(); });
+  featuredCard.addEventListener("pointerleave", () => { featuredState.paused = false; startFeaturedRotation(); });
+  featuredCard.addEventListener("focusin", () => { featuredState.paused = true; stopFeaturedRotation(); });
+  featuredCard.addEventListener("focusout", (event) => {
+    if (featuredCard.contains(event.relatedTarget)) return;
+    featuredState.paused = false;
+    startFeaturedRotation();
+  });
+
+  const loadFeaturedCampaigns = async () => {
+    const sources = featuredState.allCampaigns.length ? ["./api/site-content"] : ["./api/site-content", "./data/site-content.json"];
+    for (const source of sources) {
+      try {
+        const response = await fetch(source, { cache: "no-store" });
+        if (!response.ok) continue;
+        const payload = await response.json();
+        featuredState.allCampaigns = payload.featuredCampaigns || [];
+        refreshCurrentFeaturedCampaigns();
+        return;
+      } catch {
+        // Try the local seed data when the dynamic endpoint is unavailable.
+      }
+    }
+    if (!featuredState.allCampaigns.length) renderFeaturedCampaign();
+  };
+
+  loadFeaturedCampaigns();
+  window.setInterval(refreshCurrentFeaturedCampaigns, 60 * 1000);
+  window.setInterval(loadFeaturedCampaigns, 5 * 60 * 1000);
+}
+
 const canvas = document.querySelector("#signalCanvas");
 
 if (canvas) {

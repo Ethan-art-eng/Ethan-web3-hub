@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
     <title>内容管理后台 | 躺赚笔记</title>
-    <link rel="stylesheet" href="./admin.css?v=20260711-unified-v1" />
+    <link rel="stylesheet" href="./admin.css?v=20260717-featured-v1" />
   </head>
   <body>
     <header class="admin-header">
@@ -37,6 +37,7 @@
             <div class="sidebar-heading"><strong>管理中心</strong><small>全站数据</small></div>
             <nav class="admin-nav">
               <button class="active" type="button" data-admin-panel="overview">工作台</button>
+              <button type="button" data-admin-panel="homepage-campaigns">首页活动</button>
               <button type="button" data-admin-panel="airdrops">空投项目</button>
               <button type="button" data-admin-panel="wealth">稳定币理财</button>
               <button type="button" data-admin-panel="toolbox">工具箱</button>
@@ -51,6 +52,7 @@
                 <div><p class="eyebrow">Control Center</p><h1>全站内容工作台</h1><p>在一个后台维护空投项目、理财活动、工具入口和教程内容。</p></div>
               </div>
               <div class="overview-grid" aria-label="全站数据概览">
+                <button type="button" data-jump-panel="homepage-campaigns"><span>首页活动</span><strong id="overviewFeaturedCount">—</strong><small>新用户活动与首页轮播</small></button>
                 <button type="button" data-jump-panel="airdrops"><span>空投项目</span><strong id="overviewAirdropCount">—</strong><small>项目状态和任务入口</small></button>
                 <button type="button" data-jump-panel="wealth"><span>理财活动</span><strong id="overviewWealthCount">0</strong><small>五家交易所稳定币收益</small></button>
                 <button type="button" data-jump-panel="toolbox"><span>工具入口</span><strong id="overviewToolCount">—</strong><small>必备入口与实战工具</small></button>
@@ -60,6 +62,20 @@
                 <div><p class="eyebrow">Publishing</p><h2>修改保存后立即更新</h2><p>所有内容统一写入 Cloudflare KV，公开页无需重新部署。</p></div>
                 <a href="../../" target="_blank" rel="noreferrer">查看公开网站</a>
               </div>
+            </section>
+
+            <section class="admin-panel" data-panel="homepage-campaigns">
+              <div class="workspace-heading">
+                <div><p class="eyebrow">Homepage Campaigns</p><h1>首页活动</h1><p>维护首页右侧的新用户活动。只展示已发布且在有效期内的内容，过期后自动隐藏。</p></div>
+                <div class="workspace-actions"><a class="button-link" href="../../" target="_blank" rel="noreferrer">公开页</a><button class="primary-button" id="addFeaturedButton" type="button">新增活动</button></div>
+              </div>
+              <div class="admin-summary three" aria-label="首页活动状态">
+                <div><span>活动总数</span><strong id="featuredAdminTotal">0</strong></div>
+                <div><span>已发布</span><strong id="featuredAdminPublished">0</strong></div>
+                <div><span>当前展示</span><strong id="featuredAdminActive">0</strong></div>
+              </div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>平台 / 活动</th><th>任务</th><th>有效期</th><th>状态</th><th>操作</th></tr></thead><tbody id="featuredAdminBody"></tbody></table><p class="admin-empty" id="featuredAdminEmpty" hidden>暂时没有首页活动。</p></div>
+              <p class="save-status" id="featuredSaveStatus" role="status" aria-live="polite"></p>
             </section>
 
             <section class="admin-panel" data-panel="airdrops">
@@ -127,6 +143,14 @@
       <label>交易所<select id="campaignExchange" required></select></label><label>币种或活动名称<input id="campaignActivity" maxlength="300" required /></label><label>活动说明<input id="campaignVenue" maxlength="300" required /></label><label>产品期限<select id="campaignProductType"><option value="Flexible">活期 Flexible</option><option value="Fixed">定期 Fixed</option><option value="">其他</option></select></label><label>用户资格<input id="campaignEligibility" maxlength="300" /></label><label>地区限制<input id="campaignRegion" maxlength="300" /></label><label>活动额度<input id="campaignCap" maxlength="300" /></label><label>年利率显示<input id="campaignApy" maxlength="40" required /></label><label>年利率数值<input id="campaignApyValue" type="number" min="0" max="100000" step="0.01" required /></label><label>开始时间<input id="campaignStartsAt" type="datetime-local" /></label><label>到期时间显示<input id="campaignEndTime" maxlength="300" required /></label><label>自动过期时间<input id="campaignEndAt" type="datetime-local" /></label><label>最后核验时间<input id="campaignLastVerifiedAt" type="datetime-local" required /></label><label class="full-width">官方活动链接<input id="campaignSourceUrl" type="url" maxlength="500" required /></label><label class="publish-option full-width"><input id="campaignPublished" type="checkbox" /><span><strong>发布到公开页面</strong><small>新活动建议先保存为草稿。</small></span></label>
     </div><div class="dialog-actions"><button id="cancelDialogButton" type="button">取消</button><button class="primary-button" type="submit">保存活动</button></div></form></dialog>
 
+    <dialog id="featuredDialog"><form id="featuredForm"><div class="dialog-heading"><div><p class="eyebrow">Homepage Campaign</p><h2 id="featuredDialogTitle">新增首页活动</h2></div><button class="icon-button" id="closeFeaturedDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>平台<select id="featuredPlatformKey" required><option value="binance">Binance</option><option value="okx">OKX</option><option value="bybit">Bybit</option><option value="bitget">Bitget</option><option value="gate">Gate</option></select></label><label>活动类型<input id="featuredActivity" maxlength="120" placeholder="新用户任务" required /></label>
+      <label class="full-width">主要任务<input id="featuredTask" maxlength="180" placeholder="注册后查看账户内新用户活动" required /></label><label class="full-width">活动说明<textarea id="featuredDescription" rows="3" maxlength="700"></textarea></label>
+      <label>适合人群<input id="featuredAudience" maxlength="100" placeholder="新用户" /></label><label>标签<input id="featuredTags" maxlength="260" placeholder="注册入口, 账户任务" /></label>
+      <label>开始时间<input id="featuredStartsAt" type="datetime-local" /></label><label>到期时间<input id="featuredEndAt" type="datetime-local" /></label><label>最后核验时间<input id="featuredLastVerifiedAt" type="datetime-local" /></label><label>链接<input id="featuredSourceUrl" type="url" maxlength="1500" placeholder="https://" required /></label>
+      <label class="publish-option full-width"><input id="featuredPublished" type="checkbox" /><span><strong>发布到首页</strong><small>首页会自动轮播当前有效的已发布活动。</small></span></label>
+    </div><div class="dialog-actions"><button id="cancelFeaturedDialog" type="button">取消</button><button class="primary-button" type="submit">保存活动</button></div></form></dialog>
+
     <dialog id="toolDialog"><form id="toolForm"><div class="dialog-heading"><div><p class="eyebrow">Tool Record</p><h2 id="toolDialogTitle">新增工具</h2></div><button class="icon-button" id="closeToolDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
       <label>入口类型<select id="toolPlacement"><option value="directory">实战工具</option><option value="essential">必备入口</option></select></label><label id="toolGroupLabel">所属分类<select id="toolGroup"></select></label><label id="toolTypeLabel" hidden>类型标签<input id="toolType" maxlength="40" /></label><label>名称<input id="toolName" maxlength="120" required /></label><label class="full-width">用途说明<textarea id="toolDescription" rows="3" maxlength="600"></textarea></label><label id="toolCodeLabel" hidden>邀请码<input id="toolCode" maxlength="120" /></label><label>链接<input id="toolUrl" type="url" maxlength="1500" placeholder="https://" /></label>
     </div><div class="dialog-actions"><button id="cancelToolDialog" type="button">取消</button><button class="primary-button" type="submit">保存工具</button></div></form></dialog>
@@ -137,8 +161,8 @@
 
     <dialog id="historyDialog" class="history-dialog"><div class="history-content"><div class="dialog-heading"><div><p class="eyebrow">Revision History</p><h2>理财版本记录</h2></div><button class="icon-button" id="closeHistoryButton" type="button" aria-label="关闭">×</button></div><p class="history-help">每次保存前会自动备份上一版本，备份保留 60 天。</p><div id="historyList" class="history-list"></div><p class="form-status" id="historyStatus" role="status"></p></div></dialog>
 
-    <script src="./admin.js?v=20260711-unified-v1"></script>
-    <script src="./airdrop-admin.js?v=20260711-unified-v1"></script>
-    <script src="./content-admin.js?v=20260711-unified-v1"></script>
+    <script src="./admin.js?v=20260717-featured-v1"></script>
+    <script src="./airdrop-admin.js?v=20260717-featured-v1"></script>
+    <script src="./content-admin.js?v=20260717-featured-v1"></script>
   </body>
 </html>

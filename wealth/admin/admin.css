@@ -139,7 +139,7 @@ button:hover { background: var(--soft); }
 .admin-panel { display: none; }
 .admin-panel.active { display: block; }
 
-.overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.overview-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .overview-grid button { min-height: 176px; display: grid; align-content: start; gap: 8px; border: 0; border-radius: 0; padding: 24px; text-align: left; }
 .overview-grid button + button { border-left: 1px solid var(--line); }
 .overview-grid span { color: var(--body); font-size: 13px; }
@@ -157,6 +157,8 @@ button:hover { background: var(--soft); }
 .cell-stack span { margin-top: 4px; color: var(--body); }
 .cell-stack small { margin-top: 4px; color: var(--body); font-size: 11px; }
 .admin-link-inline { color: var(--blue); font-weight: 700; text-decoration: none; }
+.featured-date { display: grid; gap: 4px; color: var(--body); font-size: 12px; }
+.featured-date strong { color: var(--ink); font-size: 13px; }
 
 .tutorial-admin-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .tutorial-admin-card { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start; padding: 22px; border: 1px solid var(--line); border-radius: 8px; }

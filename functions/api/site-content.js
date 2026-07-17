@@ -35,17 +35,46 @@ function validUrl(value) {
   }
 }
 
+function validDate(value) {
+  return !value || !Number.isNaN(Date.parse(value));
+}
+
+function cleanDate(value) {
+  if (!value) return null;
+  const timestamp = Date.parse(value);
+  return Number.isNaN(timestamp) ? null : new Date(timestamp).toISOString();
+}
+
 function validate(payload) {
-  if (!payload || !Array.isArray(payload.essentials) || !Array.isArray(payload.toolGroups) || !Array.isArray(payload.tutorials)) {
-    return "essentials, toolGroups and tutorials must be arrays";
+  if (!payload || !Array.isArray(payload.featuredCampaigns) || !Array.isArray(payload.essentials) || !Array.isArray(payload.toolGroups) || !Array.isArray(payload.tutorials)) {
+    return "featuredCampaigns, essentials, toolGroups and tutorials must be arrays";
   }
-  if (payload.essentials.length > 30 || payload.toolGroups.length > 30 || payload.tutorials.length > 100) return "content limit exceeded";
+  if (payload.featuredCampaigns.length > 30 || payload.essentials.length > 30 || payload.toolGroups.length > 30 || payload.tutorials.length > 100) return "content limit exceeded";
   const ids = new Set();
   const checkId = (id) => {
     if (!validId(id) || ids.has(id)) return false;
     ids.add(id);
     return true;
   };
+  const supportedPlatforms = new Set(["binance", "okx", "bybit", "bitget", "gate"]);
+  for (const item of payload.featuredCampaigns) {
+    const tags = Array.isArray(item.tags) ? item.tags : [];
+    if (
+      !checkId(item.id)
+      || !supportedPlatforms.has(cleanText(item.platformKey, 20).toLowerCase())
+      || !cleanText(item.activity, 120)
+      || !cleanText(item.task, 180)
+      || !validUrl(cleanText(item.sourceUrl, 1500))
+      || !cleanText(item.sourceUrl, 1500)
+      || tags.length > 6
+      || !validDate(item.startsAt)
+      || !validDate(item.endAt)
+      || !validDate(item.lastVerifiedAt)
+    ) return "invalid featured campaign";
+    const start = Date.parse(item.startsAt || "");
+    const end = Date.parse(item.endAt || "");
+    if (!Number.isNaN(start) && !Number.isNaN(end) && end <= start) return "featured campaign end date must be after start date";
+  }
   for (const item of payload.essentials) {
     if (!checkId(item.id) || !cleanText(item.name, 120) || !validUrl(cleanText(item.url, 1500))) return "invalid essential item";
   }
@@ -67,6 +96,13 @@ function validate(payload) {
 function clean(payload) {
   return {
     updatedAt: new Date().toISOString(),
+    featuredCampaigns: payload.featuredCampaigns.map((item) => ({
+      id: cleanText(item.id, 80), platformKey: cleanText(item.platformKey, 20).toLowerCase(), platform: cleanText(item.platform, 80),
+      activity: cleanText(item.activity, 120), task: cleanText(item.task, 180), description: cleanText(item.description, 700),
+      audience: cleanText(item.audience, 100), tags: (Array.isArray(item.tags) ? item.tags : []).slice(0, 6).map((tag) => cleanText(tag, 40)).filter(Boolean),
+      startsAt: cleanDate(item.startsAt), endAt: cleanDate(item.endAt), lastVerifiedAt: cleanDate(item.lastVerifiedAt),
+      sourceUrl: cleanText(item.sourceUrl, 1500), published: item.published !== false,
+    })),
     essentials: payload.essentials.map((item) => ({
       id: cleanText(item.id, 80), type: cleanText(item.type, 40), name: cleanText(item.name, 120),
       description: cleanText(item.description, 600), code: cleanText(item.code, 120), url: cleanText(item.url, 1500),
@@ -84,10 +120,17 @@ function clean(payload) {
 
 async function loadData(env, request) {
   const stored = env.CEX_YIELDS ? await env.CEX_YIELDS.get(DATA_KEY, "json") : null;
-  if (stored) return { ...stored, source: "kv" };
   const response = await env.ASSETS.fetch(new URL("/data/site-content.json", request.url));
   if (!response.ok) throw new Error("Site content seed data is missing");
-  return { ...(await response.json()), source: "seed" };
+  const seed = await response.json();
+  if (stored) {
+    return {
+      ...stored,
+      featuredCampaigns: Array.isArray(stored.featuredCampaigns) ? stored.featuredCampaigns : (seed.featuredCampaigns || []),
+      source: "kv",
+    };
+  }
+  return { ...seed, source: "seed" };
 }
 
 async function saveBackup(env, current) {

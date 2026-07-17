@@ -1,5 +1,37 @@
 {
   "updatedAt": "2026-07-15T07:59:39Z",
+  "featuredCampaigns": [
+    {
+      "id": "featured-binance-01",
+      "platformKey": "binance",
+      "platform": "Binance",
+      "activity": "新用户任务",
+      "task": "注册后查看账户内新用户活动",
+      "description": "适合首次注册用户，具体资格、任务门槛和奖励内容需进入目标页面核验。",
+      "audience": "新用户",
+      "tags": ["注册入口", "账户任务"],
+      "startsAt": null,
+      "endAt": null,
+      "lastVerifiedAt": "2026-07-17T00:00:00Z",
+      "sourceUrl": "https://www.marketwebb.systems/join?ref=76380W",
+      "published": true
+    },
+    {
+      "id": "featured-okx-01",
+      "platformKey": "okx",
+      "platform": "OKX",
+      "activity": "新用户任务",
+      "task": "注册后查看账户内新用户活动",
+      "description": "适合首次注册用户，具体资格、任务门槛和奖励内容需进入目标页面核验。",
+      "audience": "新用户",
+      "tags": ["注册入口", "账户任务"],
+      "startsAt": null,
+      "endAt": null,
+      "lastVerifiedAt": "2026-07-17T00:00:00Z",
+      "sourceUrl": "https://okx.com/join/51196449",
+      "published": true
+    }
+  ],
   "essentials": [
     {
       "id": "essential-01",
