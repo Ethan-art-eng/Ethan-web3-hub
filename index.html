@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://ethanweb3.com/" />
     <meta name="twitter:card" content="summary" />
     <title>躺赚笔记 | 捕捉前沿信息</title>
-    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v2" />
+    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v3" />
   </head>
   <body class="intelligence-home">
     <div class="intel-shell">
@@ -68,51 +68,55 @@
           </div>
         </section>
 
-        <section class="signal-board" aria-label="跨市场信息关系图">
+        <section class="signal-board" aria-label="站内机会与资源雷达">
           <header class="signal-board-head">
-            <span>CROSS-MARKET INFORMATION MAP / VISUAL OVERVIEW</span>
-            <div class="board-controls" role="group" aria-label="关系图显示范围">
-              <button class="active" type="button" data-signal-view="all" aria-pressed="true">ALL</button>
-              <button type="button" data-signal-view="crypto" aria-pressed="false">CRYPTO</button>
-              <button type="button" data-signal-view="equity" aria-pressed="false">AI EQUITY</button>
-              <b>VISUAL MAP</b>
+            <span>SITE CONTENT RADAR / LIVE DATA</span>
+            <div class="board-controls" role="group" aria-label="雷达显示范围">
+              <button class="active" type="button" data-signal-view="all" aria-pressed="true">全部</button>
+              <button type="button" data-signal-view="opportunity" aria-pressed="false">机会</button>
+              <button type="button" data-signal-view="resource" aria-pressed="false">资源</button>
+              <b>动态数据</b>
             </div>
           </header>
 
           <div class="signal-chart">
             <canvas id="signalCanvas" aria-hidden="true"></canvas>
-            <div class="cross-labels">
-              <div class="cross-label" data-series="crypto">
-                <img src="./assets/markets/btc.svg" alt="" /><strong>BTC</strong>
-              </div>
-              <div class="cross-label" data-series="equity">
-                <img src="./assets/markets/nvda.svg" alt="" /><strong>NVDA</strong>
-              </div>
-              <div class="cross-label" data-series="crypto">
-                <img src="./assets/markets/eth.svg" alt="" /><strong>ETH</strong>
-              </div>
-              <div class="cross-label cross-label-group" data-series="equity">
-                <span class="asset-stack" aria-hidden="true">
-                  <img src="./assets/markets/aapl.svg" alt="" />
-                  <img src="./assets/markets/googl.svg" alt="" />
-                  <img src="./assets/markets/meta.svg" alt="" />
-                </span>
-                <strong>AAPL · GOOGL · META</strong>
-              </div>
-            </div>
-            <div class="chart-status"><span>INFORMATION RELATIONSHIPS</span><span>LOCAL TIME <b data-last-sync>--:--:--</b></span></div>
+            <nav class="opportunity-nodes" aria-label="站内内容入口">
+              <a class="opportunity-node node-airdrop" data-series="opportunity" href="./airdrops/">
+                <span class="node-symbol" aria-hidden="true">✦</span>
+                <span class="node-copy"><small>空投项目</small><strong><b data-node-value="airdrop">--</b> 个进行中</strong><em data-node-detail="airdrop">正在同步项目数据</em></span>
+                <span class="node-updated" data-node-updated="airdrop">--/--</span><i aria-hidden="true">↗</i>
+              </a>
+              <a class="opportunity-node node-wealth" data-series="opportunity" href="./wealth/">
+                <span class="node-symbol" aria-hidden="true">%</span>
+                <span class="node-copy"><small>币圈理财</small><strong><b data-node-value="wealth">--</b> 个公开活动</strong><em data-node-detail="wealth">正在同步活动数据</em></span>
+                <span class="node-updated" data-node-updated="wealth">--/--</span><i aria-hidden="true">↗</i>
+              </a>
+              <a class="opportunity-node node-toolbox" data-series="resource" href="./toolbox/">
+                <span class="node-symbol" aria-hidden="true">⌕</span>
+                <span class="node-copy"><small>工具箱</small><strong><b data-node-value="toolbox">--</b> 个实用工具</strong><em data-node-detail="toolbox">正在同步工具目录</em></span>
+                <span class="node-updated" data-node-updated="toolbox">--/--</span><i aria-hidden="true">↗</i>
+              </a>
+              <a class="opportunity-node node-courses" data-series="resource" href="./courses/">
+                <span class="node-symbol" aria-hidden="true">▣</span>
+                <span class="node-copy"><small>教程</small><strong><b data-node-value="courses">--</b> 篇实战教程</strong><em data-node-detail="courses">正在同步教程目录</em></span>
+                <span class="node-updated" data-node-updated="courses">--/--</span><i aria-hidden="true">↗</i>
+              </a>
+            </nav>
+            <div class="radar-hub" aria-hidden="true"><span>ETHAN</span><b>LIVE</b></div>
+            <div class="chart-status"><span>OFFICIAL DATA <b data-data-source>同步中</b></span><span>LOCAL TIME <b data-last-sync>--:--:--</b></span></div>
           </div>
 
           <div class="intelligence-dock">
             <section class="intelligence-stream">
-              <header><span>CONTENT NETWORK</span><b>信息入口</b><small>实时访问</small></header>
-              <a class="intelligence-row" href="./airdrops/"><i class="crypto-dot"></i><strong>空投项目状态与任务入口</strong><span>项目 · 融资 · 官方来源</span><b>打开 ↗</b></a>
-              <a class="intelligence-row" href="./toolbox/"><i class="equity-dot"></i><strong>研究工具与数据验证入口</strong><span>工具 · 数据 · 安全检查</span><b>打开 ↗</b></a>
+              <header><span>LATEST OPPORTUNITIES</span><b>最新机会</b><small>自动同步</small></header>
+              <a class="intelligence-row" href="./airdrops/"><i class="crypto-dot"></i><strong data-feed-title="airdrop">正在读取空投项目</strong><span data-feed-meta="airdrop">项目 · 融资 · 官方来源</span><b>查看 ↗</b></a>
+              <a class="intelligence-row" href="./wealth/"><i class="yield-dot"></i><strong data-feed-title="wealth">正在读取理财活动</strong><span data-feed-meta="wealth">年利率 · 到期时间</span><b>查看 ↗</b></a>
             </section>
             <section class="event-radar">
-              <header><span>OPPORTUNITY RADAR</span><b>机会雷达</b></header>
-              <a class="event-row" href="./wealth/"><time>YIELD</time><strong>稳定币活动与到期规则</strong><span>查看活动 ↗</span></a>
-              <a class="event-row" href="./courses/"><time>LEARN</time><strong>安全基础与项目研究教程</strong><span>开始学习 ↗</span></a>
+              <header><span>USEFUL RESOURCES</span><b>实用资源</b></header>
+              <a class="event-row" href="./toolbox/"><time>TOOL</time><strong data-feed-title="toolbox">正在读取工具目录</strong><span>打开 ↗</span></a>
+              <a class="event-row" href="./courses/"><time>LEARN</time><strong data-feed-title="courses">正在读取教程目录</strong><span>学习 ↗</span></a>
             </section>
           </div>
         </section>
@@ -128,6 +132,6 @@
         </div>
       </footer>
     </div>
-    <script src="./home-intelligence.js?v=20260716-v1"></script>
+    <script src="./home-intelligence.js?v=20260717-v3"></script>
   </body>
 </html>
