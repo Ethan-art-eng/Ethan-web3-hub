@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://ethanweb3.com/" />
     <meta name="twitter:card" content="summary" />
     <title>躺赚笔记 | 捕捉前沿信息</title>
-    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v3" />
+    <link rel="stylesheet" href="./home-intelligence.css?v=20260717-v4" />
   </head>
   <body class="intelligence-home">
     <div class="intel-shell">
@@ -68,56 +68,62 @@
           </div>
         </section>
 
-        <section class="signal-board" aria-label="站内机会与资源雷达">
+        <section class="signal-board intelligence-center" aria-label="站内实时情报中枢">
           <header class="signal-board-head">
-            <span>SITE CONTENT RADAR / LIVE DATA</span>
-            <div class="board-controls" role="group" aria-label="雷达显示范围">
-              <button class="active" type="button" data-signal-view="all" aria-pressed="true">全部</button>
-              <button type="button" data-signal-view="opportunity" aria-pressed="false">机会</button>
-              <button type="button" data-signal-view="resource" aria-pressed="false">资源</button>
-              <b>动态数据</b>
+            <span><strong>AI 情报中枢</strong><i></i>自动更新</span>
+            <div class="board-controls" role="group" aria-label="情报分类">
+              <button class="active" type="button" data-event-filter="all" aria-pressed="true">全部</button>
+              <button type="button" data-event-filter="airdrop" aria-pressed="false">空投</button>
+              <button type="button" data-event-filter="wealth" aria-pressed="false">理财</button>
+              <button type="button" data-event-filter="toolbox" aria-pressed="false">工具</button>
+              <button type="button" data-event-filter="courses" aria-pressed="false">教程</button>
             </div>
           </header>
 
-          <div class="signal-chart">
-            <canvas id="signalCanvas" aria-hidden="true"></canvas>
-            <nav class="opportunity-nodes" aria-label="站内内容入口">
-              <a class="opportunity-node node-airdrop" data-series="opportunity" href="./airdrops/">
-                <span class="node-symbol" aria-hidden="true">✦</span>
-                <span class="node-copy"><small>空投项目</small><strong><b data-node-value="airdrop">--</b> 个进行中</strong><em data-node-detail="airdrop">正在同步项目数据</em></span>
-                <span class="node-updated" data-node-updated="airdrop">--/--</span><i aria-hidden="true">↗</i>
+          <div class="center-overview">
+            <article class="daily-briefing">
+              <header><span class="briefing-ai">AI</span><strong>今日情报</strong><small>基于站内数据生成</small></header>
+              <p data-ai-briefing>正在汇总站内项目、活动、工具与教程数据。</p>
+              <footer><span class="verified-source">来源已核验</span><span>最后同步 <b data-last-sync>--:--:--</b></span></footer>
+            </article>
+
+            <nav class="section-metrics" aria-label="站内板块数据">
+              <a class="metric-card metric-airdrop" href="./airdrops/">
+                <span class="metric-icon" aria-hidden="true">✦</span><span><small>空投项目</small><strong data-node-value="airdrop">--</strong><em data-node-detail="airdrop">正在同步</em></span><b aria-hidden="true">→</b>
               </a>
-              <a class="opportunity-node node-wealth" data-series="opportunity" href="./wealth/">
-                <span class="node-symbol" aria-hidden="true">%</span>
-                <span class="node-copy"><small>币圈理财</small><strong><b data-node-value="wealth">--</b> 个公开活动</strong><em data-node-detail="wealth">正在同步活动数据</em></span>
-                <span class="node-updated" data-node-updated="wealth">--/--</span><i aria-hidden="true">↗</i>
+              <a class="metric-card metric-wealth" href="./wealth/">
+                <span class="metric-icon" aria-hidden="true">%</span><span><small>币圈理财</small><strong data-node-value="wealth">--</strong><em data-node-detail="wealth">正在同步</em></span><b aria-hidden="true">→</b>
               </a>
-              <a class="opportunity-node node-toolbox" data-series="resource" href="./toolbox/">
-                <span class="node-symbol" aria-hidden="true">⌕</span>
-                <span class="node-copy"><small>工具箱</small><strong><b data-node-value="toolbox">--</b> 个实用工具</strong><em data-node-detail="toolbox">正在同步工具目录</em></span>
-                <span class="node-updated" data-node-updated="toolbox">--/--</span><i aria-hidden="true">↗</i>
+              <a class="metric-card metric-toolbox" href="./toolbox/">
+                <span class="metric-icon" aria-hidden="true">⌕</span><span><small>工具箱</small><strong data-node-value="toolbox">--</strong><em data-node-detail="toolbox">正在同步</em></span><b aria-hidden="true">→</b>
               </a>
-              <a class="opportunity-node node-courses" data-series="resource" href="./courses/">
-                <span class="node-symbol" aria-hidden="true">▣</span>
-                <span class="node-copy"><small>教程</small><strong><b data-node-value="courses">--</b> 篇实战教程</strong><em data-node-detail="courses">正在同步教程目录</em></span>
-                <span class="node-updated" data-node-updated="courses">--/--</span><i aria-hidden="true">↗</i>
+              <a class="metric-card metric-courses" href="./courses/">
+                <span class="metric-icon" aria-hidden="true">▣</span><span><small>教程</small><strong data-node-value="courses">--</strong><em data-node-detail="courses">正在同步</em></span><b aria-hidden="true">→</b>
               </a>
             </nav>
-            <div class="radar-hub" aria-hidden="true"><span>ETHAN</span><b>LIVE</b></div>
-            <div class="chart-status"><span>OFFICIAL DATA <b data-data-source>同步中</b></span><span>LOCAL TIME <b data-last-sync>--:--:--</b></span></div>
           </div>
 
-          <div class="intelligence-dock">
-            <section class="intelligence-stream">
-              <header><span>LATEST OPPORTUNITIES</span><b>最新机会</b><small>自动同步</small></header>
-              <a class="intelligence-row" href="./airdrops/"><i class="crypto-dot"></i><strong data-feed-title="airdrop">正在读取空投项目</strong><span data-feed-meta="airdrop">项目 · 融资 · 官方来源</span><b>查看 ↗</b></a>
-              <a class="intelligence-row" href="./wealth/"><i class="yield-dot"></i><strong data-feed-title="wealth">正在读取理财活动</strong><span data-feed-meta="wealth">年利率 · 到期时间</span><b>查看 ↗</b></a>
+          <div class="center-workspace">
+            <section class="event-timeline" aria-label="实时事件流">
+              <header class="workspace-panel-head"><span><small>LIVE INTELLIGENCE</small><strong>实时事件流</strong></span><b data-data-source>同步中</b></header>
+              <div class="timeline-list" data-timeline-list>
+                <div class="timeline-loading"><i></i><span>正在读取最新内容</span></div>
+              </div>
             </section>
-            <section class="event-radar">
-              <header><span>USEFUL RESOURCES</span><b>实用资源</b></header>
-              <a class="event-row" href="./toolbox/"><time>TOOL</time><strong data-feed-title="toolbox">正在读取工具目录</strong><span>打开 ↗</span></a>
-              <a class="event-row" href="./courses/"><time>LEARN</time><strong data-feed-title="courses">正在读取教程目录</strong><span>学习 ↗</span></a>
-            </section>
+
+            <aside class="intelligence-sidebar">
+              <section class="ai-summary">
+                <header class="workspace-panel-head"><span><small>AI PRIORITY</small><strong>AI 摘要</strong></span></header>
+                <ol data-ai-summary>
+                  <li><b>1</b><span><strong>正在分析站内内容</strong><small>完成同步后显示优先观察事项。</small></span></li>
+                </ol>
+              </section>
+              <section class="deadline-panel">
+                <header class="workspace-panel-head"><span><small>DEADLINES</small><strong>即将到期</strong></span><a href="./wealth/">查看全部 →</a></header>
+                <div data-deadline-list><div class="deadline-empty">正在读取到期时间</div></div>
+              </section>
+              <div class="source-health"><span><i></i>来源连接正常</span><span>公开数据 · 独立核验</span></div>
+            </aside>
           </div>
         </section>
       </main>
@@ -132,6 +138,6 @@
         </div>
       </footer>
     </div>
-    <script src="./home-intelligence.js?v=20260717-v3"></script>
+    <script src="./home-intelligence.js?v=20260717-v4"></script>
   </body>
 </html>
