@@ -3,22 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="躺赚笔记 Web3 教程路线，从钱包安全、链上基础、DeFi 入门到项目研究。" />
+    <meta name="description" content="躺赚笔记投资教程，提供图文教程与社群会员视频课程，覆盖投资基础、技术分析、美股研究、加密资产、风险管理和工具实战。" />
     <link rel="canonical" href="https://ethanweb3.com/courses/" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Web3 教程 | 躺赚笔记" />
-    <meta property="og:description" content="从钱包安全、链上基础、DeFi 入门到项目研究。" />
+    <meta property="og:title" content="投资教程 | 躺赚笔记" />
+    <meta property="og:description" content="用图文教程讲清核心问题，用会员视频课程系统掌握方法。" />
     <meta property="og:url" content="https://ethanweb3.com/courses/" />
     <meta name="twitter:card" content="summary" />
-    <title>教程 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260716-courses-v2" />
-    <link rel="stylesheet" href="../ui-system.css?v=20260716-ui4" />
+    <title>投资教程 | 躺赚笔记</title>
+    <link rel="stylesheet" href="../styles.css?v=20260718-tutorial-hub" />
+    <link rel="stylesheet" href="../ui-system.css?v=20260718-tutorial-hub" />
+    <link rel="stylesheet" href="./tutorial-hub.css?v=20260718-1" />
   </head>
-  <body class="ui-v3 courses-page-v2">
+  <body class="ui-v3 tutorial-hub-page">
     <header class="site-header">
-      <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
+      <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>跨市场信息与学习平台</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../toolbox/">工具箱</a><a href="../wealth/">币圈理财</a><a class="active" href="../courses/">教程</a></nav>
       <div class="community-links" aria-label="加入我们">
         <span class="community-label">加入我们</span>
@@ -28,36 +29,128 @@
       </div>
     </header>
 
-    <main class="page courses-page">
-      <section class="workspace-head course-workspace-head">
+    <main class="tutorial-hub">
+      <section class="tutorial-intro" aria-labelledby="tutorialTitle">
         <div>
-          <h1>教程</h1>
-          <p>从钱包安全开始，逐步建立链上操作、DeFi 使用和项目判断能力。</p>
+          <p class="tutorial-eyebrow">FREE INSIGHTS · MEMBER COURSES</p>
+          <h1 id="tutorialTitle">投资教程</h1>
+          <p>用图文教程讲清核心问题，用视频课程系统掌握方法。</p>
         </div>
-        <div class="course-progress-card" aria-label="学习进度">
-          <div><span>学习进度</span><strong id="courseProgressText">0 / 4</strong></div>
-          <div class="course-progress-track" role="progressbar" aria-label="教程完成进度" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i id="courseProgressBar"></i></div>
-          <button id="courseProgressReset" type="button" hidden>重置进度</button>
-        </div>
+        <form class="tutorial-search" id="tutorialSearch" role="search">
+          <label class="sr-only" for="tutorialSearchInput">搜索教程</label>
+          <input id="tutorialSearchInput" type="search" placeholder="搜索技术分析、美股研究、加密资产或工具教程" autocomplete="off" />
+          <button type="submit">搜索教程</button>
+        </form>
       </section>
 
-      <section class="course-directory" aria-labelledby="courseDirectoryTitle">
-        <header class="course-directory-heading">
-          <div>
-            <h2 id="courseDirectoryTitle">学习路线</h2>
-          </div>
-          <p>建议按顺序学习，也可以直接打开需要的主题。</p>
-        </header>
-        <div class="learning-path" id="learningPath" aria-label="Web3 教程路线">
-          <article class="course-row" data-course-id="tutorial-01"><span class="course-step">01</span><div class="course-copy"><small>基础安全</small><h3>钱包安全</h3><p>助记词、私钥、硬件钱包、授权撤销、钓鱼识别。</p></div><em>适合完全新手</em><a class="course-open" href="./wallet-security/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
-          <article class="course-row" data-course-id="tutorial-02"><span class="course-step">02</span><div class="course-copy"><small>链上操作</small><h3>链上基础</h3><p>Gas、区块浏览器、跨链桥、合约交互和交易确认。</p></div><em>建立操作能力</em><a class="course-open" href="./onchain-basics/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
-          <article class="course-row" data-course-id="tutorial-03"><span class="course-step">03</span><div class="course-copy"><small>DeFi 应用</small><h3>DeFi 入门</h3><p>DEX、借贷、质押、流动性池、收益来源和退出。</p></div><em>理解资金流向</em><a class="course-open" href="./defi-basics/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
-          <article class="course-row" data-course-id="tutorial-04"><span class="course-step">04</span><div class="course-copy"><small>研究判断</small><h3>项目研究</h3><p>代币经济、融资、团队、审计、社区和风险复盘。</p></div><em>形成判断框架</em><a class="course-open" href="./project-research/">开始学习 <i aria-hidden="true">→</i></a><button class="course-complete-toggle" type="button" aria-pressed="false">标记完成</button></article>
-        </div>
+      <section class="tutorial-modebar" aria-label="教程类型">
+        <a class="tutorial-mode is-active" href="#articles">图文教程 <span>持续更新</span></a>
+        <a class="tutorial-mode" href="#videoCourses">视频教程 <span>社群专享</span></a>
       </section>
+
+      <div class="tutorial-topics" id="tutorialTopics" aria-label="教程主题筛选">
+        <button class="is-active" type="button" data-topic="全部主题">全部主题</button>
+        <button type="button" data-topic="投资基础">投资基础</button>
+        <button type="button" data-topic="技术分析">技术分析</button>
+        <button type="button" data-topic="美股研究">美股研究</button>
+        <button type="button" data-topic="加密资产">加密资产</button>
+        <button type="button" data-topic="风险管理">风险管理</button>
+        <button type="button" data-topic="工具实战">工具实战</button>
+      </div>
+
+      <div class="tutorial-layout">
+        <div class="tutorial-main-column">
+          <article class="tutorial-feature" id="articles" data-topic="技术分析" data-search="K线 趋势判断 技术分析 价格结构 成交量">
+            <div class="tutorial-feature-visual" aria-hidden="true">
+              <span>FEATURED ARTICLE / 图文教程</span>
+              <i class="chart-line chart-line-one"></i>
+              <i class="chart-line chart-line-two"></i>
+              <i class="chart-line chart-line-three"></i>
+            </div>
+            <div class="tutorial-feature-copy">
+              <span class="tutorial-free-label">免费阅读</span>
+              <h2>K线不是答案：如何建立趋势判断框架</h2>
+              <p>从价格结构、成交量和关键位置出发，建立一套可以复盘、可以验证的技术分析方法。</p>
+              <div class="tutorial-meta"><span>技术分析</span><span>新手</span><span>8 分钟阅读</span></div>
+              <button class="tutorial-primary-button" type="button" data-notice="这篇图文教程正在整理，发布后可直接阅读。">阅读全文</button>
+            </div>
+          </article>
+
+          <section class="tutorial-articles" aria-labelledby="articleListTitle">
+            <div class="tutorial-article-tabs">
+              <button class="is-active" type="button" id="articleListTitle">最新图文教程</button>
+              <button type="button">热门文章</button>
+              <button type="button">专题合集</button>
+            </div>
+            <div id="tutorialArticleList">
+              <a class="tutorial-article-row" href="./wallet-security/" data-topic="风险管理" data-search="钱包安全 助记词 私钥 授权 撤销 钓鱼 风险管理">
+                <span class="tutorial-cover tutorial-cover-dark">SAFE</span>
+                <span class="tutorial-article-copy"><strong>钱包安全：先保护资产，再开始链上操作</strong><small>从助记词、私钥、授权撤销到钓鱼识别，建立最基础的安全规则。</small><em>风险管理 · 入门</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./onchain-basics/" data-topic="工具实战" data-search="链上基础 Gas 区块浏览器 跨链桥 合约 交易确认 工具实战">
+                <span class="tutorial-cover">TX</span>
+                <span class="tutorial-article-copy"><strong>一笔链上交易应该怎么核验</strong><small>读懂 Gas、区块浏览器、合约交互与交易状态，减少操作误判。</small><em>工具实战 · 入门</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">9 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./defi-basics/" data-topic="加密资产" data-search="DeFi DEX 借贷 质押 流动性池 收益 退出 加密资产">
+                <span class="tutorial-cover tutorial-cover-green">DEFI</span>
+                <span class="tutorial-article-copy"><strong>DeFi 收益从哪里来，又该如何退出</strong><small>理解 DEX、借贷、质押与流动性池的收益来源和主要风险。</small><em>加密资产 · 入门</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">10 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./project-research/" data-topic="投资基础" data-search="项目研究 融资 团队 审计 社区 风险 代币经济 投资基础">
+                <span class="tutorial-cover tutorial-cover-orange">DYOR</span>
+                <span class="tutorial-article-copy"><strong>项目研究：把叙事变成可核验的信息</strong><small>从团队、融资、代币经济、审计和社区数据建立研究清单。</small><em>投资基础 · 研究方法</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">11 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <article class="tutorial-article-row is-upcoming" data-topic="美股研究" data-search="美股 财报 10-Q 利润表 资产负债表 现金流 美股研究">
+                <span class="tutorial-cover">10-Q</span>
+                <span class="tutorial-article-copy"><strong>如何阅读美股公司季度财报</strong><small>从利润表、资产负债表和现金流量表定位经营变化。</small><em>美股研究 · 筹备中</em></span>
+                <span class="tutorial-upcoming-tag">即将上线</span><span class="tutorial-duration">9 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">·</span>
+              </article>
+            </div>
+            <p class="tutorial-empty" id="tutorialEmpty" hidden>没有找到匹配的教程，请更换关键词或主题。</p>
+          </section>
+        </div>
+
+        <aside class="tutorial-side-column" id="videoCourses">
+          <section class="tutorial-course-panel">
+            <div class="tutorial-course-preview">
+              <span>视频教程</span>
+              <div class="tutorial-video-art" aria-hidden="true"><i>▶</i></div>
+            </div>
+            <div class="tutorial-course-body">
+              <h2>技术分析：从图表到交易系统</h2>
+              <p>不是记指标，而是建立趋势识别、入场、退出、仓位与复盘的完整执行框架。</p>
+              <div class="tutorial-stats" aria-label="课程信息"><span><strong>32</strong><small>视频课时</small></span><span><strong>8.5h</strong><small>课程时长</small></span><span><strong>会员</strong><small>观看权限</small></span></div>
+              <div class="tutorial-access">
+                <strong>已是社群会员？</strong>
+                <p>未来可使用登记过的 Google 账号登录，系统自动验证观看权限。</p>
+                <button class="tutorial-google-button" type="button" data-notice="Google 会员登录功能正在接入，暂未开放。"><b>G</b>使用 Google 账号登录</button>
+                <a class="tutorial-community-button" href="https://discord.com/" target="_blank" rel="noopener noreferrer">加入社群 · 申请会员权限</a>
+                <small>权限由社群管理员审核开通</small>
+              </div>
+            </div>
+            <p class="tutorial-course-note">登录只用于确认身份；未获得会员权限的账号无法进入完整视频课程。</p>
+          </section>
+
+          <section class="tutorial-other-courses" aria-labelledby="moreCoursesTitle">
+            <header><h2 id="moreCoursesTitle">更多视频教程</h2><span>课程库筹备中</span></header>
+            <article><span class="tutorial-course-icon">US</span><span><strong>美股公司研究与估值</strong><small>26 节 · 6.5 小时 · 会员专享</small></span><em>需权限</em></article>
+            <article><span class="tutorial-course-icon is-green">盾</span><span><strong>风险管理与交易纪律</strong><small>18 节 · 4 小时 · 会员专享</small></span><em>需权限</em></article>
+            <article><span class="tutorial-course-icon is-orange">₿</span><span><strong>加密资产研究基础</strong><small>20 节 · 5 小时 · 会员专享</small></span><em>需权限</em></article>
+          </section>
+
+          <section class="tutorial-access-flow" aria-labelledby="accessFlowTitle">
+            <h2 id="accessFlowTitle">视频教程开通流程</h2>
+            <ol><li>加入 Ethan 社群并申请成为会员。</li><li>向管理员提供用于登录的 Google 邮箱。</li><li>审核通过后，使用该账号登录观看。</li></ol>
+          </section>
+        </aside>
+      </div>
+      <div class="tutorial-toast" id="tutorialToast" role="status" aria-live="polite" hidden></div>
     </main>
-    <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
-    <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../courses-page.js?v=20260716-courses-v3"></script>
+    <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。请独立核验信息并控制风险。</span></footer>
+    <script src="../site-shell.js?v=20260718-tutorial-hub"></script>
+    <script src="./tutorial-hub.js?v=20260718-1"></script>
   </body>
 </html>
