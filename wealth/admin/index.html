@@ -198,7 +198,7 @@
 
     <dialog id="lessonDialog"><form id="lessonForm"><div class="dialog-heading"><div><p class="eyebrow">Video Lesson</p><h2 id="lessonDialogTitle">新增课时</h2></div><button class="icon-button" id="closeLessonDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
       <label>所属课程<select id="lessonCourseId" required></select></label><label>排序<input id="lessonSortOrder" type="number" value="0" /></label><label class="full-width">课时名称<input id="lessonTitle" maxlength="180" required /></label><label class="full-width">课时简介<textarea id="lessonDescription" rows="3" maxlength="800"></textarea></label>
-      <label>视频文件<input id="lessonVideoFile" type="file" accept="video/*" /></label><label>视频时长（分钟）<input id="lessonDuration" type="number" min="0" max="1440" /></label><label>观看权限<select id="lessonAccess"><option value="member">跟随课程权限</option><option value="free">免费试看</option></select></label><label>发布状态<select id="lessonStatus"><option value="draft">草稿</option><option value="published">已发布</option></select></label><label class="full-width">视频 ID<input id="lessonStreamUid" maxlength="160" placeholder="上传后自动填写，也可粘贴 Stream 视频 ID" /></label><div class="full-width upload-progress" id="videoUploadProgress" hidden><span></span><strong>正在上传视频…</strong></div>
+      <label>视频文件（开通 Stream 后可直传）<input id="lessonVideoFile" type="file" accept="video/*" /></label><label>视频时长（分钟）<input id="lessonDuration" type="number" min="0" max="1440" /></label><label>观看权限<select id="lessonAccess"><option value="member">跟随课程权限</option><option value="free">免费试看</option></select></label><label>发布状态<select id="lessonStatus"><option value="draft">草稿</option><option value="published">已发布</option></select></label><label class="full-width">视频地址或 Stream ID<input id="lessonStreamUid" maxlength="1500" placeholder="粘贴 B站、腾讯视频、优酷、YouTube、Vimeo 地址，或 Stream 视频 ID" /></label><div class="full-width upload-progress" id="videoUploadProgress" hidden><span></span><strong>正在上传视频…</strong></div>
     </div><div class="dialog-actions"><button id="cancelLessonDialog" type="button">取消</button><button class="primary-button" id="saveLessonButton" type="submit">保存课时</button></div></form></dialog>
 
     <dialog id="memberDialog"><form id="memberForm"><div class="dialog-heading"><div><p class="eyebrow">Member</p><h2 id="memberDialogTitle">新增会员</h2></div><button class="icon-button" id="closeMemberDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
@@ -210,6 +210,6 @@
     <script src="./admin.js?v=20260720-library-v1"></script>
     <script src="./airdrop-admin.js?v=20260717-featured-v1"></script>
     <script src="./content-admin.js?v=20260717-featured-v1"></script>
-    <script src="./library-admin.js?v=20260720-library-v1"></script>
+    <script src="./library-admin.js?v=20260720-library-v2"></script>
   </body>
 </html>

@@ -88,7 +88,13 @@ async function uploadImage(file) {
 
 async function uploadVideo(file, name) {
   if (file.size > 200 * 1024 * 1024) throw new Error("网页直传暂时支持 200MB 以内的视频；更大的文件可先在 Cloudflare Stream 上传，再填写视频 ID。");
-  const provision = await window.adminConsole.apiRequest("/wealth/admin/api/stream-upload", { method: "POST", body: JSON.stringify({ name, maxDurationSeconds: 21600 }) });
+  let provision;
+  try {
+    provision = await window.adminConsole.apiRequest("/wealth/admin/api/stream-upload", { method: "POST", body: JSON.stringify({ name, maxDurationSeconds: 21600 }) });
+  } catch (error) {
+    if (/Stream not enabled|尚未启用|Authorization Failure/i.test(error.message)) throw new Error("Cloudflare Stream 尚未开通。请先把视频上传到 B站、腾讯视频、优酷、YouTube 或 Vimeo，再将视频地址粘贴到下方输入框。");
+    throw error;
+  }
   const form = new FormData(); form.append("file", file);
   const response = await fetch(provision.uploadURL, { method: "POST", body: form });
   if (!response.ok) throw new Error("视频上传失败，请检查网络后重试。");
