@@ -14,11 +14,12 @@ binding = "CONTENT_DB"
 database_name = "ethan-web3-content"
 database_id = "1839de11-0151-4602-94a0-11b5ae8aea0c"
 
+[[services]]
+binding = "STREAM_SERVICE"
+service = "ethan-web3-stream-service"
+
 # R2 must be enabled once in the Cloudflare dashboard before this binding can
 # be activated. The upload endpoint reports a clear setup message until then.
 # [[r2_buckets]]
 # binding = "MEDIA"
 # bucket_name = "ethan-web3-media"
-
-[stream]
-binding = "STREAM"

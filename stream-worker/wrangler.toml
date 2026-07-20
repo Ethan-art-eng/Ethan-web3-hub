@@ -1,0 +1,7 @@
+name = "ethan-web3-stream-service"
+main = "worker.js"
+compatibility_date = "2026-05-23"
+workers_dev = true
+
+[stream]
+binding = "STREAM"
