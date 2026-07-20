@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620">
+  <rect width="1200" height="620" fill="#ffffff"/>
+  <rect x="56" y="42" width="1088" height="520" rx="24" fill="#f8fafc" stroke="#d7dee8"/>
+  <text x="92" y="102" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="#0f172a">MACD / RSI / 成交量：验证突破是否有效</text>
+  <g stroke="#e2e8f0" stroke-width="1">
+    <path d="M100 180H1100"/>
+    <path d="M100 300H1100"/>
+    <path d="M100 420H1100"/>
+  </g>
+  <path d="M112 330 C210 350 280 340 350 315 S500 250 610 270 S750 340 850 280 S1000 165 1090 185" fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+  <path d="M120 460 C250 420 390 430 515 390 S740 350 1080 285" fill="none" stroke="#2563eb" stroke-width="5"/>
+  <path d="M120 485 C240 480 360 450 520 420 S760 355 1080 305" fill="none" stroke="#f97316" stroke-width="5"/>
+  <g>
+    <rect x="160" y="486" width="34" height="36" fill="#94a3b8"/>
+    <rect x="230" y="468" width="34" height="54" fill="#94a3b8"/>
+    <rect x="300" y="450" width="34" height="72" fill="#94a3b8"/>
+    <rect x="370" y="420" width="34" height="102" fill="#16a34a"/>
+    <rect x="440" y="398" width="34" height="124" fill="#16a34a"/>
+    <rect x="510" y="440" width="34" height="82" fill="#94a3b8"/>
+    <rect x="580" y="455" width="34" height="67" fill="#94a3b8"/>
+    <rect x="650" y="430" width="34" height="92" fill="#16a34a"/>
+    <rect x="720" y="392" width="34" height="130" fill="#16a34a"/>
+    <rect x="790" y="370" width="34" height="152" fill="#16a34a"/>
+    <rect x="860" y="340" width="34" height="182" fill="#16a34a"/>
+    <rect x="930" y="318" width="34" height="204" fill="#16a34a"/>
+  </g>
+  <text x="840" y="148" font-family="Arial, sans-serif" font-size="22" fill="#166534" font-weight="700">价格创新高 + 量能放大</text>
+  <text x="840" y="178" font-family="Arial, sans-serif" font-size="20" fill="#475569">突破可信度更高</text>
+  <text x="132" y="552" font-family="Arial, sans-serif" font-size="20" fill="#475569">灰色：普通成交量</text>
+  <text x="390" y="552" font-family="Arial, sans-serif" font-size="20" fill="#166534">绿色：放量确认</text>
+</svg>

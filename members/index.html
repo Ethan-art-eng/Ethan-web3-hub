@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
     <title>会员课程 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="../ui-system.css" />
-    <link rel="stylesheet" href="./members.css?v=20260720-1" />
+    <link rel="stylesheet" href="../styles.css?v=20260720-learning-v2" />
+    <link rel="stylesheet" href="../ui-system.css?v=20260720-learning-v2" />
+    <link rel="stylesheet" href="./members.css?v=20260720-progress-v2" />
   </head>
   <body>
     <header class="site-header"><a class="brand" href="../"><span class="brand-mark">₿</span><span>躺赚笔记</span></a><nav class="nav"><a href="../courses/">公开教程</a><a class="active" href="./">会员课程</a></nav><button class="member-signout" id="memberSignout" type="button" hidden>退出登录</button></header>
     <main class="member-shell">
-      <section class="member-hero"><div><p>MEMBER ACADEMY</p><h1>会员视频课程</h1><span id="memberGreeting">正在核对会员权限…</span></div><div class="member-status" id="memberStatus"><small>当前状态</small><strong>读取中</strong><span>请稍候</span></div></section>
+      <section class="member-hero"><div><p>MEMBER LEARNING AREA</p><h1>会员学习区</h1><span id="memberGreeting">正在核对会员权限…</span></div><div class="member-status" id="memberStatus"><small>当前状态</small><strong>读取中</strong><span>请稍候</span></div></section>
       <section class="member-login" id="memberLogin" hidden><div><p>MEMBER SIGN IN</p><h2>会员登录</h2><span>请输入管理员登记的邮箱和会员登录码。</span></div><form id="memberLoginForm"><label>会员邮箱<input id="memberLoginEmail" type="email" autocomplete="email" required /></label><label>会员登录码<input id="memberLoginCode" type="password" minlength="8" autocomplete="current-password" required /></label><button type="submit">进入会员课程</button><p id="memberLoginStatus" role="status"></p></form></section>
       <section class="member-notice" id="memberNotice" hidden></section>
       <section class="member-player" id="memberPlayer" hidden><header><div><small>正在播放</small><h2 id="playerTitle"></h2></div><button id="closePlayer" type="button">关闭</button></header><div class="member-player-frame"><iframe id="videoFrame" title="会员课程播放器" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div></section>
       <section class="member-article" id="memberArticle" hidden></section>
-      <section class="member-library"><header><div><p>COURSE LIBRARY</p><h2>课程库</h2></div><span>根据会员等级自动开放</span></header><div class="member-course-grid" id="memberCourseGrid"></div></section>
+      <section class="member-library"><header><div><p>COURSE LIBRARY</p><h2>我的课程</h2></div><span>按自己的节奏学习，完成状态会自动保存</span></header><div class="member-course-grid" id="memberCourseGrid"></div></section>
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>会员内容仅供本人学习，请勿传播账户或播放链接。</span></footer>
-    <script src="./members.js?v=20260720-1"></script>
+    <script src="./members.js?v=20260720-progress-v2"></script>
   </body>
 </html>

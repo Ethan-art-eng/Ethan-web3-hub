@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <rect x="64" y="48" width="1072" height="520" rx="22" fill="#fff" stroke="#d7dee8"/>
+  <text x="96" y="104" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">MA 均线：看趋势、看支撑、看压力</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <path d="M100 180H1100"/><path d="M100 260H1100"/><path d="M100 340H1100"/><path d="M100 420H1100"/><path d="M100 500H1100"/>
+  </g>
+  <path d="M112 438 C210 430 290 400 375 360 S540 260 650 280 S820 330 920 235 S1030 170 1090 190" fill="none" stroke="#111827" stroke-width="7" stroke-linecap="round"/>
+  <path d="M112 456 C240 430 350 400 460 345 S650 285 760 285 S940 250 1090 205" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <path d="M112 480 C260 450 420 412 555 365 S790 300 1090 255" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+  <rect x="808" y="118" width="278" height="116" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+  <circle cx="838" cy="152" r="8" fill="#111827"/><text x="858" y="159" font-family="Arial,sans-serif" font-size="19" fill="#334155">价格</text>
+  <circle cx="838" cy="186" r="8" fill="#2563eb"/><text x="858" y="193" font-family="Arial,sans-serif" font-size="19" fill="#334155">短期均线 MA20</text>
+  <circle cx="838" cy="220" r="8" fill="#16a34a"/><text x="858" y="227" font-family="Arial,sans-serif" font-size="19" fill="#334155">长期均线 MA60</text>
+  <text x="118" y="550" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#2563eb">价格在均线上方：偏强</text>
+  <text x="450" y="550" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#16a34a">回踩均线不破：可能形成支撑</text>
+</svg>

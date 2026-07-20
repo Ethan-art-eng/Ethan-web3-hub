@@ -11,30 +11,27 @@
     <meta property="og:title" content="投资教程 | 躺赚笔记" />
     <meta property="og:description" content="用图文教程讲清核心问题，用会员视频课程系统掌握方法。" />
     <meta property="og:url" content="https://ethanweb3.com/courses/" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://ethanweb3.com/assets/courses/tutorial-og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ethanweb3.com/assets/courses/tutorial-og.png" />
     <title>投资教程 | 躺赚笔记</title>
     <link rel="stylesheet" href="../styles.css?v=20260718-tutorial-hub" />
-    <link rel="stylesheet" href="../ui-system.css?v=20260718-tutorial-hub" />
-    <link rel="stylesheet" href="./tutorial-hub.css?v=20260720-library-v1" />
+    <link rel="stylesheet" href="../ui-system.css?v=20260720-learning-v2" />
+    <link rel="stylesheet" href="./tutorial-hub.css?v=20260720-learning-v2" />
   </head>
   <body class="ui-v3 tutorial-hub-page">
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>跨市场信息与学习平台</small></span></a>
-      <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../toolbox/">工具箱</a><a href="../wealth/">币圈理财</a><a class="active" href="../courses/">教程</a></nav>
-      <div class="community-links" aria-label="加入我们">
-        <span class="community-label">加入我们</span>
-        <a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../assets/social/discord.svg" alt="" /></a>
-        <a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../assets/social/telegram.svg" alt="" /></a>
-        <a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../assets/social/youtube.svg" alt="" /></a>
-      </div>
+      <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../toolbox/">工具箱</a><a href="../wealth/">币圈理财</a><a class="active" aria-current="page" href="../courses/">教程</a></nav>
+      <a class="tutorial-header-member" href="../members/">会员学习区</a>
     </header>
 
     <main class="tutorial-hub">
       <section class="tutorial-intro" aria-labelledby="tutorialTitle">
         <div>
-          <p class="tutorial-eyebrow">FREE INSIGHTS · MEMBER COURSES</p>
+          <p class="tutorial-eyebrow">LEARNING PATHS · PRACTICAL NOTES</p>
           <h1 id="tutorialTitle">投资教程</h1>
-          <p>用图文教程讲清核心问题，用视频课程系统掌握方法。</p>
+          <p>从安全基础到研究方法，按自己的节奏建立可以复盘的投资知识框架。</p>
         </div>
         <form class="tutorial-search" id="tutorialSearch" role="search">
           <label class="sr-only" for="tutorialSearchInput">搜索教程</label>
@@ -44,8 +41,9 @@
       </section>
 
       <section class="tutorial-modebar" aria-label="教程类型">
-        <a class="tutorial-mode is-active" href="#articles">图文教程 <span>持续更新</span></a>
-        <a class="tutorial-mode" href="#videoCourses">视频教程 <span>社群专享</span></a>
+        <a class="tutorial-mode is-active" href="#learningPaths">学习路径 <span>建议从这里开始</span></a>
+        <a class="tutorial-mode" href="#articles">图文知识库 <span>免费阅读</span></a>
+        <a class="tutorial-mode" href="#videoCourses">会员学习区 <span>视频与进度</span></a>
       </section>
 
       <div class="tutorial-topics" id="tutorialTopics" aria-label="教程主题筛选">
@@ -58,29 +56,38 @@
         <button type="button" data-topic="工具实战">工具实战</button>
       </div>
 
+      <section class="tutorial-paths" id="learningPaths" aria-labelledby="learningPathsTitle">
+        <div class="tutorial-section-heading"><div><p>START HERE</p><h2 id="learningPathsTitle">选择一条学习路径</h2></div><div class="tutorial-local-progress" id="tutorialLocalProgress"><span>本机学习记录</span><strong>已完成 0 篇</strong><i><b></b></i></div></div>
+        <div class="tutorial-path-grid">
+          <a class="tutorial-path-card" href="./wallet-security/" data-path-ids="tutorial-01,tutorial-02,tutorial-03,tutorial-04"><span class="tutorial-path-number">01</span><small>新手起步 · 4 篇</small><h3>安全与链上基础</h3><p>先理解资产保护、交易核验、DeFi 风险和项目研究，再考虑任何具体操作。</p><em>从钱包安全开始 →</em></a>
+          <a class="tutorial-path-card is-blue" href="./okx-technical-analysis-19-ma/" data-path-ids="okx-technical-analysis-19-ma,okx-technical-analysis-20-volume,okx-technical-analysis-21-boll,okx-technical-analysis-22-macd,okx-technical-analysis-23-kdj,okx-technical-analysis-24-rsi,okx-technical-analysis-25-sar,okx-technical-analysis-26-td-sequential,okx-technical-analysis-27-okx-trading-data,okx-technical-analysis-28-multi-indicator-practice"><span class="tutorial-path-number">02</span><small>指标实战篇 · 10 篇</small><h3>技术分析：从单一指标到检查流程</h3><p>按 MA、成交量、动能和风险信号逐步学习，最后组合成一套可复盘的判断流程。</p><em>从 MA 均线开始 →</em></a>
+          <a class="tutorial-path-card is-green" href="./project-research/" data-path-ids="tutorial-04,tutorial-03"><span class="tutorial-path-number">03</span><small>研究方法 · 2 篇</small><h3>项目研究与风险判断</h3><p>把叙事拆成团队、资金、代币机制、收益来源和退出条件等可核验信息。</p><em>从研究清单开始 →</em></a>
+        </div>
+        <p class="tutorial-path-note">进度只保存在当前设备中，不影响阅读，也不会用于营销推送。</p>
+      </section>
+
       <div class="tutorial-layout">
         <div class="tutorial-main-column">
-          <article class="tutorial-feature" id="articles" data-topic="技术分析" data-search="K线 趋势判断 技术分析 价格结构 成交量">
+          <article class="tutorial-feature" id="articles" data-topic="技术分析" data-search="技术分析 MA 成交量 BOLL MACD KDJ RSI SAR TD 多指标 实战流程">
             <div class="tutorial-feature-visual" aria-hidden="true">
-              <span>FEATURED ARTICLE / 图文教程</span>
+              <span>GUIDED SERIES / 学习专题</span>
               <i class="chart-line chart-line-one"></i>
               <i class="chart-line chart-line-two"></i>
               <i class="chart-line chart-line-three"></i>
             </div>
             <div class="tutorial-feature-copy">
-              <span class="tutorial-free-label">免费阅读</span>
-              <h2>K线不是答案：如何建立趋势判断框架</h2>
-              <p>从价格结构、成交量和关键位置出发，建立一套可以复盘、可以验证的技术分析方法。</p>
-              <div class="tutorial-meta"><span>技术分析</span><span>新手</span><span>8 分钟阅读</span></div>
-              <button class="tutorial-primary-button" type="button" data-notice="这篇图文教程正在整理，发布后可直接阅读。">阅读全文</button>
+              <span class="tutorial-free-label">完整专题 · 免费阅读</span>
+              <h2>技术分析指标实战篇</h2>
+              <p>十篇内容从均线、成交量和动能指标讲到多指标检查流程；重点不是预测，而是建立一致的观察方法。</p>
+              <div class="tutorial-meta"><span>10 篇</span><span>入门到进阶</span><span>约 80 分钟</span></div>
+              <a class="tutorial-primary-button" href="./okx-technical-analysis-19-ma/">从第一篇开始</a>
             </div>
           </article>
 
           <section class="tutorial-articles" aria-labelledby="articleListTitle">
-            <div class="tutorial-article-tabs">
-              <button class="is-active" type="button" id="articleListTitle">最新图文教程</button>
-              <button type="button">热门文章</button>
-              <button type="button">专题合集</button>
+            <div class="tutorial-article-heading">
+              <div><p>ARTICLE LIBRARY</p><h2 id="articleListTitle">全部图文教程</h2></div>
+              <div><span id="tutorialResultCount">共 0 篇</span><button id="tutorialClearFilters" type="button" hidden>清除筛选</button></div>
             </div>
             <div id="tutorialArticleList">
               <a class="tutorial-article-row" href="./wallet-security/" data-topic="风险管理" data-search="钱包安全 助记词 私钥 授权 撤销 钓鱼 风险管理">
@@ -103,6 +110,56 @@
                 <span class="tutorial-article-copy"><strong>项目研究：把叙事变成可核验的信息</strong><small>从团队、融资、代币经济、审计和社区数据建立研究清单。</small><em>投资基础 · 研究方法</em></span>
                 <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">11 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
               </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-19-ma/" data-topic="技术分析" data-search="零基础学技术分析 19：MA 均线怎么看？ 用原创方式整理 MA 均线的核心用法：趋势方向、均线排列、金叉死叉、支撑压力和新手常见误区。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">MA</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 19：MA 均线怎么看？</strong><small>用原创方式整理 MA 均线的核心用法：趋势方向、均线排列、金叉死叉、支撑压力和新手常见误区。</small><em>技术分析 · 入门</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-20-volume/" data-topic="技术分析" data-search="零基础学技术分析 20：成交量怎么看？ 整理成交量在币市技术分析中的作用：放量、缩量、价量配合、突破确认和假突破过滤。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">VOL</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 20：成交量怎么看？</strong><small>整理成交量在币市技术分析中的作用：放量、缩量、价量配合、突破确认和假突破过滤。</small><em>技术分析 · 入门</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-21-boll/" data-topic="技术分析" data-search="零基础学技术分析 21：BOLL 布林带怎么看？ 用原创语言拆解 BOLL 布林带的三条轨道、收口开口、趋势判断和追涨杀跌风险。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">BOLL</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 21：BOLL 布林带怎么看？</strong><small>用原创语言拆解 BOLL 布林带的三条轨道、收口开口、趋势判断和追涨杀跌风险。</small><em>技术分析 · 入门</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-22-macd/" data-topic="技术分析" data-search="零基础学技术分析 22：MACD 指标怎么看？ 整理 MACD 的核心逻辑：金叉死叉、柱状图、零轴、趋势动能和顶底背离。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">MACD</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 22：MACD 指标怎么看？</strong><small>整理 MACD 的核心逻辑：金叉死叉、柱状图、零轴、趋势动能和顶底背离。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-23-kdj/" data-topic="技术分析" data-search="零基础学技术分析 23：KDJ 指标怎么看？ 整理 KDJ 的短线用法：超买超卖、金叉死叉、钝化、背离和震荡行情注意事项。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">KDJ</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 23：KDJ 指标怎么看？</strong><small>整理 KDJ 的短线用法：超买超卖、金叉死叉、钝化、背离和震荡行情注意事项。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-24-rsi/" data-topic="技术分析" data-search="零基础学技术分析 24：RSI 相对强弱指标怎么看？ 整理 RSI 的使用方法：强弱分界、超买超卖、背离、趋势过滤和实战注意事项。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">RSI</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 24：RSI 相对强弱指标怎么看？</strong><small>整理 RSI 的使用方法：强弱分界、超买超卖、背离、趋势过滤和实战注意事项。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-25-sar/" data-topic="技术分析" data-search="零基础学技术分析 25：SAR 指标怎么看？ 整理 SAR 抛物线指标的趋势跟踪用法：方向判断、移动止损、反转提示和震荡行情局限。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">SAR</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 25：SAR 指标怎么看？</strong><small>整理 SAR 抛物线指标的趋势跟踪用法：方向判断、移动止损、反转提示和震荡行情局限。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-26-td-sequential/" data-topic="技术分析" data-search="零基础学技术分析 26：TD 序列怎么看？ 整理 TD 序列的核心用途：趋势衰竭提醒、风险窗口、强趋势钝化和组合判断。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">TD</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 26：TD 序列怎么看？</strong><small>整理 TD 序列的核心用途：趋势衰竭提醒、风险窗口、强趋势钝化和组合判断。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-27-okx-trading-data/" data-topic="技术分析" data-search="零基础学技术分析 27：OKX 交易大数据怎么看？ 整理 OKX 交易大数据的实战用途：多空人数比、持仓量、资金费率、大户持仓和市场拥挤度。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">DATA</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 27：OKX 交易大数据怎么看？</strong><small>整理 OKX 交易大数据的实战用途：多空人数比、持仓量、资金费率、大户持仓和市场拥挤度。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tutorial-article-row" href="./okx-technical-analysis-28-multi-indicator-practice/" data-topic="技术分析" data-search="零基础学技术分析 28：多指标综合实战怎么做？ 把 MA、成交量、BOLL、MACD、RSI、SAR、TD 和交易大数据组合成一套实战检查流程。 技术分析 OKX 欧易 K线 指标 MA 成交量 BOLL MACD KDJ RSI SAR TD 交易大数据">
+                <span class="tutorial-cover tutorial-cover-blue">FLOW</span>
+                <span class="tutorial-article-copy"><strong>零基础学技术分析 28：多指标综合实战怎么做？</strong><small>把 MA、成交量、BOLL、MACD、RSI、SAR、TD 和交易大数据组合成一套实战检查流程。</small><em>技术分析 · 进阶</em></span>
+                <span class="tutorial-free-tag">免费阅读</span><span class="tutorial-duration">8 分钟</span><span class="tutorial-row-arrow" aria-hidden="true">→</span>
+              </a>
               <article class="tutorial-article-row is-upcoming" data-topic="美股研究" data-search="美股 财报 10-Q 利润表 资产负债表 现金流 美股研究">
                 <span class="tutorial-cover">10-Q</span>
                 <span class="tutorial-article-copy"><strong>如何阅读美股公司季度财报</strong><small>从利润表、资产负债表和现金流量表定位经营变化。</small><em>美股研究 · 筹备中</em></span>
@@ -120,28 +177,27 @@
               <div class="tutorial-video-art" aria-hidden="true"><i>▶</i></div>
             </div>
             <div class="tutorial-course-body">
-              <h2 id="featuredCourseTitle">技术分析：从图表到交易系统</h2>
-              <p id="featuredCourseDescription">不是记指标，而是建立趋势识别、入场、退出、仓位与复盘的完整执行框架。</p>
-              <div class="tutorial-stats" id="featuredCourseStats" aria-label="课程信息"><span><strong>32</strong><small>视频课时</small></span><span><strong>8.5h</strong><small>课程时长</small></span><span><strong>会员</strong><small>观看权限</small></span></div>
+              <h2 id="featuredCourseTitle">视频课程尚未发布</h2>
+              <p id="featuredCourseDescription">课程会在课时、目录和试看内容准备完整后再公开展示，不以占位信息打扰学习。</p>
+              <div class="tutorial-stats is-empty" id="featuredCourseStats" aria-label="课程信息"><span><strong>0</strong><small>已发布课程</small></span><span><strong>—</strong><small>等待完整内容</small></span></div>
               <div class="tutorial-access">
-                <strong>已是社群会员？</strong>
-                <p>使用登记过的邮箱和专属会员码登录，系统会自动核对会员等级和有效期。</p>
-                <a class="tutorial-google-button" href="../members/"><b>✉</b>会员邮箱登录</a>
-                <a class="tutorial-community-button" href="https://discord.com/" target="_blank" rel="noopener noreferrer">加入社群 · 申请会员权限</a>
-                <small>权限由社群管理员审核开通</small>
+                <strong>已有学习权限？</strong>
+                <p>进入学习区查看已开放的课程、课时和完成进度。</p>
+                <a class="tutorial-google-button" href="../members/"><b>→</b>进入会员学习区</a>
+                <small>公开图文教程无需登录</small>
               </div>
             </div>
-            <p class="tutorial-course-note">登录只用于确认身份；未获得会员权限的账号无法进入完整视频课程。</p>
+            <p class="tutorial-course-note">视频课程是图文学习的补充；是否登录不会影响公开教程阅读。</p>
           </section>
 
           <section class="tutorial-other-courses" aria-labelledby="moreCoursesTitle">
-            <header><h2 id="moreCoursesTitle">更多视频教程</h2><span>会员课程库</span></header>
-            <div id="dynamicCourseList"><article><span class="tutorial-course-icon">US</span><span><strong>美股公司研究与估值</strong><small>课程筹备中 · 会员专享</small></span><em>需权限</em></article><article><span class="tutorial-course-icon is-green">盾</span><span><strong>风险管理与交易纪律</strong><small>课程筹备中 · 会员专享</small></span><em>需权限</em></article></div>
+            <header><h2 id="moreCoursesTitle">已发布课程</h2><span>以后台内容为准</span></header>
+            <div id="dynamicCourseList"><p class="tutorial-course-empty">当前没有已发布的视频课程。</p></div>
           </section>
 
           <section class="tutorial-access-flow" aria-labelledby="accessFlowTitle">
-            <h2 id="accessFlowTitle">视频教程开通流程</h2>
-            <ol><li>加入 Ethan 社群并申请成为会员。</li><li>向管理员提供用于登录的常用邮箱。</li><li>收到专属会员码后，登录进入会员课程。</li></ol>
+            <h2 id="accessFlowTitle">学习区说明</h2>
+            <ol><li>公开图文教程始终可以直接阅读。</li><li>视频课程发布后会先展示目录和适合人群。</li><li>已有权限的读者使用邮箱和会员码登录。</li></ol>
           </section>
         </aside>
       </div>
@@ -149,6 +205,6 @@
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。请独立核验信息并控制风险。</span></footer>
     <script src="../site-shell.js?v=20260718-tutorial-hub"></script>
-    <script src="./tutorial-hub.js?v=20260720-library-1"></script>
+    <script src="./tutorial-hub.js?v=20260720-learning-v2"></script>
   </body>
 </html>

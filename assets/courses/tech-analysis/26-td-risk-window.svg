@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <rect x="70" y="60" width="1060" height="500" rx="22" fill="#fff" stroke="#d7dee8"/>
+  <text x="106" y="118" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">TD 序列：提醒趋势衰竭窗口</text>
+  <path d="M135 450 C235 410 300 390 370 350 S500 270 610 245 S760 210 900 165 S1010 130 1080 120" fill="none" stroke="#111827" stroke-width="7"/>
+  <g font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#2563eb">
+    <text x="170" y="442">1</text><text x="255" y="410">2</text><text x="340" y="372">3</text><text x="425" y="328">4</text><text x="510" y="288">5</text><text x="595" y="260">6</text><text x="680" y="238">7</text><text x="765" y="210">8</text><text x="850" y="175">9</text>
+  </g>
+  <rect x="798" y="88" width="250" height="128" rx="16" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="824" y="134" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#c2410c">风险窗口</text>
+  <text x="824" y="170" font-family="Arial,sans-serif" font-size="19" fill="#7c2d12">不是必然反转</text>
+  <text x="824" y="198" font-family="Arial,sans-serif" font-size="19" fill="#7c2d12">而是提醒少追高</text>
+  <text x="130" y="526" font-family="Arial,sans-serif" font-size="20" fill="#475569">TD 更适合和压力位、背离、成交量一起使用</text>
+</svg>

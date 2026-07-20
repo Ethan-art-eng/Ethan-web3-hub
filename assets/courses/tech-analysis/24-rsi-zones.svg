@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <rect x="80" y="60" width="1040" height="500" rx="22" fill="#fff" stroke="#d7dee8"/>
+  <text x="116" y="118" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">RSI：70 / 50 / 30 三条线怎么用</text>
+  <rect x="150" y="156" width="860" height="92" fill="#fee2e2"/>
+  <rect x="150" y="388" width="860" height="92" fill="#dcfce7"/>
+  <path d="M150 248H1010" stroke="#ef4444" stroke-width="2"/><text x="1030" y="255" font-family="Arial,sans-serif" font-size="19" fill="#ef4444">70</text>
+  <path d="M150 318H1010" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 8"/><text x="1030" y="325" font-family="Arial,sans-serif" font-size="19" fill="#64748b">50</text>
+  <path d="M150 388H1010" stroke="#22c55e" stroke-width="2"/><text x="1030" y="395" font-family="Arial,sans-serif" font-size="19" fill="#16a34a">30</text>
+  <path d="M165 380 C245 250 320 215 390 285 S520 420 610 350 S760 175 850 220 S940 380 995 300" fill="none" stroke="#2563eb" stroke-width="7"/>
+  <text x="168" y="210" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#991b1b">超买区：提醒追高风险</text>
+  <text x="168" y="452" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#166534">超卖区：提醒恐慌风险</text>
+  <text x="620" y="336" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#334155">50 中轴：强弱分界</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <text x="72" y="86" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">OKX 交易大数据：看市场是否拥挤</text>
+  <g font-family="Arial,sans-serif">
+    <rect x="80" y="130" width="500" height="160" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="116" y="178" font-size="24" font-weight="700" fill="#0f172a">多空人数比</text>
+    <rect x="116" y="210" width="380" height="22" rx="11" fill="#fee2e2"/>
+    <rect x="116" y="210" width="285" height="22" rx="11" fill="#16a34a"/>
+    <text x="116" y="262" font-size="19" fill="#475569">多头人数过高时，关注反向波动风险</text>
+    <rect x="620" y="130" width="500" height="160" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="656" y="178" font-size="24" font-weight="700" fill="#0f172a">持仓量</text>
+    <path d="M660 248 C740 230 800 215 860 190 S990 210 1070 170" stroke="#2563eb" stroke-width="7" fill="none"/>
+    <text x="656" y="262" font-size="19" fill="#475569">持仓量上升，说明资金分歧加大</text>
+    <rect x="80" y="330" width="500" height="160" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="116" y="378" font-size="24" font-weight="700" fill="#0f172a">资金费率</text>
+    <text x="116" y="430" font-size="44" font-weight="700" fill="#f97316">偏高</text>
+    <text x="240" y="430" font-size="19" fill="#475569">做多拥挤，追多赔率下降</text>
+    <rect x="620" y="330" width="500" height="160" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="656" y="378" font-size="24" font-weight="700" fill="#0f172a">大户倾向</text>
+    <circle cx="710" cy="430" r="38" fill="#dcfce7"/><text x="692" y="440" font-size="28" font-weight="700" fill="#166534">多</text>
+    <text x="770" y="435" font-size="19" fill="#475569">只能辅助，不能神化</text>
+  </g>
+</svg>

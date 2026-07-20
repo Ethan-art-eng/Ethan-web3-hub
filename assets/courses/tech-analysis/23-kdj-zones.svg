@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <rect x="76" y="56" width="1048" height="500" rx="22" fill="#fff" stroke="#d7dee8"/>
+  <text x="112" y="114" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">KDJ：短线节奏与高低位风险</text>
+  <rect x="130" y="150" width="900" height="80" fill="#fee2e2"/><text x="1040" y="198" font-family="Arial,sans-serif" font-size="20" fill="#991b1b">高位</text>
+  <rect x="130" y="410" width="900" height="80" fill="#dcfce7"/><text x="1040" y="458" font-family="Arial,sans-serif" font-size="20" fill="#166534">低位</text>
+  <path d="M130 320H1030" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 8"/>
+  <path d="M150 430 C220 180 310 190 380 410 S540 480 610 210 S780 180 850 420 S950 470 1010 250" fill="none" stroke="#2563eb" stroke-width="6"/>
+  <path d="M150 455 C230 240 315 230 390 385 S535 445 610 245 S770 235 850 390 S945 430 1010 285" fill="none" stroke="#f97316" stroke-width="5"/>
+  <path d="M150 470 C230 120 320 145 385 440 S545 520 612 150 S785 125 850 455 S955 520 1010 185" fill="none" stroke="#7c3aed" stroke-width="4"/>
+  <text x="154" y="526" font-family="Arial,sans-serif" font-size="20" fill="#475569">高位不是立刻卖，低位不是立刻买；要结合趋势与关键价位</text>
+</svg>

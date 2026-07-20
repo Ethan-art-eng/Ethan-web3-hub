@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <rect x="70" y="60" width="1060" height="500" rx="22" fill="#fff" stroke="#d7dee8"/>
+  <text x="104" y="116" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">MACD：零轴、柱状图与动能变化</text>
+  <path d="M120 330H1080" stroke="#94a3b8" stroke-width="3"/>
+  <text x="104" y="356" font-family="Arial,sans-serif" font-size="18" fill="#64748b">零轴</text>
+  <g>
+    <rect x="170" y="290" width="34" height="40" fill="#16a34a"/><rect x="222" y="260" width="34" height="70" fill="#16a34a"/><rect x="274" y="230" width="34" height="100" fill="#16a34a"/><rect x="326" y="250" width="34" height="80" fill="#16a34a"/><rect x="378" y="280" width="34" height="50" fill="#16a34a"/>
+    <rect x="560" y="330" width="34" height="42" fill="#dc2626"/><rect x="612" y="330" width="34" height="72" fill="#dc2626"/><rect x="664" y="330" width="34" height="108" fill="#dc2626"/><rect x="716" y="330" width="34" height="82" fill="#dc2626"/><rect x="768" y="330" width="34" height="52" fill="#dc2626"/>
+  </g>
+  <path d="M150 290 C250 220 350 215 460 285 S650 440 840 380 S950 250 1050 270" fill="none" stroke="#2563eb" stroke-width="6"/>
+  <path d="M150 315 C250 265 370 260 480 310 S655 395 830 360 S950 290 1050 305" fill="none" stroke="#f97316" stroke-width="6"/>
+  <text x="170" y="190" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#16a34a">零轴上方：偏强</text>
+  <text x="610" y="488" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#dc2626">零轴下方：偏弱</text>
+</svg>

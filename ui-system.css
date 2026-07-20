@@ -252,6 +252,62 @@
   line-height: 1.75;
 }
 
+.ui-v3 .tutorial-trust-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 18px;
+  padding: 12px 0;
+  border-top: 1px solid var(--ui-line);
+  border-bottom: 1px solid var(--ui-line);
+  color: var(--ui-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ui-v3 .tutorial-trust-meta span { display: inline-flex; gap: 5px; }
+.ui-v3 .tutorial-trust-meta strong { color: var(--ui-ink); font-weight: 720; }
+
+.ui-v3 .tutorial-detail-member-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--ui-line);
+  border-radius: 6px;
+  color: var(--ui-ink);
+  font-size: 13px;
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.ui-v3 .tutorial-detail-member-link:hover,
+.ui-v3 .tutorial-detail-member-link:focus-visible { border-color: var(--ui-blue); color: var(--ui-blue); }
+
+.ui-v3 .tutorial-hero-figure,
+.ui-v3 .tutorial-figure {
+  margin: 26px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--ui-line);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.ui-v3 .tutorial-hero-figure img,
+.ui-v3 .tutorial-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ui-v3 .tutorial-figure figcaption {
+  padding: 10px 14px;
+  border-top: 1px solid var(--ui-line);
+  color: var(--ui-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .ui-v3 .tutorial-layout {
   grid-template-columns: 190px minmax(0, 1fr);
   gap: 42px;
@@ -271,7 +327,7 @@
 }
 
 .ui-v3 .tutorial-complete-toggle {
-  min-height: 40px;
+  min-height: 44px;
   margin: 22px 0 0 auto;
   padding: 8px 14px;
   display: block;
@@ -282,6 +338,11 @@
   cursor: pointer;
   font-size: 12px;
   font-weight: 700;
+}
+
+.ui-v3 .tutorial-complete-toggle:focus-visible {
+  outline: 3px solid rgba(20, 92, 245, .2);
+  outline-offset: 2px;
 }
 
 .ui-v3 .tutorial-complete-toggle[aria-pressed="true"] {

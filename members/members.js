@@ -14,7 +14,8 @@ function renderCourses(courses) {
   grid.innerHTML = courses.length ? courses.map((course) => `<article class="member-course-card${course.allowed ? "" : " is-locked"}">
     <div class="member-course-cover"${course.cover_url ? ` style="background-image:url('${escapeHtml(course.cover_url)}')"` : ""}><span>${course.allowed ? "可学习" : "需权限"}</span></div>
     <div class="member-course-copy"><small>${levelLabel(course.access_level)}</small><h3>${escapeHtml(course.title)}</h3><p>${escapeHtml(course.description)}</p>
-      <div class="member-lessons">${course.lessons.length ? course.lessons.map((lesson, index) => `<button type="button" data-lesson="${escapeHtml(lesson.id)}" ${lesson.allowed ? "" : "disabled"}><span><i>${String(index + 1).padStart(2, "0")}</i><strong>${escapeHtml(lesson.title)}</strong></span><em>${lesson.allowed ? `${lesson.duration_minutes || "—"} 分钟` : "已锁定"}</em></button>`).join("") : '<p class="member-empty">课程内容正在准备。</p>'}</div>
+      ${course.lessons.length ? `<div class="member-course-progress"><span><b style="width:${Math.round(course.lessons.filter((lesson) => lesson.completed).length / course.lessons.length * 100)}%"></b></span><small>已完成 ${course.lessons.filter((lesson) => lesson.completed).length} / ${course.lessons.length} 课时</small></div>` : ""}
+      <div class="member-lessons">${course.lessons.length ? course.lessons.map((lesson, index) => `<div class="member-lesson-row${lesson.completed ? " is-complete" : ""}"><button class="member-lesson-play" type="button" data-lesson="${escapeHtml(lesson.id)}" ${lesson.allowed ? "" : "disabled"}><span><i>${String(index + 1).padStart(2, "0")}</i><strong>${escapeHtml(lesson.title)}</strong></span><em>${lesson.allowed ? `${lesson.duration_minutes || "—"} 分钟` : "已锁定"}</em></button><button class="member-lesson-complete" type="button" data-progress="${escapeHtml(lesson.id)}" data-completed="${lesson.completed ? "true" : "false"}" ${lesson.allowed ? "" : "disabled"} aria-label="${lesson.completed ? "取消完成" : "标记完成"}：${escapeHtml(lesson.title)}">${lesson.completed ? "✓" : "○"}</button></div>`).join("") : '<p class="member-empty">课程内容正在准备。</p>'}</div>
     </div></article>`).join("") : '<p class="member-empty">课程库还没有已发布内容。</p>';
 }
 
@@ -58,6 +59,17 @@ async function loadSession() {
 }
 
 grid.addEventListener("click", async (event) => {
+  const progressButton = event.target.closest("button[data-progress]");
+  if (progressButton && !progressButton.disabled) {
+    progressButton.disabled = true;
+    try {
+      const response = await fetch("/members/api/progress", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ lessonId: progressButton.dataset.progress, completed: progressButton.dataset.completed !== "true" }) });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "无法保存学习进度");
+      await loadSession();
+    } catch (error) { showNotice(error.message, "error"); progressButton.disabled = false; }
+    return;
+  }
   const button = event.target.closest("button[data-lesson]");
   if (!button || button.disabled) return;
   button.disabled = true;

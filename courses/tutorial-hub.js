@@ -5,6 +5,8 @@ let tutorialRows = Array.from(document.querySelectorAll(".tutorial-article-row")
 const tutorialFeature = document.querySelector(".tutorial-feature");
 const tutorialEmpty = document.getElementById("tutorialEmpty");
 const tutorialToast = document.getElementById("tutorialToast");
+const tutorialResultCount = document.getElementById("tutorialResultCount");
+const tutorialClearFilters = document.getElementById("tutorialClearFilters");
 let activeTopic = "全部主题";
 let toastTimer;
 
@@ -28,6 +30,8 @@ function applyTutorialFilters() {
   const featureMatchesQuery = !query || normalizeTutorialText(`${tutorialFeature.dataset.search} ${tutorialFeature.textContent}`).includes(query);
   tutorialFeature.hidden = !(featureMatchesTopic && featureMatchesQuery);
   tutorialEmpty.hidden = visibleRows > 0;
+  tutorialResultCount.textContent = `共 ${visibleRows} 篇内容`;
+  tutorialClearFilters.hidden = activeTopic === "全部主题" && !query;
 }
 
 function showTutorialNotice(message) {
@@ -50,20 +54,54 @@ tutorialTopics.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-topic]");
   if (!button) return;
   activeTopic = button.dataset.topic;
-  tutorialTopics.querySelectorAll("button").forEach((item) => item.classList.toggle("is-active", item === button));
+  tutorialTopics.querySelectorAll("button").forEach((item) => {
+    const active = item === button;
+    item.classList.toggle("is-active", active);
+    item.setAttribute("aria-pressed", String(active));
+  });
   applyTutorialFilters();
 });
+
+tutorialClearFilters.addEventListener("click", () => {
+  activeTopic = "全部主题";
+  tutorialSearchInput.value = "";
+  tutorialTopics.querySelectorAll("button").forEach((item) => {
+    const active = item.dataset.topic === activeTopic;
+    item.classList.toggle("is-active", active);
+    item.setAttribute("aria-pressed", String(active));
+  });
+  applyTutorialFilters();
+});
+
+document.querySelectorAll(".tutorial-mode").forEach((mode) => mode.addEventListener("click", () => {
+  document.querySelectorAll(".tutorial-mode").forEach((item) => item.classList.toggle("is-active", item === mode));
+}));
 
 document.addEventListener("click", (event) => {
   const noticeButton = event.target.closest("[data-notice]");
   if (noticeButton) showTutorialNotice(noticeButton.dataset.notice);
 
-  const tabButton = event.target.closest(".tutorial-article-tabs button");
-  if (tabButton) {
-    tabButton.parentElement.querySelectorAll("button").forEach((item) => item.classList.toggle("is-active", item === tabButton));
-    if (!tabButton.matches(":first-child")) showTutorialNotice("该内容视图正在整理，目前先展示最新图文教程。");
-  }
 });
+
+function renderLocalProgress() {
+  let completed = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem("ethan-course-progress-v1") || "[]");
+    completed = Array.isArray(stored) ? stored : [];
+  } catch {}
+  const completedSet = new Set(completed);
+  const allIds = new Set();
+  document.querySelectorAll(".tutorial-path-card[data-path-ids]").forEach((card) => {
+    const ids = card.dataset.pathIds.split(",").filter(Boolean);
+    ids.forEach((id) => allIds.add(id));
+    card.dataset.completed = String(ids.length > 0 && ids.every((id) => completedSet.has(id)));
+  });
+  const completeCount = Array.from(allIds).filter((id) => completedSet.has(id)).length;
+  const total = allIds.size;
+  const progress = document.getElementById("tutorialLocalProgress");
+  progress.querySelector("strong").textContent = `已完成 ${completeCount} / ${total} 篇`;
+  progress.querySelector("b").style.width = `${total ? Math.round(completeCount / total * 100) : 0}%`;
+}
 
 function escapeDynamicHtml(value) {
   return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
@@ -90,9 +128,15 @@ fetch("../api/articles", { cache: "no-store" })
       const featured = courses[0];
       document.getElementById("featuredCourseTitle").textContent = featured.title;
       document.getElementById("featuredCourseDescription").textContent = featured.description;
+      document.getElementById("featuredCourseStats").classList.remove("is-empty");
       document.getElementById("featuredCourseStats").innerHTML = `<span><strong>${featured.lesson_count || 0}</strong><small>视频课时</small></span><span><strong>${featured.duration_minutes || 0}</strong><small>分钟</small></span><span><strong>${featured.access_level === "premium" ? "高级" : featured.access_level === "free" ? "免费" : "会员"}</strong><small>观看权限</small></span>`;
-      document.getElementById("dynamicCourseList").innerHTML = courses.slice(1).map((course, index) => `<article><span class="tutorial-course-icon${index % 2 ? " is-green" : ""}">${String(index + 2).padStart(2, "0")}</span><span><strong>${escapeDynamicHtml(course.title)}</strong><small>${course.lesson_count || 0} 节 · ${course.duration_minutes || 0} 分钟 · ${course.access_level === "premium" ? "高级会员" : course.access_level === "free" ? "免费" : "会员专享"}</small></span><em>${course.access_level === "free" ? "可观看" : "需权限"}</em></article>`).join("");
+      const moreCourses = courses.slice(1);
+      document.getElementById("dynamicCourseList").innerHTML = moreCourses.length ? moreCourses.map((course, index) => `<a href="../members/"><article><span class="tutorial-course-icon${index % 2 ? " is-green" : ""}">${String(index + 2).padStart(2, "0")}</span><span><strong>${escapeDynamicHtml(course.title)}</strong><small>${course.lesson_count || 0} 节 · ${course.duration_minutes || 0} 分钟 · ${course.access_level === "premium" ? "高级会员" : course.access_level === "free" ? "免费" : "会员学习区"}</small></span><em>查看</em></article></a>`).join("") : '<p class="tutorial-course-empty">当前仅发布了上方一门课程。</p>';
     }
     applyTutorialFilters();
   })
   .catch((error) => console.warn("动态文章和课程暂时不可用。", error));
+
+tutorialTopics.querySelectorAll("button").forEach((item) => item.setAttribute("aria-pressed", String(item.classList.contains("is-active"))));
+renderLocalProgress();
+applyTutorialFilters();

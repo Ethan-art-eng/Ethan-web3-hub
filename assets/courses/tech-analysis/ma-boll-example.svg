@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620">
+  <rect width="1200" height="620" fill="#ffffff"/>
+  <rect x="56" y="42" width="1088" height="520" rx="24" fill="#f8fafc" stroke="#d7dee8"/>
+  <text x="92" y="102" font-family="Arial, sans-serif" font-size="36" font-weight="700" fill="#0f172a">MA + BOLL：用趋势和波动一起判断</text>
+  <g stroke="#e2e8f0" stroke-width="1">
+    <path d="M100 480H1100"/>
+    <path d="M100 400H1100"/>
+    <path d="M100 320H1100"/>
+    <path d="M100 240H1100"/>
+    <path d="M100 160H1100"/>
+  </g>
+  <path d="M110 380 C210 320 280 350 360 280 S520 180 630 220 S800 360 900 290 S1010 180 1090 205" fill="none" stroke="#bfdbfe" stroke-width="62" stroke-linecap="round" opacity="0.75"/>
+  <path d="M110 420 C220 390 300 370 390 330 S560 240 655 265 S805 390 920 350 S1010 270 1090 300" fill="none" stroke="#93c5fd" stroke-width="4"/>
+  <path d="M110 340 C210 250 290 300 360 230 S515 120 625 170 S790 315 900 230 S1015 90 1090 110" fill="none" stroke="#93c5fd" stroke-width="4"/>
+  <path d="M110 395 C210 345 305 342 390 300 S550 220 650 242 S805 350 920 310 S1020 210 1090 235" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <path d="M110 430 C210 385 310 360 400 320 S560 255 655 270 S808 335 920 315 S1010 260 1090 245" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+  <g font-family="Arial, sans-serif" font-size="20" fill="#334155">
+    <rect x="830" y="106" width="248" height="108" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+    <circle cx="858" cy="142" r="8" fill="#2563eb"/>
+    <text x="878" y="149">价格走势</text>
+    <circle cx="858" cy="178" r="8" fill="#16a34a"/>
+    <text x="878" y="185">均线 MA</text>
+    <rect x="100" y="500" width="1000" height="2" fill="#94a3b8"/>
+    <text x="100" y="536">价格贴近上轨：强势但需防追高</text>
+    <text x="705" y="536">跌破中轨：趋势转弱信号</text>
+  </g>
+</svg>

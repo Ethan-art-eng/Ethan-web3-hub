@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f8fafc"/>
+  <text x="76" y="84" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0f172a">BOLL 三种状态：收口、开口、通道</text>
+  <g font-family="Arial,sans-serif">
+    <rect x="70" y="126" width="320" height="390" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="100" y="178" font-size="26" font-weight="700" fill="#2563eb">收口</text>
+    <path d="M110 290 C180 250 260 250 350 230" stroke="#93c5fd" stroke-width="5" fill="none"/>
+    <path d="M110 410 C180 385 260 380 350 360" stroke="#93c5fd" stroke-width="5" fill="none"/>
+    <path d="M110 350 C190 322 260 320 350 295" stroke="#111827" stroke-width="6" fill="none"/>
+    <text x="100" y="470" font-size="19" fill="#475569">波动变小，等待方向选择</text>
+    <rect x="440" y="126" width="320" height="390" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="470" y="178" font-size="26" font-weight="700" fill="#16a34a">开口</text>
+    <path d="M480 370 C570 260 650 185 720 150" stroke="#93c5fd" stroke-width="5" fill="none"/>
+    <path d="M480 420 C570 430 650 455 720 490" stroke="#93c5fd" stroke-width="5" fill="none"/>
+    <path d="M480 400 C560 350 645 265 720 210" stroke="#111827" stroke-width="6" fill="none"/>
+    <text x="470" y="470" font-size="19" fill="#475569">波动扩大，趋势可能加速</text>
+    <rect x="810" y="126" width="320" height="390" rx="18" fill="#fff" stroke="#d7dee8"/>
+    <text x="840" y="178" font-size="26" font-weight="700" fill="#f59e0b">通道</text>
+    <path d="M850 240 C930 225 1010 235 1090 220" stroke="#93c5fd" stroke-width="5" fill="none"/>
+    <path d="M850 430 C930 410 1010 420 1090 400" stroke="#93c5fd" stroke-width="5" fill="none"/>
+    <path d="M850 340 C920 270 1000 395 1090 320" stroke="#111827" stroke-width="6" fill="none"/>
+    <text x="840" y="470" font-size="19" fill="#475569">区间震荡，少追涨杀跌</text>
+  </g>
+</svg>

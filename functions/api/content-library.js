@@ -37,7 +37,22 @@ export async function onRequestDelete({ request, env }) {
   const table = TABLES[resource];
   if (!table || !/^[a-z0-9-]{3,80}$/i.test(id)) return json({ error: "Invalid resource" }, { status: 400 });
   try {
-    if (resource === "course") await env.CONTENT_DB.prepare("DELETE FROM lessons WHERE course_id = ?").bind(id).run();
+    if (resource === "course") {
+      await env.CONTENT_DB.batch([
+        env.CONTENT_DB.prepare("DELETE FROM lesson_progress WHERE lesson_id IN (SELECT id FROM lessons WHERE course_id = ?)").bind(id),
+        env.CONTENT_DB.prepare("DELETE FROM lessons WHERE course_id = ?").bind(id),
+      ]);
+    }
+    if (resource === "lesson") {
+      await env.CONTENT_DB.prepare("DELETE FROM lesson_progress WHERE lesson_id = ?").bind(id).run();
+    }
+    if (resource === "member") {
+      const member = await env.CONTENT_DB.prepare("SELECT email FROM members WHERE id = ? LIMIT 1").bind(id).first();
+      if (member?.email) await env.CONTENT_DB.batch([
+        env.CONTENT_DB.prepare("DELETE FROM lesson_progress WHERE email = ?").bind(member.email),
+        env.CONTENT_DB.prepare("DELETE FROM member_sessions WHERE email = ?").bind(member.email),
+      ]);
+    }
     await env.CONTENT_DB.prepare(`DELETE FROM ${table} WHERE id = ?`).bind(id).run();
     return json({ ok: true, data: await listLibrary(env) });
   } catch (error) {

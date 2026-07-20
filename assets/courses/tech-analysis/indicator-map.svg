@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <rect width="1200" height="680" fill="#f7fafc"/>
+  <rect x="56" y="48" width="1088" height="584" rx="28" fill="#ffffff" stroke="#d8e0ea" stroke-width="2"/>
+  <text x="92" y="112" font-family="Arial, sans-serif" font-size="40" font-weight="700" fill="#0f172a">技术分析指标地图</text>
+  <text x="92" y="154" font-family="Arial, sans-serif" font-size="22" fill="#526070">先判断趋势，再确认动能，最后用成交量和风险信号过滤交易</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="92" y="210" width="250" height="250" rx="18" fill="#e8f2ff" stroke="#8ab8ff"/>
+    <text x="124" y="260" font-size="28" font-weight="700" fill="#1455b8">趋势类</text>
+    <text x="124" y="310" font-size="22" fill="#17324d">MA 均线</text>
+    <text x="124" y="350" font-size="22" fill="#17324d">BOLL 布林带</text>
+    <text x="124" y="390" font-size="22" fill="#17324d">SAR 抛物线</text>
+    <text x="124" y="430" font-size="18" fill="#53677d">解决：方向是否明确</text>
+    <rect x="366" y="210" width="250" height="250" rx="18" fill="#ecfdf3" stroke="#79d79b"/>
+    <text x="398" y="260" font-size="28" font-weight="700" fill="#166534">动能类</text>
+    <text x="398" y="310" font-size="22" fill="#21452e">MACD</text>
+    <text x="398" y="350" font-size="22" fill="#21452e">KDJ</text>
+    <text x="398" y="390" font-size="22" fill="#21452e">RSI</text>
+    <text x="398" y="430" font-size="18" fill="#54705d">解决：涨跌是否有力</text>
+    <rect x="640" y="210" width="250" height="250" rx="18" fill="#fff7e8" stroke="#ffc76b"/>
+    <text x="672" y="260" font-size="28" font-weight="700" fill="#a15c00">量能类</text>
+    <text x="672" y="310" font-size="22" fill="#513817">成交量</text>
+    <text x="672" y="350" font-size="22" fill="#513817">资金流向</text>
+    <text x="672" y="390" font-size="22" fill="#513817">持仓变化</text>
+    <text x="672" y="430" font-size="18" fill="#75624a">解决：行情是否真实</text>
+    <rect x="914" y="210" width="190" height="250" rx="18" fill="#fff0f3" stroke="#ff9ab0"/>
+    <text x="946" y="260" font-size="28" font-weight="700" fill="#a21a3c">风控类</text>
+    <text x="946" y="310" font-size="22" fill="#57202d">TD 序列</text>
+    <text x="946" y="350" font-size="22" fill="#57202d">止损线</text>
+    <text x="946" y="390" font-size="22" fill="#57202d">仓位管理</text>
+    <text x="946" y="430" font-size="18" fill="#76515a">解决：错了怎么办</text>
+  </g>
+  <path d="M170 540 H1030" stroke="#b9c3d0" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="170" cy="540" r="15" fill="#2563eb"/>
+  <circle cx="455" cy="540" r="15" fill="#16a34a"/>
+  <circle cx="740" cy="540" r="15" fill="#f59e0b"/>
+  <circle cx="1030" cy="540" r="15" fill="#e11d48"/>
+  <text x="132" y="590" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">看方向</text>
+  <text x="416" y="590" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">看强弱</text>
+  <text x="704" y="590" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">看确认</text>
+  <text x="987" y="590" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">控风险</text>
+</svg>

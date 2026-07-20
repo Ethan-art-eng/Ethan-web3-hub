@@ -346,6 +346,86 @@
       "description": "代币经济、融资、团队、审计、社区和风险复盘。",
       "audience": "形成判断框架",
       "url": "/courses/project-research/"
+    },
+    {
+      "id": "okx-ta-19",
+      "stage": "05",
+      "title": "零基础学技术分析 19：MA 均线怎么看？",
+      "description": "用原创方式整理 MA 均线的核心用法：趋势方向、均线排列、金叉死叉、支撑压力和新手常见误区。",
+      "audience": "技术分析 · 入门",
+      "url": "/courses/okx-technical-analysis-19-ma/"
+    },
+    {
+      "id": "okx-ta-20",
+      "stage": "06",
+      "title": "零基础学技术分析 20：成交量怎么看？",
+      "description": "整理成交量在币市技术分析中的作用：放量、缩量、价量配合、突破确认和假突破过滤。",
+      "audience": "技术分析 · 入门",
+      "url": "/courses/okx-technical-analysis-20-volume/"
+    },
+    {
+      "id": "okx-ta-21",
+      "stage": "07",
+      "title": "零基础学技术分析 21：BOLL 布林带怎么看？",
+      "description": "用原创语言拆解 BOLL 布林带的三条轨道、收口开口、趋势判断和追涨杀跌风险。",
+      "audience": "技术分析 · 入门",
+      "url": "/courses/okx-technical-analysis-21-boll/"
+    },
+    {
+      "id": "okx-ta-22",
+      "stage": "08",
+      "title": "零基础学技术分析 22：MACD 指标怎么看？",
+      "description": "整理 MACD 的核心逻辑：金叉死叉、柱状图、零轴、趋势动能和顶底背离。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-22-macd/"
+    },
+    {
+      "id": "okx-ta-23",
+      "stage": "09",
+      "title": "零基础学技术分析 23：KDJ 指标怎么看？",
+      "description": "整理 KDJ 的短线用法：超买超卖、金叉死叉、钝化、背离和震荡行情注意事项。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-23-kdj/"
+    },
+    {
+      "id": "okx-ta-24",
+      "stage": "10",
+      "title": "零基础学技术分析 24：RSI 相对强弱指标怎么看？",
+      "description": "整理 RSI 的使用方法：强弱分界、超买超卖、背离、趋势过滤和实战注意事项。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-24-rsi/"
+    },
+    {
+      "id": "okx-ta-25",
+      "stage": "11",
+      "title": "零基础学技术分析 25：SAR 指标怎么看？",
+      "description": "整理 SAR 抛物线指标的趋势跟踪用法：方向判断、移动止损、反转提示和震荡行情局限。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-25-sar/"
+    },
+    {
+      "id": "okx-ta-26",
+      "stage": "12",
+      "title": "零基础学技术分析 26：TD 序列怎么看？",
+      "description": "整理 TD 序列的核心用途：趋势衰竭提醒、风险窗口、强趋势钝化和组合判断。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-26-td-sequential/"
+    },
+    {
+      "id": "okx-ta-27",
+      "stage": "13",
+      "title": "零基础学技术分析 27：OKX 交易大数据怎么看？",
+      "description": "整理 OKX 交易大数据的实战用途：多空人数比、持仓量、资金费率、大户持仓和市场拥挤度。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-27-okx-trading-data/"
+    },
+    {
+      "id": "okx-ta-28",
+      "stage": "14",
+      "title": "零基础学技术分析 28：多指标综合实战怎么做？",
+      "description": "把 MA、成交量、BOLL、MACD、RSI、SAR、TD 和交易大数据组合成一套实战检查流程。",
+      "audience": "技术分析 · 进阶",
+      "url": "/courses/okx-technical-analysis-28-multi-indicator-practice/"
     }
   ]
 }
