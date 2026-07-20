@@ -1,0 +1,419 @@
+.wealth-page-v3 {
+  --wealth-ink: #10233f;
+  --wealth-muted: #627087;
+  --wealth-line: #dfe7f1;
+  --wealth-blue: #1769e0;
+  --wealth-blue-soft: #eef5ff;
+  --wealth-amber: #a76406;
+  --wealth-amber-soft: #fff7e6;
+}
+
+.wealth-member-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid #dbe5f1;
+  border-radius: 999px;
+  color: var(--wealth-ink);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #fff;
+}
+
+.wealth-member-link:hover {
+  border-color: #a9c8ef;
+  color: var(--wealth-blue);
+}
+
+.wealth-hero {
+  align-items: end;
+}
+
+.wealth-hero > div:first-child {
+  max-width: 760px;
+}
+
+.wealth-method-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.wealth-method-tags span {
+  padding: 7px 10px;
+  border: 1px solid #d6e5f7;
+  border-radius: 999px;
+  color: #36536f;
+  background: #f8fbff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.wealth-page-v3 .yield-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.wealth-page-v3 .yield-summary article {
+  min-height: 130px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  border-color: var(--wealth-line);
+  background: linear-gradient(150deg, #fff 45%, #f7faff 100%);
+}
+
+.wealth-page-v3 .yield-summary strong {
+  color: var(--wealth-ink);
+}
+
+.wealth-page-v3 .yield-summary small {
+  line-height: 1.45;
+}
+
+.wealth-monitor-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 18px 0 24px;
+  padding: 16px 18px;
+  border: 1px solid #cfdef0;
+  border-radius: 14px;
+  background: #f7fbff;
+  color: #264663;
+}
+
+.wealth-monitor-notice.has-changes {
+  border-color: #efce92;
+  background: var(--wealth-amber-soft);
+  color: #65420b;
+}
+
+.wealth-monitor-notice strong {
+  color: var(--wealth-ink);
+  font-size: 14px;
+}
+
+.wealth-monitor-notice p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.wealth-monitor-notice button {
+  min-width: 96px;
+  min-height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid #b8cee8;
+  border-radius: 10px;
+  background: #fff;
+  color: #244a70;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.wealth-monitor-notice button:hover {
+  border-color: var(--wealth-blue);
+  color: var(--wealth-blue);
+}
+
+.wealth-monitor-notice button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.wealth-section-heading {
+  align-items: end;
+}
+
+.campaign-result-count {
+  margin: 8px 0 0;
+  color: var(--wealth-muted);
+  font-size: 13px;
+}
+
+.wealth-page-v3 .campaign-table {
+  min-width: 980px;
+}
+
+.wealth-page-v3 .campaign-table th:nth-child(1) { width: 37%; }
+.wealth-page-v3 .campaign-table th:nth-child(2) { width: 16%; }
+.wealth-page-v3 .campaign-table th:nth-child(3) { width: 25%; }
+.wealth-page-v3 .campaign-table th:nth-child(4) { width: 22%; }
+
+.wealth-page-v3 .campaign-row {
+  cursor: pointer;
+}
+
+.wealth-page-v3 .campaign-row:hover td {
+  background: #f8fbff;
+}
+
+.wealth-page-v3 .campaign-row.is-stale td {
+  background: #fffdf8;
+}
+
+.wealth-page-v3 .campaign-row.is-stale:hover td {
+  background: #fff9eb;
+}
+
+.activity-title-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.verification-label.stale {
+  color: var(--wealth-amber) !important;
+}
+
+.apy-value {
+  display: block;
+}
+
+.apy-caption {
+  display: block;
+  margin-top: 4px;
+  color: var(--wealth-muted);
+  font-size: 11px;
+}
+
+.campaign-requirement,
+.deadline-cell {
+  display: grid;
+  gap: 6px;
+}
+
+.campaign-requirement strong,
+.deadline-cell strong {
+  color: var(--wealth-ink);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.campaign-requirement small,
+.deadline-cell small {
+  color: var(--wealth-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.campaign-detail-rate.is-stale {
+  border-color: #efd19a;
+  background: var(--wealth-amber-soft);
+}
+
+.yield-estimator {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #d8e5f2;
+  border-radius: 14px;
+  background: #f7fbff;
+}
+
+.yield-estimator > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.yield-estimator > div:first-child strong {
+  color: var(--wealth-ink);
+}
+
+.yield-estimator > div:first-child small {
+  color: var(--wealth-muted);
+  line-height: 1.5;
+}
+
+.yield-estimator-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.yield-estimator label {
+  display: grid;
+  gap: 6px;
+  color: #41556d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.yield-estimator input,
+.yield-estimator select {
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 1px solid #c8d8e8;
+  border-radius: 9px;
+  padding: 0 11px;
+  background: #fff;
+  color: var(--wealth-ink);
+  font: inherit;
+}
+
+.yield-estimator output {
+  color: #0c5dc7;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.campaign-detail-note ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.campaign-detail-note li + li {
+  margin-top: 7px;
+}
+
+.wealth-method {
+  margin-top: 28px;
+  padding: 30px;
+  border: 1px solid var(--wealth-line);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.wealth-method h2 {
+  max-width: 720px;
+  margin: 5px 0 0;
+  color: var(--wealth-ink);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.2;
+}
+
+.wealth-method ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wealth-method li {
+  padding: 18px;
+  border-radius: 14px;
+  background: #f6f9fd;
+}
+
+.wealth-method li > span {
+  display: block;
+  margin-bottom: 18px;
+  color: #7c91aa;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.wealth-method li strong {
+  color: var(--wealth-ink);
+  font-size: 15px;
+}
+
+.wealth-method li p {
+  margin: 8px 0 0;
+  color: var(--wealth-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.wealth-page-v3 button:focus-visible,
+.wealth-page-v3 a:focus-visible,
+.wealth-page-v3 input:focus-visible,
+.wealth-page-v3 select:focus-visible,
+.wealth-page-v3 [tabindex="0"]:focus-visible {
+  outline: 3px solid rgba(23, 105, 224, .25);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .wealth-page-v3 .yield-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wealth-method ol {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .wealth-member-link {
+    display: none;
+  }
+
+  .wealth-method-tags {
+    margin-top: 16px;
+  }
+
+  .wealth-page-v3 .yield-summary article {
+    min-height: 112px;
+    padding: 16px;
+  }
+
+  .wealth-monitor-notice {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .wealth-monitor-notice button {
+    width: 100%;
+  }
+
+  .wealth-page-v3 .campaign-table {
+    min-width: 0;
+  }
+
+  .wealth-page-v3 .campaign-table td[data-label="参考年化"],
+  .wealth-page-v3 .campaign-table td[data-label="参与门槛"],
+  .wealth-page-v3 .campaign-table td[data-label="截止时间"] {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+  }
+
+  .wealth-page-v3 .campaign-table td[data-label]::before {
+    color: #718198;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .yield-estimator-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .yield-estimator output {
+    font-size: 18px;
+  }
+
+  .wealth-method {
+    padding: 22px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wealth-page-v3 .yield-summary {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .wealth-page-v3 .yield-summary article {
+    min-height: 104px;
+    padding: 14px;
+  }
+}

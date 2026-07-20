@@ -3,36 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="躺赚笔记币圈理财页，整理稳定币、质押、DeFi 和 RWA 收益项目的风险检查框架。" />
+    <meta name="description" content="躺赚笔记稳定币收益观察台，整理五家交易所公开活动、年化收益、门槛、截止时间与官方核验链接。" />
     <link rel="canonical" href="https://ethanweb3.com/wealth/" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="币圈理财 | 躺赚笔记" />
-    <meta property="og:description" content="追踪五家交易所已核验的稳定币理财活动。" />
+    <meta property="og:title" content="稳定币收益观察台 | 躺赚笔记" />
+    <meta property="og:description" content="人工核验、官方源监控和收益试算，帮你更快看懂稳定币活动。" />
     <meta property="og:url" content="https://ethanweb3.com/wealth/" />
-    <meta name="twitter:card" content="summary" />
-    <title>币圈理财 | 躺赚笔记</title>
-    <link rel="stylesheet" href="../styles.css?v=20260716-wealth-v2" />
-    <link rel="stylesheet" href="../ui-system.css?v=20260716-ui4" />
+    <meta property="og:image" content="https://ethanweb3.com/assets/wealth/wealth-og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ethanweb3.com/assets/wealth/wealth-og.png" />
+    <title>稳定币收益观察台 | 躺赚笔记</title>
+    <link rel="stylesheet" href="../styles.css?v=20260720-wealth-v3" />
+    <link rel="stylesheet" href="../ui-system.css?v=20260720-learning-v2" />
+    <link rel="stylesheet" href="./wealth.css?v=20260720-observer-v1" />
   </head>
-  <body class="ui-v3 wealth-page-v2">
+  <body class="ui-v3 wealth-page-v2 wealth-page-v3">
     <header class="site-header">
       <a class="brand" href="../"><span class="brand-mark" aria-label="Bitcoin">₿</span><span><strong>躺赚笔记</strong><small>Web3 内容导航</small></span></a>
       <nav class="nav"><a href="../airdrops/">空投项目</a><a href="../toolbox/">工具箱</a><a class="active" href="../wealth/">币圈理财</a><a href="../courses/">教程</a></nav>
-      <div class="community-links" aria-label="加入我们">
-        <span class="community-label">加入我们</span>
-        <a class="social-link discord" href="https://discord.com/" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="../assets/social/discord.svg" alt="" /></a>
-        <a class="social-link telegram" href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><img src="../assets/social/telegram.svg" alt="" /></a>
-        <a class="social-link youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="../assets/social/youtube.svg" alt="" /></a>
-      </div>
+      <a class="wealth-member-link" href="../members/">会员学习区 <span aria-hidden="true">→</span></a>
     </header>
 
     <main class="page wealth-page">
       <section class="workspace-head wealth-hero">
         <div>
-          <h1>币圈理财</h1>
-          <p>集中追踪币安、欧易、Bybit、Bitget、Gate 的公开稳定币活动。</p>
+          <p class="eyebrow">Stablecoin Observer</p>
+          <h1>稳定币收益观察台</h1>
+          <p>集中整理币安、欧易、Bybit、Bitget 和 Gate 的公开活动。只把年化当作筛选线索，最终以你账户内的官方规则为准。</p>
+          <div class="wealth-method-tags" aria-label="数据更新方式"><span>人工核验</span><span>6 小时源站监控</span><span>5 分钟页面刷新</span></div>
         </div>
         <div class="workspace-meta" aria-label="数据概览">
           <span><b id="verifiedCount">—</b> 个已核验活动</span>
@@ -41,10 +41,24 @@
         </div>
       </section>
 
+      <section class="yield-summary" aria-label="理财数据摘要">
+        <article><span>可见活动</span><strong id="summaryCampaignCount">—</strong><small>已排除过期</small></article>
+        <article><span>最高展示年化</span><strong id="summaryTopApy">—</strong><small id="summaryTopApyNote">非保证收益</small></article>
+        <article><span>官方源可达</span><strong id="summarySourceHealth">—</strong><small id="summaryMonitorTime">等待监控</small></article>
+        <article><span>待复核变化</span><strong id="summaryChangedCount">—</strong><small>监控不会自动改写利率</small></article>
+      </section>
+
+      <section class="wealth-monitor-notice" id="wealthMonitorNotice" aria-live="polite">
+        <div><strong>数据更新方式</strong><p id="wealthMonitorCopy">正在读取官方源监控状态。</p></div>
+        <button id="refreshCampaigns" type="button">立即刷新</button>
+      </section>
+
       <section class="campaign-section wealth-watchlist" id="campaigns" aria-label="交易所稳定币理财活动">
         <div class="section-heading wealth-section-heading">
           <div>
+            <p class="eyebrow">Verified Watchlist</p>
             <h2>稳定币活动</h2>
+            <p class="campaign-result-count" id="campaignResultCount">正在读取活动</p>
           </div>
           <div class="data-freshness wealth-data-freshness" id="wealthDataFreshness">
             <span>数据状态</span>
@@ -56,13 +70,14 @@
         <div class="campaign-toolbar">
           <div class="exchange-filters" id="exchangeFilters" aria-label="按交易所筛选"></div>
           <div class="campaign-controls">
-            <label class="campaign-search"><span class="sr-only">搜索活动</span><input id="campaignSearch" type="search" placeholder="搜索活动或币种" autocomplete="off" /></label>
+            <label class="campaign-search"><span class="sr-only">搜索活动</span><input id="campaignSearch" type="search" placeholder="搜索币种、交易所或活动" autocomplete="off" /></label>
             <details class="campaign-filter-menu">
               <summary>筛选与排序</summary>
               <div>
                 <label class="campaign-audience"><span>用户资格</span><select id="campaignAudience"><option value="all">全部用户</option><option value="new">新用户活动</option></select></label>
                 <label class="campaign-term"><span>产品期限</span><select id="campaignTerm"><option value="all">全部期限</option><option value="flexible">活期</option><option value="fixed">定期</option></select></label>
-                <label class="campaign-sort"><span>排序方式</span><select id="campaignSort"><option value="deadline">按到期时间</option><option value="apy">按年利率</option></select></label>
+                <label class="campaign-verification"><span>核验状态</span><select id="campaignVerification"><option value="all">全部状态</option><option value="current">72 小时内核验</option><option value="stale">需要复核</option></select></label>
+                <label class="campaign-sort"><span>排序方式</span><select id="campaignSort"><option value="verified">按核验时间</option><option value="deadline">按到期时间</option><option value="apy">按年化</option></select></label>
               </div>
             </details>
           </div>
@@ -73,12 +88,13 @@
             <thead>
               <tr>
                 <th>活动</th>
-                <th>年利率</th>
-                <th>到期时间</th>
+                <th>参考年化</th>
+                <th>参与门槛</th>
+                <th>截止时间</th>
               </tr>
             </thead>
             <tbody id="campaignTableBody">
-              <tr><td colspan="3">正在加载交易所理财数据</td></tr>
+              <tr><td colspan="4">正在加载交易所理财数据</td></tr>
             </tbody>
           </table>
         </div>
@@ -87,6 +103,15 @@
           <p class="table-disclaimer" id="campaignDisclaimer">数据加载中。</p>
           <p class="data-source" id="campaignSource" aria-live="polite"></p>
         </div>
+      </section>
+
+      <section class="wealth-method" aria-labelledby="wealthMethodTitle">
+        <div><p class="eyebrow">Update Standard</p><h2 id="wealthMethodTitle">我们不把“自动刷新”写成“实时利率”</h2></div>
+        <ol>
+          <li><span>01</span><strong>页面每 5 分钟重新读取</strong><p>及时获取站内已发布的最新记录。</p></li>
+          <li><span>02</span><strong>官方源每 6 小时检查</strong><p>发现交易所页面有变化时，标记为待复核。</p></li>
+          <li><span>03</span><strong>人工核对后才改写利率</strong><p>避免爬虫误读、分层年化或地区限制被错当成通用收益。</p></li>
+        </ol>
       </section>
     </main>
     <dialog class="campaign-detail-dialog" id="campaignDetailDialog" aria-labelledby="campaignDetailTitle">
@@ -98,6 +123,6 @@
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script id="campaignInitialData" type="application/json">{"updatedAt":"","exchanges":[],"campaigns":[]}</script>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../wealth-page.js?v=20260716-wealth-v3"></script>
+    <script src="../wealth-page.js?v=20260720-observer-v1"></script>
   </body>
 </html>

@@ -161,6 +161,30 @@ function toPublicData(data) {
   };
 }
 
+function toPublicMonitor(report) {
+  if (!report?.checkedAt) return null;
+  return {
+    checkedAt: report.checkedAt,
+    changedCount: Number(report.changedCount || 0),
+    issueCount: Number(report.issueCount || 0),
+    blockedCount: Number(report.blockedCount || 0),
+    exchanges: Array.isArray(report.exchanges) ? report.exchanges.map((item) => ({
+      name: item.name || "",
+      shortName: item.shortName || item.name || "",
+      checkedAt: item.checkedAt || report.checkedAt,
+      reachable: Boolean(item.reachable),
+      status: Number(item.status || 0),
+      changed: Boolean(item.changed),
+      blocked: Boolean(item.blocked),
+    })) : [],
+  };
+}
+
+async function loadPublicMonitor(env) {
+  if (!env.CEX_YIELDS) return null;
+  return toPublicMonitor(await env.CEX_YIELDS.get(MONITOR_KEY, "json"));
+}
+
 async function handleWrite({ request, env }) {
   if (!env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
   if (!isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
@@ -227,8 +251,11 @@ export async function onRequestGet(context) {
       if (!context.env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
       return json((await context.env.CEX_YIELDS.get(MONITOR_KEY, "json")) || { checkedAt: null, changedCount: 0, issueCount: 0, exchanges: [] });
     }
-    const data = await loadCampaigns(context.env, context.request);
-    return json(adminRequest ? data : toPublicData(data));
+    const [data, monitor] = await Promise.all([
+      loadCampaigns(context.env, context.request),
+      adminRequest ? Promise.resolve(null) : loadPublicMonitor(context.env),
+    ]);
+    return json(adminRequest ? data : { ...toPublicData(data), monitor });
   } catch (error) {
     return json({ error: error.message }, { status: 500 });
   }
