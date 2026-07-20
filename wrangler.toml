@@ -8,3 +8,17 @@ ACCESS_AUTH_ENABLED = "true"
 [[kv_namespaces]]
 binding = "CEX_YIELDS"
 id = "3a7989585dd144f9a984c5cbb1abdfdc"
+
+[[d1_databases]]
+binding = "CONTENT_DB"
+database_name = "ethan-web3-content"
+database_id = "1839de11-0151-4602-94a0-11b5ae8aea0c"
+
+# R2 must be enabled once in the Cloudflare dashboard before this binding can
+# be activated. The upload endpoint reports a clear setup message until then.
+# [[r2_buckets]]
+# binding = "MEDIA"
+# bucket_name = "ethan-web3-media"
+
+[stream]
+binding = "STREAM"

@@ -330,6 +330,7 @@
 }
 
 .tutorial-cover-dark { background: #142a49; color: #ffffff; }
+.tutorial-cover-image { background-position: center; background-size: cover; color: transparent; }
 .tutorial-cover-green { background: #143f39; color: #ffffff; }
 .tutorial-cover-orange { background: #553719; color: #ffffff; }
 

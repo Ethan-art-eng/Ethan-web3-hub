@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
     <title>内容管理后台 | 躺赚笔记</title>
-    <link rel="stylesheet" href="./admin.css?v=20260717-featured-v1" />
+    <link rel="stylesheet" href="./admin.css?v=20260720-library-v1" />
   </head>
   <body>
     <header class="admin-header">
@@ -42,6 +42,9 @@
               <button type="button" data-admin-panel="wealth">稳定币理财</button>
               <button type="button" data-admin-panel="toolbox">工具箱</button>
               <button type="button" data-admin-panel="tutorials">教程</button>
+              <button type="button" data-admin-panel="articles">文章管理</button>
+              <button type="button" data-admin-panel="video-courses">视频课程</button>
+              <button type="button" data-admin-panel="members">会员管理</button>
             </nav>
             <div class="sidebar-note"><span>权限状态</span><strong>Cloudflare 已验证</strong></div>
           </aside>
@@ -57,6 +60,9 @@
                 <button type="button" data-jump-panel="wealth"><span>理财活动</span><strong id="overviewWealthCount">0</strong><small>五家交易所稳定币收益</small></button>
                 <button type="button" data-jump-panel="toolbox"><span>工具入口</span><strong id="overviewToolCount">—</strong><small>必备入口与实战工具</small></button>
                 <button type="button" data-jump-panel="tutorials"><span>教程阶段</span><strong id="overviewTutorialCount">—</strong><small>新手学习路线</small></button>
+                <button type="button" data-jump-panel="articles"><span>正式文章</span><strong id="overviewArticleCount">0</strong><small>草稿、发布与会员文章</small></button>
+                <button type="button" data-jump-panel="video-courses"><span>视频课程</span><strong id="overviewCourseCount">0</strong><small>课程、课时与私有视频</small></button>
+                <button type="button" data-jump-panel="members"><span>有效会员</span><strong id="overviewMemberCount">0</strong><small>等级、到期和暂停权限</small></button>
               </div>
               <div class="overview-status">
                 <div><p class="eyebrow">Publishing</p><h2>修改保存后立即更新</h2><p>所有内容统一写入 Cloudflare KV，公开页无需重新部署。</p></div>
@@ -129,6 +135,25 @@
               <div class="tutorial-admin-grid" id="tutorialAdminGrid"></div>
               <p class="save-status" id="tutorialSaveStatus" role="status"></p>
             </section>
+
+            <section class="admin-panel" data-panel="articles">
+              <div class="workspace-heading"><div><p class="eyebrow">Publishing Studio</p><h1>文章管理</h1><p>直接编辑正文、保存草稿或发布到公开教程页面。</p></div><div class="workspace-actions"><a class="button-link" href="../../courses/" target="_blank" rel="noreferrer">公开页</a><button class="primary-button" id="addArticleButton" type="button">新建文章</button></div></div>
+              <div class="admin-summary three"><div><span>文章总数</span><strong id="articleTotal">0</strong></div><div><span>已发布</span><strong id="articlePublished">0</strong></div><div><span>草稿</span><strong id="articleDraft">0</strong></div></div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>文章</th><th>分类</th><th>权限</th><th>状态</th><th>操作</th></tr></thead><tbody id="articleAdminBody"></tbody></table><p class="admin-empty" id="articleAdminEmpty" hidden>还没有文章，点击“新建文章”开始。</p></div><p class="save-status" id="articleSaveStatus" role="status"></p>
+            </section>
+
+            <section class="admin-panel" data-panel="video-courses">
+              <div class="workspace-heading"><div><p class="eyebrow">Member Academy</p><h1>视频课程</h1><p>先创建课程，再上传并发布课时；会员播放地址不会公开暴露。</p></div><div class="workspace-actions"><a class="button-link" href="../../members/" target="_blank" rel="noreferrer">会员页</a><button id="addLessonButton" type="button">新增课时</button><button class="primary-button" id="addCourseButton" type="button">新建课程</button></div></div>
+              <div class="admin-summary three"><div><span>课程数</span><strong id="courseTotal">0</strong></div><div><span>已发布课时</span><strong id="lessonPublished">0</strong></div><div><span>待发布</span><strong id="lessonDraft">0</strong></div></div>
+              <div class="course-admin-list" id="courseAdminList"></div><p class="save-status" id="courseSaveStatus" role="status"></p>
+            </section>
+
+            <section class="admin-panel" data-panel="members">
+              <div class="workspace-heading"><div><p class="eyebrow">Access Control</p><h1>会员管理</h1><p>按会员邮箱、等级和到期时间控制课程观看权限。</p></div><div class="workspace-actions"><button class="primary-button" id="addMemberButton" type="button">新增会员</button></div></div>
+              <div class="admin-summary three"><div><span>会员总数</span><strong id="memberTotal">0</strong></div><div><span>当前有效</span><strong id="memberActive">0</strong></div><div><span>暂停或到期</span><strong id="memberInactive">0</strong></div></div>
+              <div class="admin-filter-bar"><label>搜索<input id="memberSearch" type="search" placeholder="邮箱或姓名" /></label><label>状态<select id="memberFilter"><option value="all">全部</option><option value="active">有效</option><option value="inactive">暂停或到期</option></select></label></div>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>会员</th><th>等级</th><th>有效期</th><th>状态</th><th>操作</th></tr></thead><tbody id="memberAdminBody"></tbody></table><p class="admin-empty" id="memberAdminEmpty" hidden>还没有会员。</p></div><p class="save-status" id="memberSaveStatus" role="status"></p>
+            </section>
           </div>
         </div>
       </section>
@@ -159,10 +184,32 @@
       <label>阶段<input id="tutorialStage" maxlength="20" placeholder="05" required /></label><label>标题<input id="tutorialTitle" maxlength="160" required /></label><label class="full-width">学习内容<textarea id="tutorialDescription" rows="3" maxlength="800"></textarea></label><label>适合人群<input id="tutorialAudience" maxlength="160" /></label><label>详细教程链接<input id="tutorialUrl" type="url" maxlength="1500" placeholder="https://" /></label>
     </div><div class="dialog-actions"><button id="cancelTutorialDialog" type="button">取消</button><button class="primary-button" type="submit">保存教程</button></div></form></dialog>
 
+    <dialog id="articleDialog" class="wide-dialog"><form id="articleForm"><div class="dialog-heading"><div><p class="eyebrow">Article</p><h2 id="articleDialogTitle">新建文章</h2></div><button class="icon-button" id="closeArticleDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label class="full-width">标题<input id="articleTitle" maxlength="180" required /></label><label>网址标识<input id="articleSlug" maxlength="100" placeholder="例如 btc-risk-guide" /></label><label>分类<input id="articleCategory" maxlength="80" value="投资基础" /></label>
+      <label class="full-width">摘要<textarea id="articleExcerpt" rows="3" maxlength="600"></textarea></label><label>封面地址<input id="articleCoverUrl" maxlength="1500" placeholder="可粘贴图片网址" /></label><label>上传封面<input id="articleCoverFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" /></label>
+      <label>阅读时间（分钟）<input id="articleReadingMinutes" type="number" min="1" max="120" value="5" /></label><label>阅读权限<select id="articleAccess"><option value="public">公开阅读</option><option value="member">会员专享</option></select></label>
+      <label class="full-width rich-editor-label">正文<div class="editor-toolbar"><button type="button" data-editor-command="formatBlock" data-editor-value="h2">标题</button><button type="button" data-editor-command="bold">加粗</button><button type="button" data-editor-command="insertUnorderedList">列表</button><button type="button" id="articleInsertLink">链接</button><button type="button" id="articleInsertImage">插入图片</button></div><div id="articleBody" class="rich-editor" contenteditable="true" role="textbox" aria-multiline="true"></div></label>
+      <label>发布状态<select id="articleStatus"><option value="draft">保存草稿</option><option value="published">正式发布</option></select></label>
+    </div><div class="dialog-actions"><button id="cancelArticleDialog" type="button">取消</button><button class="primary-button" type="submit">保存文章</button></div></form></dialog>
+
+    <dialog id="courseDialog"><form id="courseForm"><div class="dialog-heading"><div><p class="eyebrow">Course</p><h2 id="courseDialogTitle">新建课程</h2></div><button class="icon-button" id="closeCourseDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label class="full-width">课程名称<input id="courseTitle" maxlength="180" required /></label><label>网址标识<input id="courseSlug" maxlength="100" /></label><label>课程权限<select id="courseAccess"><option value="basic">正式会员</option><option value="premium">高级会员</option><option value="free">免费课程</option></select></label><label class="full-width">课程简介<textarea id="courseDescription" rows="4" maxlength="1200"></textarea></label><label>封面地址<input id="courseCoverUrl" maxlength="1500" /></label><label>排序<input id="courseSortOrder" type="number" value="0" /></label><label>发布状态<select id="courseStatus"><option value="draft">草稿</option><option value="published">已发布</option></select></label>
+    </div><div class="dialog-actions"><button id="cancelCourseDialog" type="button">取消</button><button class="primary-button" type="submit">保存课程</button></div></form></dialog>
+
+    <dialog id="lessonDialog"><form id="lessonForm"><div class="dialog-heading"><div><p class="eyebrow">Video Lesson</p><h2 id="lessonDialogTitle">新增课时</h2></div><button class="icon-button" id="closeLessonDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>所属课程<select id="lessonCourseId" required></select></label><label>排序<input id="lessonSortOrder" type="number" value="0" /></label><label class="full-width">课时名称<input id="lessonTitle" maxlength="180" required /></label><label class="full-width">课时简介<textarea id="lessonDescription" rows="3" maxlength="800"></textarea></label>
+      <label>视频文件<input id="lessonVideoFile" type="file" accept="video/*" /></label><label>视频时长（分钟）<input id="lessonDuration" type="number" min="0" max="1440" /></label><label>观看权限<select id="lessonAccess"><option value="member">跟随课程权限</option><option value="free">免费试看</option></select></label><label>发布状态<select id="lessonStatus"><option value="draft">草稿</option><option value="published">已发布</option></select></label><label class="full-width">视频 ID<input id="lessonStreamUid" maxlength="160" placeholder="上传后自动填写，也可粘贴 Stream 视频 ID" /></label><div class="full-width upload-progress" id="videoUploadProgress" hidden><span></span><strong>正在上传视频…</strong></div>
+    </div><div class="dialog-actions"><button id="cancelLessonDialog" type="button">取消</button><button class="primary-button" id="saveLessonButton" type="submit">保存课时</button></div></form></dialog>
+
+    <dialog id="memberDialog"><form id="memberForm"><div class="dialog-heading"><div><p class="eyebrow">Member</p><h2 id="memberDialogTitle">新增会员</h2></div><button class="icon-button" id="closeMemberDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
+      <label>会员邮箱<input id="memberEmail" type="email" maxlength="254" required /></label><label>姓名或备注名<input id="memberName" maxlength="120" /></label><label>会员等级<select id="memberTier"><option value="basic">正式会员</option><option value="premium">高级会员</option></select></label><label>状态<select id="memberStatusInput"><option value="active">正常</option><option value="paused">暂停</option></select></label><label>开通日期<input id="memberStartsAt" type="date" required /></label><label>到期日期<input id="memberExpiresAt" type="date" /></label><label class="full-width">会员登录码<div class="token-row"><input id="memberAccessCode" maxlength="80" autocomplete="off" placeholder="新会员必须设置；编辑时留空表示不重置" /><button id="generateMemberCode" type="button">随机生成</button></div><small>请把邮箱和登录码单独发给会员；后台不会再次显示旧登录码。</small></label><label class="full-width">备注<textarea id="memberNotes" rows="3" maxlength="800"></textarea></label>
+    </div><div class="dialog-actions"><button id="cancelMemberDialog" type="button">取消</button><button class="primary-button" type="submit">保存会员</button></div></form></dialog>
+
     <dialog id="historyDialog" class="history-dialog"><div class="history-content"><div class="dialog-heading"><div><p class="eyebrow">Revision History</p><h2>理财版本记录</h2></div><button class="icon-button" id="closeHistoryButton" type="button" aria-label="关闭">×</button></div><p class="history-help">每次保存前会自动备份上一版本，备份保留 60 天。</p><div id="historyList" class="history-list"></div><p class="form-status" id="historyStatus" role="status"></p></div></dialog>
 
-    <script src="./admin.js?v=20260717-featured-v1"></script>
+    <script src="./admin.js?v=20260720-library-v1"></script>
     <script src="./airdrop-admin.js?v=20260717-featured-v1"></script>
     <script src="./content-admin.js?v=20260717-featured-v1"></script>
+    <script src="./library-admin.js?v=20260720-library-v1"></script>
   </body>
 </html>

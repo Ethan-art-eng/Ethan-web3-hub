@@ -15,7 +15,7 @@
     <title>投资教程 | 躺赚笔记</title>
     <link rel="stylesheet" href="../styles.css?v=20260718-tutorial-hub" />
     <link rel="stylesheet" href="../ui-system.css?v=20260718-tutorial-hub" />
-    <link rel="stylesheet" href="./tutorial-hub.css?v=20260718-1" />
+    <link rel="stylesheet" href="./tutorial-hub.css?v=20260720-library-v1" />
   </head>
   <body class="ui-v3 tutorial-hub-page">
     <header class="site-header">
@@ -120,13 +120,13 @@
               <div class="tutorial-video-art" aria-hidden="true"><i>▶</i></div>
             </div>
             <div class="tutorial-course-body">
-              <h2>技术分析：从图表到交易系统</h2>
-              <p>不是记指标，而是建立趋势识别、入场、退出、仓位与复盘的完整执行框架。</p>
-              <div class="tutorial-stats" aria-label="课程信息"><span><strong>32</strong><small>视频课时</small></span><span><strong>8.5h</strong><small>课程时长</small></span><span><strong>会员</strong><small>观看权限</small></span></div>
+              <h2 id="featuredCourseTitle">技术分析：从图表到交易系统</h2>
+              <p id="featuredCourseDescription">不是记指标，而是建立趋势识别、入场、退出、仓位与复盘的完整执行框架。</p>
+              <div class="tutorial-stats" id="featuredCourseStats" aria-label="课程信息"><span><strong>32</strong><small>视频课时</small></span><span><strong>8.5h</strong><small>课程时长</small></span><span><strong>会员</strong><small>观看权限</small></span></div>
               <div class="tutorial-access">
                 <strong>已是社群会员？</strong>
-                <p>未来可使用登记过的 Google 账号登录，系统自动验证观看权限。</p>
-                <button class="tutorial-google-button" type="button" data-notice="Google 会员登录功能正在接入，暂未开放。"><b>G</b>使用 Google 账号登录</button>
+                <p>使用登记过的邮箱和专属会员码登录，系统会自动核对会员等级和有效期。</p>
+                <a class="tutorial-google-button" href="../members/"><b>✉</b>会员邮箱登录</a>
                 <a class="tutorial-community-button" href="https://discord.com/" target="_blank" rel="noopener noreferrer">加入社群 · 申请会员权限</a>
                 <small>权限由社群管理员审核开通</small>
               </div>
@@ -135,15 +135,13 @@
           </section>
 
           <section class="tutorial-other-courses" aria-labelledby="moreCoursesTitle">
-            <header><h2 id="moreCoursesTitle">更多视频教程</h2><span>课程库筹备中</span></header>
-            <article><span class="tutorial-course-icon">US</span><span><strong>美股公司研究与估值</strong><small>26 节 · 6.5 小时 · 会员专享</small></span><em>需权限</em></article>
-            <article><span class="tutorial-course-icon is-green">盾</span><span><strong>风险管理与交易纪律</strong><small>18 节 · 4 小时 · 会员专享</small></span><em>需权限</em></article>
-            <article><span class="tutorial-course-icon is-orange">₿</span><span><strong>加密资产研究基础</strong><small>20 节 · 5 小时 · 会员专享</small></span><em>需权限</em></article>
+            <header><h2 id="moreCoursesTitle">更多视频教程</h2><span>会员课程库</span></header>
+            <div id="dynamicCourseList"><article><span class="tutorial-course-icon">US</span><span><strong>美股公司研究与估值</strong><small>课程筹备中 · 会员专享</small></span><em>需权限</em></article><article><span class="tutorial-course-icon is-green">盾</span><span><strong>风险管理与交易纪律</strong><small>课程筹备中 · 会员专享</small></span><em>需权限</em></article></div>
           </section>
 
           <section class="tutorial-access-flow" aria-labelledby="accessFlowTitle">
             <h2 id="accessFlowTitle">视频教程开通流程</h2>
-            <ol><li>加入 Ethan 社群并申请成为会员。</li><li>向管理员提供用于登录的 Google 邮箱。</li><li>审核通过后，使用该账号登录观看。</li></ol>
+            <ol><li>加入 Ethan 社群并申请成为会员。</li><li>向管理员提供用于登录的常用邮箱。</li><li>收到专属会员码后，登录进入会员课程。</li></ol>
           </section>
         </aside>
       </div>
@@ -151,6 +149,6 @@
     </main>
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。请独立核验信息并控制风险。</span></footer>
     <script src="../site-shell.js?v=20260718-tutorial-hub"></script>
-    <script src="./tutorial-hub.js?v=20260718-1"></script>
+    <script src="./tutorial-hub.js?v=20260720-library-1"></script>
   </body>
 </html>

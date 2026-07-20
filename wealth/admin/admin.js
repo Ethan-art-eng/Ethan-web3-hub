@@ -79,7 +79,7 @@ async function apiRequest(url, options = {}) {
   return payload;
 }
 
-window.adminConsole = { apiRequest, escapeHtml, setStatus, selectPanel };
+window.adminConsole = { apiRequest, escapeHtml, setStatus, selectPanel, getToken: token };
 
 function normalizeCampaign(item, fallbackDate) {
   return {
