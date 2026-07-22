@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="躺赚笔记稳定币收益观察台，自动同步 Barker 的交易所理财活动、年化收益、门槛、截止时间与核验链接。" />
+    <meta name="description" content="躺赚笔记稳定币收益观察台，自动同步 Barker 的交易所主站理财活动、年化收益与截止时间。" />
     <link rel="canonical" href="https://ethanweb3.com/wealth/" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="稳定币收益观察台 | 躺赚笔记" />
-    <meta property="og:description" content="自动同步交易所稳定币活动，集中查看年化、额度、期限与收益试算。" />
+    <meta property="og:description" content="自动同步交易所主站稳定币活动，集中比较年化、期限与收益试算。" />
     <meta property="og:url" content="https://ethanweb3.com/wealth/" />
     <meta property="og:image" content="https://ethanweb3.com/assets/wealth/wealth-og-barker.png?v=20260722" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -17,7 +17,7 @@
     <title>稳定币收益观察台 | 躺赚笔记</title>
     <link rel="stylesheet" href="../styles.css?v=20260720-wealth-v3" />
     <link rel="stylesheet" href="../ui-system.css?v=20260720-learning-v2" />
-    <link rel="stylesheet" href="./wealth.css?v=20260722-barker-v1" />
+    <link rel="stylesheet" href="./wealth.css?v=20260722-main-v2" />
   </head>
   <body class="ui-v3 wealth-page-v2 wealth-page-v3">
     <header class="site-header">
@@ -31,8 +31,8 @@
         <div>
           <p class="eyebrow">Stablecoin Observer</p>
           <h1>稳定币收益观察台</h1>
-          <p>自动同步 Barker 收录的交易所稳定币活动，集中查看年化、额度和截止时间。最终资格与实际收益以交易所账户页面为准。</p>
-          <div class="wealth-method-tags" aria-label="数据更新方式"><span>Barker 数据源</span><span>每 30 分钟自动同步</span><span>5 分钟页面刷新</span></div>
+          <p>自动同步 Barker 收录的交易所主站稳定币活动，集中查看年化和截止时间。钱包活动不会进入列表。</p>
+          <div class="wealth-method-tags" aria-label="数据更新方式"><span>仅交易所主站</span><span>每 30 分钟自动同步</span><span>5 分钟页面刷新</span></div>
         </div>
         <div class="workspace-meta" aria-label="数据概览">
           <span><b id="verifiedCount">—</b> 个同步活动</span>
@@ -43,9 +43,17 @@
 
       <section class="yield-summary" aria-label="理财数据摘要">
         <article><span>可见活动</span><strong id="summaryCampaignCount">—</strong><small>已排除过期</small></article>
-        <article><span>最高展示年化</span><strong id="summaryTopApy">—</strong><small id="summaryTopApyNote">非保证收益</small></article>
+        <article><span>最高展示年化</span><strong id="summaryTopApy">—</strong><small id="summaryTopApyNote">正在计算</small></article>
         <article><span>同步来源</span><strong id="summarySourceHealth">Barker</strong><small id="summaryMonitorTime">等待同步</small></article>
         <article><span>自动同步</span><strong id="summaryChangedCount">—</strong><small>每 30 分钟检查一次</small></article>
+      </section>
+
+      <section class="yield-visual" aria-labelledby="yieldVisualTitle">
+        <header>
+          <div><p class="eyebrow">Yield Comparison</p><h2 id="yieldVisualTitle">各交易所主站最高年化</h2></div>
+          <p id="yieldVisualMeta">正在整理当前活动</p>
+        </header>
+        <div class="yield-comparison-chart" id="yieldComparisonChart" aria-live="polite"></div>
       </section>
 
       <section class="wealth-monitor-notice" id="wealthMonitorNotice" aria-live="polite">
@@ -89,12 +97,11 @@
               <tr>
                 <th>活动</th>
                 <th>参考年化</th>
-                <th>参与门槛</th>
                 <th>截止时间</th>
               </tr>
             </thead>
             <tbody id="campaignTableBody">
-              <tr><td colspan="4">正在加载交易所理财数据</td></tr>
+              <tr><td colspan="3">正在加载交易所理财数据</td></tr>
             </tbody>
           </table>
         </div>
@@ -108,7 +115,7 @@
       <section class="wealth-method" aria-labelledby="wealthMethodTitle">
         <div><p class="eyebrow">Update Standard</p><h2 id="wealthMethodTitle">自动同步，但不把第三方数据当成最终成交条件</h2></div>
         <ol>
-          <li><span>01</span><strong>Barker 每 30 分钟同步</strong><p>获取当前交易所活动、APY、额度和期限。</p></li>
+          <li><span>01</span><strong>Barker 每 30 分钟同步</strong><p>只获取交易所主站的当前活动、APY 和期限。</p></li>
           <li><span>02</span><strong>页面每 5 分钟重新读取</strong><p>及时展示站内已经同步完成的最新记录。</p></li>
           <li><span>03</span><strong>参与前回到交易所确认</strong><p>账户地区、资格、实时额度和最终利率仍以交易所页面为准。</p></li>
         </ol>
@@ -123,6 +130,6 @@
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script id="campaignInitialData" type="application/json">{"updatedAt":"","exchanges":[],"campaigns":[]}</script>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../wealth-page.js?v=20260722-barker-v1"></script>
+    <script src="../wealth-page.js?v=20260722-main-v2"></script>
   </body>
 </html>

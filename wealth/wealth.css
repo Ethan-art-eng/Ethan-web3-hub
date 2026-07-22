@@ -77,6 +77,127 @@
   line-height: 1.45;
 }
 
+.yield-visual {
+  margin: 18px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--wealth-line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.yield-visual > header {
+  min-height: 82px;
+  padding: 17px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--wealth-line);
+  background: linear-gradient(135deg, #fff 45%, #f4f8ff 100%);
+}
+
+.yield-visual h2 {
+  margin: 3px 0 0;
+  color: var(--wealth-ink);
+  font-size: 20px;
+}
+
+.yield-visual > header > p {
+  margin: 0;
+  color: var(--wealth-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.yield-comparison-chart {
+  padding: 8px 20px 14px;
+}
+
+.yield-chart-row {
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 0;
+  display: grid;
+  grid-template-columns: 160px minmax(120px, 1fr) 74px;
+  align-items: center;
+  gap: 18px;
+  border: 0;
+  border-bottom: 1px solid #edf1f6;
+  background: transparent;
+  color: var(--wealth-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.yield-chart-row:last-child {
+  border-bottom: 0;
+}
+
+.yield-chart-row:hover,
+.yield-chart-row.active {
+  background: #f7faff;
+}
+
+.yield-chart-label {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.yield-chart-logo {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border: 1px solid var(--wealth-line);
+  border-radius: 7px;
+  object-fit: contain;
+  background: #fff;
+}
+
+.yield-chart-label > span:last-child {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.yield-chart-label strong {
+  font-size: 13px;
+}
+
+.yield-chart-label small {
+  color: var(--wealth-muted);
+  font-size: 10px;
+}
+
+.yield-chart-bar {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e9eef5;
+}
+
+.yield-chart-bar i {
+  width: var(--yield-bar);
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #1769e0, #5c8ff1);
+  transition: width 180ms ease;
+}
+
+.yield-chart-row.active .yield-chart-bar i {
+  background: linear-gradient(90deg, #0057ff, #23a1ff);
+}
+
+.yield-chart-value {
+  color: var(--wealth-blue);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
 .wealth-monitor-notice {
   display: flex;
   align-items: center;
@@ -135,6 +256,10 @@
   align-items: end;
 }
 
+.wealth-page-v3 .exchange-filters {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
 .campaign-result-count {
   margin: 8px 0 0;
   color: var(--wealth-muted);
@@ -142,13 +267,12 @@
 }
 
 .wealth-page-v3 .campaign-table {
-  min-width: 980px;
+  min-width: 760px;
 }
 
-.wealth-page-v3 .campaign-table th:nth-child(1) { width: 37%; }
-.wealth-page-v3 .campaign-table th:nth-child(2) { width: 16%; }
-.wealth-page-v3 .campaign-table th:nth-child(3) { width: 25%; }
-.wealth-page-v3 .campaign-table th:nth-child(4) { width: 22%; }
+.wealth-page-v3 .campaign-table th:nth-child(1) { width: 56%; }
+.wealth-page-v3 .campaign-table th:nth-child(2) { width: 18%; }
+.wealth-page-v3 .campaign-table th:nth-child(3) { width: 26%; }
 
 .wealth-page-v3 .campaign-row {
   cursor: pointer;
@@ -175,6 +299,27 @@
   background: #edf5ff;
   color: #1769e0;
   font-weight: 800;
+}
+
+.exchange-logo[src$="/mexc.svg"] {
+  width: 78px;
+  flex-basis: 78px;
+  padding: 8px;
+}
+
+.campaign-detail-logo[src$="/mexc.svg"] {
+  width: 104px;
+  padding: 8px 10px;
+}
+
+.exchange-filter img[src$="/mexc.svg"] {
+  width: 48px;
+}
+
+.yield-chart-logo[src$="/mexc.svg"] {
+  width: 62px;
+  flex-basis: 62px;
+  padding: 5px;
 }
 
 .exchange-monogram {
@@ -212,31 +357,70 @@
   display: block;
 }
 
-.apy-caption {
-  display: block;
-  margin-top: 4px;
-  color: var(--wealth-muted);
-  font-size: 11px;
-}
-
-.campaign-requirement,
 .deadline-cell {
   display: grid;
-  gap: 6px;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 7px 10px;
 }
 
-.campaign-requirement strong,
 .deadline-cell strong {
   color: var(--wealth-ink);
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+  white-space: nowrap;
 }
 
-.campaign-requirement small,
-.deadline-cell small {
-  color: var(--wealth-muted);
-  font-size: 12px;
-  line-height: 1.5;
+.deadline-status {
+  width: fit-content;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #eaf2ff;
+  color: #155fca;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.deadline-cell.ongoing .deadline-status {
+  background: #e9f8f0;
+  color: #087b55;
+}
+
+.deadline-cell.soon .deadline-status {
+  background: #fff2df;
+  color: #a85c08;
+}
+
+.deadline-cell.ending .deadline-status {
+  background: #ffeded;
+  color: #b93838;
+}
+
+.deadline-track {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e9eef5;
+}
+
+.deadline-track i {
+  width: var(--deadline-progress);
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: #4e7fe5;
+}
+
+.deadline-cell.soon .deadline-track i {
+  background: #d99529;
+}
+
+.deadline-cell.ending .deadline-track i {
+  background: #d75555;
 }
 
 .campaign-detail-rate.is-stale {
@@ -299,15 +483,6 @@
   color: #0c5dc7;
   font-size: 20px;
   font-weight: 800;
-}
-
-.campaign-detail-note ul {
-  margin: 10px 0 0;
-  padding-left: 20px;
-}
-
-.campaign-detail-note li + li {
-  margin-top: 7px;
 }
 
 .campaign-tier-details {
@@ -464,12 +639,31 @@
     width: 100%;
   }
 
+  .yield-visual > header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .yield-comparison-chart {
+    padding: 6px 14px 10px;
+  }
+
+  .yield-chart-row {
+    grid-template-columns: 112px minmax(70px, 1fr) 58px;
+    gap: 10px;
+  }
+
+  .yield-chart-logo[src$="/mexc.svg"] {
+    width: 52px;
+    flex-basis: 52px;
+  }
+
   .wealth-page-v3 .campaign-table {
     min-width: 0;
   }
 
   .wealth-page-v3 .campaign-table td[data-label="参考年化"],
-  .wealth-page-v3 .campaign-table td[data-label="参与门槛"],
   .wealth-page-v3 .campaign-table td[data-label="截止时间"] {
     display: grid;
     grid-template-columns: 92px minmax(0, 1fr);
@@ -481,6 +675,10 @@
     color: #718198;
     font-size: 11px;
     font-weight: 700;
+  }
+
+  .wealth-page-v3 .deadline-cell {
+    width: min(220px, 100%);
   }
 
   .yield-estimator-fields {
