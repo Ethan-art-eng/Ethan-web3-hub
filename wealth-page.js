@@ -58,7 +58,7 @@ function getActivityMeta(exchange) {
 }
 
 function renderExchangeLogo(meta, className = "exchange-logo") {
-  if (!meta.logo) return "";
+  if (!meta.logo) return `<span class="${className} exchange-monogram" aria-hidden="true">${escapeHtml((meta.shortName || meta.name || "?").slice(0, 1))}</span>`;
   return `<img class="${className}" src="${escapeHtml(meta.logo)}" alt="${escapeHtml(meta.name)} Logo" width="58" height="58" loading="lazy" />`;
 }
 
@@ -144,7 +144,8 @@ function getVerificationMeta(item) {
   if (!Number.isFinite(timestamp)) return { label: "尚未记录核验时间", stale: true, timestamp: 0 };
   const stale = Date.now() - timestamp > STALE_AFTER_MS;
   const date = new Date(timestamp).toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
-  return { label: stale ? `核验于 ${date} · 建议复核` : `核验于 ${date}`, stale, timestamp };
+  const verb = item.dataOrigin === "barker" ? "数据更新于" : "核验于";
+  return { label: stale ? `${verb} ${date} · 建议复核` : `${verb} ${date}`, stale, timestamp };
 }
 
 async function fetchCampaigns() {
@@ -165,7 +166,7 @@ function renderExchangeFilters(data) {
   const filters = [{ name: "all", label: "全部", logo: "" }, ...exchanges.map((item) => ({ name: item.name, label: item.shortName || item.name, logo: item.logo }))];
   exchangeFilters.innerHTML = filters.map((filter) => `
     <button class="exchange-filter${filter.name === state.exchange ? " active" : ""}" type="button" data-exchange="${escapeHtml(filter.name)}" aria-pressed="${filter.name === state.exchange}">
-      ${filter.logo ? `<img src="${escapeHtml(filter.logo)}" alt="" width="18" height="18" />` : ""}${escapeHtml(filter.label)}
+      ${filter.logo ? `<img src="${escapeHtml(filter.logo)}" alt="" width="18" height="18" />` : filter.name !== "all" ? `<span class="exchange-filter-monogram" aria-hidden="true">${escapeHtml(filter.label.slice(0, 1))}</span>` : ""}${escapeHtml(filter.label)}
     </button>`).join("");
 }
 
@@ -175,7 +176,7 @@ function filteredCampaigns() {
   const visible = campaigns.filter((item) => {
     const verification = getVerificationMeta(item);
     const matchesExchange = state.exchange === "all" || item.exchange === state.exchange;
-    const matchesQuery = !query || `${item.activity} ${item.venue} ${item.exchange} ${item.eligibility || ""} ${item.cap || ""}`.toLowerCase().includes(query);
+    const matchesQuery = !query || `${item.activity} ${item.venue} ${item.exchange} ${item.rewardAsset || ""} ${item.eligibility || ""} ${item.cap || ""}`.toLowerCase().includes(query);
     const matchesAudience = state.audience === "all" || (state.audience === "new" && /新用户/.test(item.eligibility || item.activity));
     const matchesTerm = state.term === "all" || String(item.productType || "").toLowerCase() === state.term;
     const matchesVerification = state.verification === "all" || (state.verification === "stale" ? verification.stale : !verification.stale);
@@ -192,7 +193,7 @@ function filteredCampaigns() {
 function renderCampaigns() {
   const campaigns = filteredCampaigns();
   campaignEmpty.hidden = campaigns.length > 0;
-  campaignResultCount.textContent = `当前显示 ${campaigns.length} 条 · 点击查看门槛、试算和官方来源`;
+  campaignResultCount.textContent = `当前显示 ${campaigns.length} 条 · 点击查看分层额度、试算和来源`;
   if (!campaigns.length) {
     campaignBody.innerHTML = "";
     return;
@@ -215,12 +216,32 @@ function renderCampaigns() {
 
 function riskNotes(item, verification) {
   const notes = [];
+  if (item.dataOrigin === "barker") notes.push("该活动由 Barker 自动同步，最终条件以交易所账户页面为准。");
   if (verification.stale) notes.push("该记录已超过 72 小时未重新核验。");
   if (Number(item.apyValue || 0) >= 20) notes.push("高年化常伴随小额度、新用户或短期限制。");
   if (/新用户/.test(item.eligibility || item.activity)) notes.push("只有符合新用户或地区条件的账户可参与。");
   if (item.cap) notes.push("展示年化可能只适用于限额内本金。");
   if (String(item.productType || "").toLowerCase() === "fixed") notes.push("定期产品需核对提前赎回和资金锁定规则。");
   return notes.length ? notes : ["利率、额度、地区资格和可用性可能随时变化。"];
+}
+
+function apyBreakdown(item) {
+  const parts = [];
+  if (item.baseApyValue !== null && item.baseApyValue !== undefined && Number.isFinite(Number(item.baseApyValue))) parts.push(`<div><dt>基础 APY</dt><dd>${Number(item.baseApyValue).toFixed(2)}%</dd></div>`);
+  if (item.rewardApyValue !== null && item.rewardApyValue !== undefined && Number.isFinite(Number(item.rewardApyValue))) parts.push(`<div><dt>奖励 APY</dt><dd>${Number(item.rewardApyValue).toFixed(2)}%</dd></div>`);
+  if (item.rewardAsset) parts.push(`<div><dt>奖励资产</dt><dd>${escapeHtml(item.rewardAsset)}</dd></div>`);
+  if (item.rewardFrequency) parts.push(`<div><dt>奖励频率</dt><dd>${escapeHtml(item.rewardFrequency)}</dd></div>`);
+  return parts.join("");
+}
+
+function tierDetails(item) {
+  if (!Array.isArray(item.tierDetails) || !item.tierDetails.length) return "";
+  const rows = item.tierDetails.map((tier) => {
+    const minimum = Number(tier.min || 0).toLocaleString("en-US");
+    const maximum = Number.isFinite(Number(tier.max)) && Number(tier.max) > 0 ? `$${Number(tier.max).toLocaleString("en-US")}` : "以上";
+    return `<li><span>$${minimum} – ${maximum}</span><strong>${Number(tier.apyValue).toFixed(2)}%</strong></li>`;
+  }).join("");
+  return `<section class="campaign-tier-details"><strong>分层年化</strong><ul>${rows}</ul></section>`;
 }
 
 function openCampaignDetail(item) {
@@ -239,15 +260,18 @@ function openCampaignDetail(item) {
       <div><dt>参与资格</dt><dd>${escapeHtml(item.eligibility || "以账户页面为准")}</dd></div>
       <div><dt>参考额度</dt><dd>${escapeHtml(item.cap || "以账户页面为准")}</dd></div>
       <div><dt>适用地区</dt><dd>${escapeHtml(item.region || "以账户页面为准")}</dd></div>
-      <div><dt>数据来源</dt><dd>人工核验的官方规则页</dd></div>
+      <div><dt>数据来源</dt><dd>${item.dataOrigin === "barker" ? "Barker 自动同步" : "站内人工记录"}</dd></div>
+      ${apyBreakdown(item)}
     </dl>
+    ${tierDetails(item)}
     <section class="yield-estimator" data-apy="${Number(item.apyValue || 0)}">
       <div><strong>收益试算</strong><small>单利估算，未计手续费、分层额度与奖励波动</small></div>
       <div class="yield-estimator-fields"><label>本金（USD）<input id="campaignPrincipal" type="number" min="1" step="100" value="10000" /></label><label>持有天数<select id="campaignDays"><option value="7">7 天</option><option value="30" selected>30 天</option><option value="90">90 天</option><option value="365">365 天</option></select></label></div>
       <output id="campaignEstimateValue">—</output>
     </section>
     <div class="campaign-detail-note"><strong>参与前核验</strong><ul>${notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}</ul></div>
-    ${item.sourceUrl ? `<a class="campaign-source-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">打开官方活动页 <span aria-hidden="true">↗</span></a>` : ""}`;
+    ${item.sourceUrl ? `<a class="campaign-source-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">${item.sourceType === "official" ? "打开交易所官方页面" : "查看 Barker 活动详情"} <span aria-hidden="true">↗</span></a>` : ""}
+    ${item.sourceType === "official" && item.providerUrl ? `<a class="campaign-provider-link" href="${escapeHtml(item.providerUrl)}" target="_blank" rel="noopener noreferrer">查看 Barker 数据页 ↗</a>` : ""}`;
   updateEstimate();
   if (!campaignDetailDialog.open) campaignDetailDialog.showModal();
 }
@@ -263,6 +287,18 @@ function updateEstimate() {
 }
 
 function renderMonitorSummary(data) {
+  const sync = data.sync;
+  if (sync?.provider) {
+    const healthy = sync.status !== "error";
+    summarySourceHealth.textContent = sync.provider;
+    summaryChangedCount.textContent = healthy ? "正常" : "回退";
+    summaryMonitorTime.textContent = relativeTime(sync.providerUpdatedAt || sync.syncedAt, "更新");
+    wealthMonitorNotice.classList.toggle("has-changes", !healthy);
+    wealthMonitorCopy.textContent = healthy
+      ? `最近同步于 ${formatUpdatedAt(sync.syncedAt)}，当前收录 ${Number(sync.campaignCount || data.campaigns?.length || 0)} 个交易所活动；页面每 5 分钟读取一次。`
+      : `最近一次同步未完成，当前继续展示 ${formatUpdatedAt(sync.syncedAt)} 保存的活动数据，不会清空列表。`;
+    return;
+  }
   const monitor = data.monitor;
   if (!monitor?.checkedAt || !Array.isArray(monitor.exchanges)) {
     summarySourceHealth.textContent = "—";
@@ -292,9 +328,13 @@ function renderSummary(data) {
   updatedAt.textContent = formatUpdatedAt(data.updatedAt);
   summaryCampaignCount.textContent = String(active.length);
   summaryTopApy.textContent = top?.apy || "—";
-  summaryTopApyNote.textContent = top ? (top.eligibility || "非保证收益") : "暂无可见活动";
+  summaryTopApyNote.textContent = top ? `${top.exchange} · ${top.activity}` : "暂无可见活动";
   campaignDisclaimer.textContent = data.notice || "数据仅供研究，不构成投资建议。";
-  campaignSource.textContent = data.source === "kv" ? "数据层：站内人工核验记录 · 点击活动打开官方来源" : "数据层：站点默认记录";
+  if (data.dataProviderUrl) {
+    campaignSource.innerHTML = `数据来源：<a href="${escapeHtml(data.dataProviderUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(data.dataProvider || "Barker")}</a> · 参与前请回到交易所确认`;
+  } else {
+    campaignSource.textContent = data.source === "kv" ? "数据层：站内人工记录 · 点击活动核验来源" : "数据层：站点默认记录";
+  }
   renderDatasetFreshness(data.updatedAt);
   renderMonitorSummary(data);
 }

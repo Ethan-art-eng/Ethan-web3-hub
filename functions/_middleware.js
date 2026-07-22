@@ -7,6 +7,7 @@ import {
   renderExchangeFilters,
   renderInitialDataScript,
 } from "../lib/public-render.js";
+import { loadStoredBarkerDataset } from "../lib/barker-yield-sync.js";
 
 const SECURITY_HEADERS = {
   "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://www.google.com https://*.videodelivery.net https://*.cloudflarestream.com; connect-src 'self' https://upload.videodelivery.net; frame-src https://iframe.videodelivery.net https://*.cloudflarestream.com https://www.youtube-nocookie.com https://player.vimeo.com https://player.bilibili.com https://v.qq.com https://player.youku.com; object-src 'none'; base-uri 'self'; form-action 'self' https://upload.videodelivery.net; frame-ancestors 'none'; upgrade-insecure-requests",
@@ -31,6 +32,10 @@ function secureResponse(response, pathname) {
 }
 
 async function loadData(context, key, seedPath) {
+  if (key === "cex-yields" && context.env.CEX_YIELDS) {
+    const barker = await loadStoredBarkerDataset(context.env.CEX_YIELDS);
+    if (barker) return { ...barker, source: "barker" };
+  }
   const stored = context.env.CEX_YIELDS ? await context.env.CEX_YIELDS.get(key, "json") : null;
   if (stored) return { ...stored, source: "kv" };
   const response = await context.env.ASSETS.fetch(new URL(seedPath, context.request.url));
@@ -77,13 +82,13 @@ async function renderWealthPage(context, response) {
   const rows = renderCampaignRows(data);
   return new HTMLRewriter()
     .on("#exchangeFilters", setContent(renderExchangeFilters(data.exchanges), true))
-    .on("#campaignTableBody", setContent(rows || '<tr class="empty-row"><td colspan="3">暂无未到期且已核验的活动</td></tr>', true))
+    .on("#campaignTableBody", setContent(rows || '<tr class="empty-row"><td colspan="4">暂无未到期的同步活动</td></tr>', true))
     .on("#verifiedCount", setContent(String(visible.length)))
     .on("#exchangeCount", setContent(String((data.exchanges || []).length || 5)))
     .on("#updatedAt", setContent(freshness.label))
     .on("#wealthDataFreshness", setFreshness(freshness))
     .on("#campaignDisclaimer", setContent(data.notice || "数据仅供研究，不构成投资建议。"))
-    .on("#campaignSource", setContent("来源：交易所公开规则页 · 点击活动名称核验"))
+    .on("#campaignSource", setContent(data.dataProvider === "Barker" ? "数据来源：Barker · 参与前请回到交易所确认" : "来源：站内记录 · 点击活动名称核验"))
     .on("#campaignInitialData", setContent(renderInitialDataScript(data), true))
     .transform(response);
 }

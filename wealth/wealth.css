@@ -166,6 +166,37 @@
   background: #fff9eb;
 }
 
+.exchange-monogram,
+.exchange-filter-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cbdcf0;
+  background: #edf5ff;
+  color: #1769e0;
+  font-weight: 800;
+}
+
+.exchange-monogram {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.campaign-detail-logo.exchange-monogram {
+  width: 42px;
+  height: 42px;
+}
+
+.exchange-filter-monogram {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  font-size: 9px;
+}
+
 .activity-title-line {
   display: flex;
   align-items: center;
@@ -277,6 +308,65 @@
 
 .campaign-detail-note li + li {
   margin-top: 7px;
+}
+
+.campaign-tier-details {
+  margin: 14px 0;
+  padding: 14px;
+  border: 1px solid #d8e5f2;
+  border-radius: 10px;
+  background: #fbfdff;
+}
+
+.campaign-tier-details > strong {
+  color: var(--wealth-ink);
+  font-size: 12px;
+}
+
+.campaign-tier-details ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.campaign-tier-details li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid #e7edf5;
+  color: var(--wealth-muted);
+  font-size: 12px;
+}
+
+.campaign-tier-details li strong {
+  color: var(--wealth-blue);
+}
+
+.campaign-provider-link {
+  min-height: 40px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c9d8e9;
+  border-radius: 7px;
+  color: #36536f;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.campaign-provider-link:hover,
+.campaign-footnote .data-source a:hover {
+  color: var(--wealth-blue);
+}
+
+.campaign-footnote .data-source a {
+  color: #36536f;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .wealth-method {

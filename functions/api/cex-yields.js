@@ -1,5 +1,6 @@
 import { MONITOR_KEY, runYieldMonitor } from "../../lib/yield-monitor.js";
 import { isAdminAuthorized } from "../../lib/admin-auth.js";
+import { loadStoredBarkerDataset, syncBarkerCampaigns } from "../../lib/barker-yield-sync.js";
 
 const DATA_KEY = "cex-yields";
 const BACKUP_PREFIX = "cex-yields-backup:";
@@ -30,8 +31,12 @@ async function loadSeed(env, request) {
   return response.json();
 }
 
-async function loadCampaigns(env, request) {
+async function loadCampaigns(env, request, preferBarker = true) {
   if (env.CEX_YIELDS) {
+    if (preferBarker) {
+      const barker = await loadStoredBarkerDataset(env.CEX_YIELDS);
+      if (barker) return { ...barker, source: "barker" };
+    }
     const stored = await env.CEX_YIELDS.get(DATA_KEY, "json");
     if (stored) return { ...stored, source: "kv" };
   }
@@ -66,13 +71,13 @@ function validatePayload(payload) {
     return "exchanges and campaigns must be arrays";
   }
 
-  if (payload.exchanges.length !== 5) return "exactly five exchanges are required";
+  if (payload.exchanges.length < 1 || payload.exchanges.length > 12) return "between one and twelve exchanges are required";
   if (payload.campaigns.length > MAX_CAMPAIGNS) return `campaigns cannot contain more than ${MAX_CAMPAIGNS} items`;
 
   const exchangeNames = new Set();
   for (const exchange of payload.exchanges) {
     if (!isText(exchange.name, 40) || !isText(exchange.shortName, 40)) return "every exchange needs a valid name and shortName";
-    if (!isText(exchange.logo, 160) || !isHttpUrl(exchange.url)) return "every exchange needs a valid logo and official URL";
+    if (!isOptionalText(exchange.logo, 160) || !isHttpUrl(exchange.url)) return "every exchange needs a valid logo value and official URL";
     exchangeNames.add(exchange.name.trim());
   }
 
@@ -157,6 +162,16 @@ async function loadHistory(env) {
 function toPublicData(data) {
   return {
     ...data,
+    sync: data.sync ? {
+      status: data.sync.status || "ok",
+      provider: data.sync.provider || "",
+      providerUrl: data.sync.providerUrl || "",
+      syncedAt: data.sync.syncedAt || null,
+      providerUpdatedAt: data.sync.providerUpdatedAt || null,
+      lastAttemptAt: data.sync.lastAttemptAt || null,
+      intervalMinutes: Number(data.sync.intervalMinutes || 0),
+      campaignCount: Number(data.sync.campaignCount || 0),
+    } : null,
     campaigns: Array.isArray(data.campaigns) ? data.campaigns.filter((item) => item.published !== false) : [],
   };
 }
@@ -236,6 +251,17 @@ async function handleMonitorRun({ request, env }) {
   }
 }
 
+async function handleBarkerSync({ request, env }) {
+  if (!env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
+  if (!isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  try {
+    const data = await syncBarkerCampaigns(env.CEX_YIELDS);
+    return json({ ok: true, data: { updatedAt: data.updatedAt, campaigns: data.campaigns.length, exchanges: data.exchanges.length, sync: data.sync } });
+  } catch (error) {
+    return json({ error: error.message }, { status: 502 });
+  }
+}
+
 export async function onRequestGet(context) {
   try {
     const url = new URL(context.request.url);
@@ -252,7 +278,7 @@ export async function onRequestGet(context) {
       return json((await context.env.CEX_YIELDS.get(MONITOR_KEY, "json")) || { checkedAt: null, changedCount: 0, issueCount: 0, exchanges: [] });
     }
     const [data, monitor] = await Promise.all([
-      loadCampaigns(context.env, context.request),
+      loadCampaigns(context.env, context.request, !adminRequest),
       adminRequest ? Promise.resolve(null) : loadPublicMonitor(context.env),
     ]);
     return json(adminRequest ? data : { ...toPublicData(data), monitor });
@@ -265,6 +291,7 @@ export async function onRequestPost(context) {
   const url = new URL(context.request.url);
   if (url.searchParams.get("action") === "restore") return handleRestore(context);
   if (url.searchParams.get("action") === "monitor") return handleMonitorRun(context);
+  if (url.searchParams.get("action") === "sync-barker") return handleBarkerSync(context);
   return handleWrite(context);
 }
 
