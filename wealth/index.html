@@ -17,7 +17,7 @@
     <title>稳定币收益观察台 | 躺赚笔记</title>
     <link rel="stylesheet" href="../styles.css?v=20260720-wealth-v3" />
     <link rel="stylesheet" href="../ui-system.css?v=20260720-learning-v2" />
-    <link rel="stylesheet" href="./wealth.css?v=20260722-main-v2" />
+    <link rel="stylesheet" href="./wealth.css?v=20260723-clean-v8" />
   </head>
   <body class="ui-v3 wealth-page-v2 wealth-page-v3">
     <header class="site-header">
@@ -31,7 +31,6 @@
         <div>
           <p class="eyebrow">Stablecoin Observer</p>
           <h1>稳定币收益观察台</h1>
-          <p>自动同步 Barker 收录的交易所主站稳定币活动，集中查看年化和截止时间。钱包活动不会进入列表。</p>
           <div class="wealth-method-tags" aria-label="数据更新方式"><span>仅交易所主站</span><span>每 30 分钟自动同步</span><span>5 分钟页面刷新</span></div>
         </div>
         <div class="workspace-meta" aria-label="数据概览">
@@ -39,21 +38,6 @@
           <span><b id="exchangeCount">—</b> 家交易所</span>
           <span>更新于 <b id="updatedAt">—</b></span>
         </div>
-      </section>
-
-      <section class="yield-summary" aria-label="理财数据摘要">
-        <article><span>可见活动</span><strong id="summaryCampaignCount">—</strong><small>已排除过期</small></article>
-        <article><span>最高展示年化</span><strong id="summaryTopApy">—</strong><small id="summaryTopApyNote">正在计算</small></article>
-        <article><span>同步来源</span><strong id="summarySourceHealth">Barker</strong><small id="summaryMonitorTime">等待同步</small></article>
-        <article><span>自动同步</span><strong id="summaryChangedCount">—</strong><small>每 30 分钟检查一次</small></article>
-      </section>
-
-      <section class="yield-visual" aria-labelledby="yieldVisualTitle">
-        <header>
-          <div><p class="eyebrow">Yield Comparison</p><h2 id="yieldVisualTitle">各交易所主站最高年化</h2></div>
-          <p id="yieldVisualMeta">正在整理当前活动</p>
-        </header>
-        <div class="yield-comparison-chart" id="yieldComparisonChart" aria-live="polite"></div>
       </section>
 
       <section class="wealth-monitor-notice" id="wealthMonitorNotice" aria-live="polite">
@@ -106,20 +90,8 @@
           </table>
         </div>
         <p class="campaign-empty" id="campaignEmpty" hidden>该筛选条件下暂无可核验活动。请直接到对应交易所的 Earn 页面查看最新规则。</p>
-        <div class="campaign-footnote">
-          <p class="table-disclaimer" id="campaignDisclaimer">数据加载中。</p>
-          <p class="data-source" id="campaignSource" aria-live="polite"></p>
-        </div>
       </section>
 
-      <section class="wealth-method" aria-labelledby="wealthMethodTitle">
-        <div><p class="eyebrow">Update Standard</p><h2 id="wealthMethodTitle">自动同步，但不把第三方数据当成最终成交条件</h2></div>
-        <ol>
-          <li><span>01</span><strong>Barker 每 30 分钟同步</strong><p>只获取交易所主站的当前活动、APY 和期限。</p></li>
-          <li><span>02</span><strong>页面每 5 分钟重新读取</strong><p>及时展示站内已经同步完成的最新记录。</p></li>
-          <li><span>03</span><strong>参与前回到交易所确认</strong><p>账户地区、资格、实时额度和最终利率仍以交易所页面为准。</p></li>
-        </ol>
-      </section>
     </main>
     <dialog class="campaign-detail-dialog" id="campaignDetailDialog" aria-labelledby="campaignDetailTitle">
       <div class="campaign-detail-shell">
@@ -130,6 +102,6 @@
     <footer class="site-footer"><strong>躺赚笔记</strong><span>内容仅用于研究和教育，不构成投资建议。Web3 风险高，请独立核验信息。</span></footer>
     <script id="campaignInitialData" type="application/json">{"updatedAt":"","exchanges":[],"campaigns":[]}</script>
     <script src="../site-shell.js?v=20260715-ui-v2"></script>
-    <script src="../wealth-page.js?v=20260722-main-v2"></script>
+    <script src="../wealth-page.js?v=20260723-clean-v8"></script>
   </body>
 </html>

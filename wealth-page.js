@@ -1,6 +1,4 @@
 const campaignBody = document.getElementById("campaignTableBody");
-const campaignDisclaimer = document.getElementById("campaignDisclaimer");
-const campaignSource = document.getElementById("campaignSource");
 const campaignEmpty = document.getElementById("campaignEmpty");
 const exchangeFilters = document.getElementById("exchangeFilters");
 const campaignSearch = document.getElementById("campaignSearch");
@@ -16,20 +14,12 @@ const wealthDataFreshness = document.getElementById("wealthDataFreshness");
 const wealthMonitorNotice = document.getElementById("wealthMonitorNotice");
 const wealthMonitorCopy = document.getElementById("wealthMonitorCopy");
 const refreshCampaignsButton = document.getElementById("refreshCampaigns");
-const summaryCampaignCount = document.getElementById("summaryCampaignCount");
-const summaryTopApy = document.getElementById("summaryTopApy");
-const summaryTopApyNote = document.getElementById("summaryTopApyNote");
-const summarySourceHealth = document.getElementById("summarySourceHealth");
-const summaryMonitorTime = document.getElementById("summaryMonitorTime");
-const summaryChangedCount = document.getElementById("summaryChangedCount");
 const campaignDetailDialog = document.getElementById("campaignDetailDialog");
 const campaignDetailClose = document.getElementById("campaignDetailClose");
 const campaignDetailLogo = document.getElementById("campaignDetailLogo");
 const campaignDetailExchange = document.getElementById("campaignDetailExchange");
 const campaignDetailTitle = document.getElementById("campaignDetailTitle");
 const campaignDetailContent = document.getElementById("campaignDetailContent");
-const yieldComparisonChart = document.getElementById("yieldComparisonChart");
-const yieldVisualMeta = document.getElementById("yieldVisualMeta");
 
 const state = {
   data: null,
@@ -45,6 +35,7 @@ const state = {
 const DAY_MS = 24 * 60 * 60 * 1000;
 const STALE_AFTER_MS = 72 * 60 * 60 * 1000;
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+const DEADLINE_RENDER_INTERVAL_MS = 60 * 1000;
 
 function escapeHtml(value) {
   return String(value || "")
@@ -110,17 +101,24 @@ function renderDatasetFreshness(value) {
   wealthDataFreshness.innerHTML = `<span>${freshness.stale ? "需要复核" : "数据已维护"}</span><strong>${escapeHtml(freshness.label)}</strong><small>${escapeHtml(freshness.detail)}</small>`;
 }
 
-function getDeadlineMeta(item) {
+function getDeadlineScaleDays(campaigns) {
+  const remainingDays = campaigns.map((item) => {
+    const timestamp = getDateTimestamp(item.endAt);
+    return Number.isFinite(timestamp) ? Math.max(0, Math.ceil((timestamp - Date.now()) / DAY_MS)) : 0;
+  });
+  return Math.max(30, ...remainingDays);
+}
+
+function getDeadlineMeta(item, scaleDays = 30) {
   const timestamp = getDateTimestamp(item.endAt);
   if (!Number.isFinite(timestamp)) {
-    return { label: "长期开放", date: "无固定截止日", progress: 100, className: "ongoing", finite: false };
+    return { label: "长期开放", date: "无固定截止日", time: "", progress: 100, className: "ongoing", finite: false };
   }
   const now = Date.now();
-  const remainingDays = Math.ceil((timestamp - Date.now()) / DAY_MS);
-  const startsAt = getDateTimestamp(item.startsAt);
-  const duration = Number.isFinite(startsAt) && startsAt < timestamp ? timestamp - startsAt : 30 * DAY_MS;
-  const progress = Math.max(4, Math.min(100, ((timestamp - now) / duration) * 100));
-  const date = new Date(timestamp).toLocaleString("zh-CN", {
+  const remainingDays = Math.max(0, Math.ceil((timestamp - now) / DAY_MS));
+  const remainingValue = Math.max(0, (timestamp - now) / DAY_MS);
+  const progress = Math.max(4, Math.min(100, (remainingValue / Math.max(1, scaleDays)) * 100));
+  const dateParts = new Intl.DateTimeFormat("zh-CN", {
     timeZone: "Asia/Shanghai",
     year: "numeric",
     month: "2-digit",
@@ -128,10 +126,13 @@ function getDeadlineMeta(item) {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-  }).replaceAll("/", "-");
-  if (remainingDays <= 1) return { label: "今天截止", date, progress, className: "ending", finite: true };
-  if (remainingDays <= 7) return { label: `剩余 ${remainingDays} 天`, date, progress, className: "soon", finite: true };
-  return { label: `剩余 ${remainingDays} 天`, date, progress, className: "scheduled", finite: true };
+  }).formatToParts(new Date(timestamp)).reduce((parts, part) => ({ ...parts, [part.type]: part.value }), {});
+  const currentYear = new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric" }).format(new Date(now)).replace(/\D/g, "");
+  const date = dateParts.year === currentYear ? `${Number(dateParts.month)}月${Number(dateParts.day)}日` : `${dateParts.year}年${Number(dateParts.month)}月${Number(dateParts.day)}日`;
+  const time = `${dateParts.hour}:${dateParts.minute}`;
+  if (remainingDays <= 1) return { label: "今天截止", date, time, progress, remainingValue, className: "ending", finite: true };
+  if (remainingDays <= 7) return { label: `剩余 ${remainingDays} 天`, date, time, progress, remainingValue, className: "soon", finite: true };
+  return { label: `剩余 ${remainingDays} 天`, date, time, progress, remainingValue, className: "scheduled", finite: true };
 }
 
 function formatCampaignEndTime(item) {
@@ -148,12 +149,12 @@ function formatCampaignEndTime(item) {
   })} 北京时间`;
 }
 
-function renderDeadline(item) {
-  const deadline = getDeadlineMeta(item);
-  return `<div class="deadline-cell ${deadline.className}">
+function renderDeadline(item, scaleDays) {
+  const deadline = getDeadlineMeta(item, scaleDays);
+  return `<div class="deadline-cell ${deadline.className}" aria-label="${escapeHtml(`${deadline.label}，截止 ${deadline.date}${deadline.time ? ` ${deadline.time}` : ""}`)}">
     <span class="deadline-status">${escapeHtml(deadline.label)}</span>
-    <strong>${escapeHtml(deadline.date)}</strong>
-    ${deadline.finite ? `<span class="deadline-track" aria-hidden="true"><i style="--deadline-progress:${deadline.progress.toFixed(1)}%"></i></span>` : ""}
+    <time${item.endAt ? ` datetime="${escapeHtml(item.endAt)}"` : ""}><strong>${escapeHtml(deadline.date)}</strong>${deadline.time ? `<small>${escapeHtml(deadline.time)}</small>` : ""}</time>
+    ${deadline.finite ? `<progress class="deadline-track" max="${Math.max(1, scaleDays)}" value="${Math.min(Math.max(1, scaleDays), deadline.remainingValue).toFixed(2)}" aria-hidden="true"></progress>` : ""}
   </div>`;
 }
 
@@ -219,6 +220,7 @@ function filteredCampaigns() {
 
 function renderCampaigns() {
   const campaigns = filteredCampaigns();
+  const deadlineScaleDays = getDeadlineScaleDays(campaigns);
   campaignEmpty.hidden = campaigns.length > 0;
   campaignResultCount.textContent = `当前显示 ${campaigns.length} 条主站活动 · 点击查看详情、试算和来源`;
   if (!campaigns.length) {
@@ -235,7 +237,7 @@ function renderCampaigns() {
       <tr class="campaign-row${verification.stale ? " is-stale" : ""}" data-campaign-id="${escapeHtml(item.id)}" tabindex="0" aria-label="查看 ${escapeHtml(item.activity)} 详情">
         <td data-label="活动"><div class="activity-cell">${renderExchangeLogo(meta)}<span class="activity-link">${activityContent}</span></div></td>
         <td data-label="参考年化"><strong class="apy-value">${escapeHtml(item.apy)}</strong></td>
-        <td data-label="截止时间">${renderDeadline(item)}</td>
+        <td data-label="截止时间">${renderDeadline(item, deadlineScaleDays)}</td>
       </tr>`;
   }).join("");
 }
@@ -303,9 +305,6 @@ function renderMonitorSummary(data) {
   const sync = data.sync;
   if (sync?.provider) {
     const healthy = sync.status !== "error";
-    summarySourceHealth.textContent = sync.provider;
-    summaryChangedCount.textContent = healthy ? "正常" : "回退";
-    summaryMonitorTime.textContent = relativeTime(sync.providerUpdatedAt || sync.syncedAt, "更新");
     wealthMonitorNotice.classList.toggle("has-changes", !healthy);
     wealthMonitorCopy.textContent = healthy
       ? `最近同步于 ${formatUpdatedAt(sync.syncedAt)}，当前收录 ${Number(sync.campaignCount || data.campaigns?.length || 0)} 个交易所活动；页面每 5 分钟读取一次。`
@@ -314,17 +313,11 @@ function renderMonitorSummary(data) {
   }
   const monitor = data.monitor;
   if (!monitor?.checkedAt || !Array.isArray(monitor.exchanges)) {
-    summarySourceHealth.textContent = "—";
-    summaryChangedCount.textContent = "—";
-    summaryMonitorTime.textContent = "尚无监控记录";
     wealthMonitorCopy.textContent = "页面会读取站内最新数据；利率变化仍需人工回到官方页面核对。";
     return;
   }
   const reachable = monitor.exchanges.filter((item) => item.reachable).length;
   const changed = Number(monitor.changedCount || 0);
-  summarySourceHealth.textContent = `${reachable}/${monitor.exchanges.length}`;
-  summaryChangedCount.textContent = String(changed);
-  summaryMonitorTime.textContent = relativeTime(monitor.checkedAt, "检查");
   wealthMonitorNotice.classList.toggle("has-changes", changed > 0);
   wealthMonitorCopy.textContent = changed > 0
     ? `官方源最近检查于 ${formatUpdatedAt(monitor.checkedAt)}，发现 ${changed} 个页面有变化。展示利率已标记为需要人工复核，不会自动改写。`
@@ -335,50 +328,17 @@ function renderSummary(data) {
   const campaigns = Array.isArray(data.campaigns) ? data.campaigns : [];
   const exchanges = Array.isArray(data.exchanges) ? data.exchanges : [];
   const active = campaigns.filter((item) => !isExpired(item));
-  const top = active.reduce((best, item) => Number(item.apyValue || 0) > Number(best?.apyValue || -1) ? item : best, null);
   verifiedCount.textContent = String(active.length);
   exchangeCount.textContent = String(exchanges.length || 5);
   updatedAt.textContent = formatUpdatedAt(data.updatedAt);
-  summaryCampaignCount.textContent = String(active.length);
-  summaryTopApy.textContent = top?.apy || "—";
-  summaryTopApyNote.textContent = top ? `${top.exchange} · ${top.activity}` : "暂无可见活动";
-  campaignDisclaimer.textContent = data.notice || "数据仅供研究，不构成投资建议。";
-  if (data.dataProviderUrl) {
-    campaignSource.innerHTML = `数据来源：<a href="${escapeHtml(data.dataProviderUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(data.dataProvider || "Barker")}</a> · 每 30 分钟同步主站活动`;
-  } else {
-    campaignSource.textContent = data.source === "kv" ? "数据层：站内人工记录 · 点击活动核验来源" : "数据层：站点默认记录";
-  }
   renderDatasetFreshness(data.updatedAt);
   renderMonitorSummary(data);
-}
-
-function renderYieldComparison(data) {
-  if (!yieldComparisonChart || !yieldVisualMeta) return;
-  const campaigns = (Array.isArray(data.campaigns) ? data.campaigns : []).filter((item) => !isExpired(item));
-  const exchanges = Array.isArray(data.exchanges) ? data.exchanges : [];
-  const rows = exchanges.map((meta) => {
-    const items = campaigns.filter((item) => item.exchange === meta.name);
-    const top = items.reduce((best, item) => Number(item.apyValue || 0) > Number(best?.apyValue || -1) ? item : best, null);
-    return top ? { meta, top, count: items.length } : null;
-  }).filter(Boolean).sort((a, b) => Number(b.top.apyValue || 0) - Number(a.top.apyValue || 0));
-  const maximum = Math.max(1, ...rows.map((row) => Number(row.top.apyValue || 0)));
-  yieldVisualMeta.textContent = `${rows.length} 家交易所 · ${campaigns.length} 个主站活动`;
-  yieldComparisonChart.innerHTML = rows.map(({ meta, top, count }) => {
-    const percentage = Math.max(8, (Number(top.apyValue || 0) / maximum) * 100);
-    const active = state.exchange === meta.name;
-    return `<button type="button" class="yield-chart-row${active ? " active" : ""}" data-chart-exchange="${escapeHtml(meta.name)}" aria-pressed="${active}" aria-label="筛选 ${escapeHtml(meta.name)}，最高展示年化 ${escapeHtml(top.apy)}">
-      <span class="yield-chart-label">${renderExchangeLogo(meta, "yield-chart-logo")}<span><strong>${escapeHtml(meta.shortName || meta.name)}</strong><small>${count} 个活动</small></span></span>
-      <span class="yield-chart-bar" aria-hidden="true"><i style="--yield-bar:${percentage.toFixed(1)}%"></i></span>
-      <strong class="yield-chart-value">${escapeHtml(top.apy)}</strong>
-    </button>`;
-  }).join("");
 }
 
 function render() {
   if (!state.data) return;
   renderExchangeFilters(state.data);
   renderSummary(state.data);
-  renderYieldComparison(state.data);
   renderCampaigns();
 }
 
@@ -394,7 +354,6 @@ async function refreshCampaignData(manual = false) {
     if (manual) refreshCampaignsButton.textContent = "已刷新";
   } catch (error) {
     campaignBody.innerHTML = `<tr class="empty-row"><td colspan="3">${escapeHtml(error.message)}</td></tr>`;
-    campaignDisclaimer.textContent = "数据加载失败，请稍后重试。";
     if (manual) refreshCampaignsButton.textContent = "刷新失败";
   } finally {
     if (manual) setTimeout(() => { refreshCampaignsButton.disabled = false; refreshCampaignsButton.textContent = "立即刷新"; }, 1200);
@@ -405,13 +364,6 @@ exchangeFilters.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-exchange]");
   if (!button) return;
   state.exchange = button.dataset.exchange || "all";
-  render();
-});
-
-yieldComparisonChart?.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-chart-exchange]");
-  if (!button) return;
-  state.exchange = state.exchange === button.dataset.chartExchange ? "all" : button.dataset.chartExchange;
   render();
 });
 
@@ -459,6 +411,7 @@ const initialCampaigns = readInitialCampaigns();
 if (Array.isArray(initialCampaigns?.campaigns)) { state.data = initialCampaigns; render(); }
 refreshCampaignData();
 setInterval(() => refreshCampaignData(), REFRESH_INTERVAL_MS);
+setInterval(() => { if (state.data) renderCampaigns(); }, DEADLINE_RENDER_INTERVAL_MS);
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden && Date.now() - state.fetchedAt > REFRESH_INTERVAL_MS) refreshCampaignData();
 });
