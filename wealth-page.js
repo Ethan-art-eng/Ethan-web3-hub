@@ -101,23 +101,18 @@ function renderDatasetFreshness(value) {
   wealthDataFreshness.innerHTML = `<span>${freshness.stale ? "需要复核" : "数据已维护"}</span><strong>${escapeHtml(freshness.label)}</strong><small>${escapeHtml(freshness.detail)}</small>`;
 }
 
-function getDeadlineScaleDays(campaigns) {
-  const remainingDays = campaigns.map((item) => {
-    const timestamp = getDateTimestamp(item.endAt);
-    return Number.isFinite(timestamp) ? Math.max(0, Math.ceil((timestamp - Date.now()) / DAY_MS)) : 0;
-  });
-  return Math.max(30, ...remainingDays);
-}
-
-function getDeadlineMeta(item, scaleDays = 30) {
+function getDeadlineMeta(item) {
   const timestamp = getDateTimestamp(item.endAt);
   if (!Number.isFinite(timestamp)) {
-    return { label: "长期开放", date: "无固定截止日", time: "", progress: 100, className: "ongoing", finite: false };
+    return { label: "长期开放", date: "无固定截止日", time: "", progress: null, className: "ongoing", finite: false };
   }
   const now = Date.now();
+  const startsAt = getDateTimestamp(item.startsAt);
   const remainingDays = Math.max(0, Math.ceil((timestamp - now) / DAY_MS));
-  const remainingValue = Math.max(0, (timestamp - now) / DAY_MS);
-  const progress = Math.max(4, Math.min(100, (remainingValue / Math.max(1, scaleDays)) * 100));
+  const duration = timestamp - startsAt;
+  const progress = Number.isFinite(startsAt) && duration > 0
+    ? Math.max(0, Math.min(100, ((timestamp - now) / duration) * 100))
+    : null;
   const dateParts = new Intl.DateTimeFormat("zh-CN", {
     timeZone: "Asia/Shanghai",
     year: "numeric",
@@ -130,9 +125,9 @@ function getDeadlineMeta(item, scaleDays = 30) {
   const currentYear = new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric" }).format(new Date(now)).replace(/\D/g, "");
   const date = dateParts.year === currentYear ? `${Number(dateParts.month)}月${Number(dateParts.day)}日` : `${dateParts.year}年${Number(dateParts.month)}月${Number(dateParts.day)}日`;
   const time = `${dateParts.hour}:${dateParts.minute}`;
-  if (remainingDays <= 1) return { label: "今天截止", date, time, progress, remainingValue, className: "ending", finite: true };
-  if (remainingDays <= 7) return { label: `剩余 ${remainingDays} 天`, date, time, progress, remainingValue, className: "soon", finite: true };
-  return { label: `剩余 ${remainingDays} 天`, date, time, progress, remainingValue, className: "scheduled", finite: true };
+  if (remainingDays <= 1) return { label: "今天截止", date, time, progress, className: "ending", finite: true };
+  if (remainingDays <= 7) return { label: `剩余 ${remainingDays} 天`, date, time, progress, className: "soon", finite: true };
+  return { label: `剩余 ${remainingDays} 天`, date, time, progress, className: "scheduled", finite: true };
 }
 
 function formatCampaignEndTime(item) {
@@ -149,12 +144,12 @@ function formatCampaignEndTime(item) {
   })} 北京时间`;
 }
 
-function renderDeadline(item, scaleDays) {
-  const deadline = getDeadlineMeta(item, scaleDays);
+function renderDeadline(item) {
+  const deadline = getDeadlineMeta(item);
   return `<div class="deadline-cell ${deadline.className}" aria-label="${escapeHtml(`${deadline.label}，截止 ${deadline.date}${deadline.time ? ` ${deadline.time}` : ""}`)}">
     <span class="deadline-status">${escapeHtml(deadline.label)}</span>
     <time${item.endAt ? ` datetime="${escapeHtml(item.endAt)}"` : ""}><strong>${escapeHtml(deadline.date)}</strong>${deadline.time ? `<small>${escapeHtml(deadline.time)}</small>` : ""}</time>
-    ${deadline.finite ? `<progress class="deadline-track" max="${Math.max(1, scaleDays)}" value="${Math.min(Math.max(1, scaleDays), deadline.remainingValue).toFixed(2)}" aria-hidden="true"></progress>` : ""}
+    ${Number.isFinite(deadline.progress) ? `<progress class="deadline-track" max="100" value="${deadline.progress.toFixed(2)}" aria-label="当前活动周期剩余 ${Math.round(deadline.progress)}%"></progress>` : ""}
   </div>`;
 }
 
@@ -220,7 +215,6 @@ function filteredCampaigns() {
 
 function renderCampaigns() {
   const campaigns = filteredCampaigns();
-  const deadlineScaleDays = getDeadlineScaleDays(campaigns);
   campaignEmpty.hidden = campaigns.length > 0;
   campaignResultCount.textContent = `当前显示 ${campaigns.length} 条主站活动 · 点击查看详情、试算和来源`;
   if (!campaigns.length) {
@@ -237,7 +231,7 @@ function renderCampaigns() {
       <tr class="campaign-row${verification.stale ? " is-stale" : ""}" data-campaign-id="${escapeHtml(item.id)}" tabindex="0" aria-label="查看 ${escapeHtml(item.activity)} 详情">
         <td data-label="活动"><div class="activity-cell">${renderExchangeLogo(meta)}<span class="activity-link">${activityContent}</span></div></td>
         <td data-label="参考年化"><strong class="apy-value">${escapeHtml(item.apy)}</strong></td>
-        <td data-label="截止时间">${renderDeadline(item, deadlineScaleDays)}</td>
+        <td data-label="截止时间">${renderDeadline(item)}</td>
       </tr>`;
   }).join("");
 }
