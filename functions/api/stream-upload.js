@@ -2,7 +2,7 @@ import { isAdminAuthorized } from "../../lib/admin-auth.js";
 import { cleanText, json } from "../../lib/content-library.js";
 
 export async function onRequestPost({ request, env }) {
-  if (!isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   if (!env.STREAM_SERVICE || !env.ADMIN_TOKEN) return json({ error: "Cloudflare Stream 尚未启用。" }, { status: 501 });
   try {
     const input = await request.json();

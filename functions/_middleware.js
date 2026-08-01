@@ -10,7 +10,7 @@ import {
 import { loadStoredBarkerDataset } from "../lib/barker-yield-sync.js";
 
 const SECURITY_HEADERS = {
-  "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://www.google.com https://*.videodelivery.net https://*.cloudflarestream.com; connect-src 'self' https://upload.videodelivery.net; frame-src https://iframe.videodelivery.net https://*.cloudflarestream.com https://www.youtube-nocookie.com https://player.vimeo.com https://player.bilibili.com https://v.qq.com https://player.youku.com; object-src 'none'; base-uri 'self'; form-action 'self' https://upload.videodelivery.net; frame-ancestors 'none'; upgrade-insecure-requests",
+  "content-security-policy": "default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data: https://www.google.com https://*.videodelivery.net https://*.cloudflarestream.com; connect-src 'self' https://upload.videodelivery.net https://challenges.cloudflare.com; frame-src https://iframe.videodelivery.net https://*.cloudflarestream.com https://challenges.cloudflare.com https://www.youtube-nocookie.com https://player.vimeo.com https://player.bilibili.com https://v.qq.com https://player.youku.com; object-src 'none'; base-uri 'self'; form-action 'self' https://upload.videodelivery.net; frame-ancestors 'none'; upgrade-insecure-requests",
   "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   "referrer-policy": "strict-origin-when-cross-origin",
   "strict-transport-security": "max-age=31536000; includeSubDomains",

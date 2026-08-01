@@ -20,7 +20,7 @@ function json(data, init = {}) {
   });
 }
 
-function isAuthorized(request, env) {
+async function isAuthorized(request, env) {
   return isAdminAuthorized(request, env);
 }
 
@@ -202,7 +202,7 @@ async function loadPublicMonitor(env) {
 
 async function handleWrite({ request, env }) {
   if (!env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
-  if (!isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
 
   let payload;
   try {
@@ -223,7 +223,7 @@ async function handleWrite({ request, env }) {
 
 async function handleRestore({ request, env }) {
   if (!env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
-  if (!isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
 
   const url = new URL(request.url);
   const key = url.searchParams.get("key") || "";
@@ -243,7 +243,7 @@ async function handleRestore({ request, env }) {
 
 async function handleMonitorRun({ request, env }) {
   if (!env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
-  if (!isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   try {
     return json({ ok: true, data: await runYieldMonitor(env.CEX_YIELDS) });
   } catch (error) {
@@ -253,7 +253,7 @@ async function handleMonitorRun({ request, env }) {
 
 async function handleBarkerSync({ request, env }) {
   if (!env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
-  if (!isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   try {
     const data = await syncBarkerCampaigns(env.CEX_YIELDS);
     return json({ ok: true, data: { updatedAt: data.updatedAt, campaigns: data.campaigns.length, exchanges: data.exchanges.length, sync: data.sync } });
@@ -266,7 +266,7 @@ export async function onRequestGet(context) {
   try {
     const url = new URL(context.request.url);
     const adminRequest = url.searchParams.get("admin") === "1" || url.searchParams.get("history") === "1" || url.searchParams.get("monitor") === "1";
-    if (adminRequest && !isAuthorized(context.request, context.env)) {
+    if (adminRequest && !await isAuthorized(context.request, context.env)) {
       return json({ error: "Unauthorized" }, { status: 401 });
     }
     if (url.searchParams.get("history") === "1") {

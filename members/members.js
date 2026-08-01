@@ -5,10 +5,48 @@ const player = document.getElementById("memberPlayer");
 const frame = document.getElementById("videoFrame");
 const articleBox = document.getElementById("memberArticle");
 const loginBox = document.getElementById("memberLogin");
+const watermark = document.getElementById("videoWatermark");
+let activeMemberEmail = "";
+let heartbeatTimer = null;
+let watermarkTimer = null;
 
 function escapeHtml(value) { return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"); }
 function showNotice(message, type = "") { notice.hidden = false; notice.className = `member-notice ${type}`; notice.textContent = message; }
 function levelLabel(level) { return level === "premium" ? "高级会员" : level === "basic" ? "正式会员" : "免费试看"; }
+
+function moveWatermark() {
+  watermark.style.left = `${5 + Math.floor(Math.random() * 42)}%`;
+  watermark.style.top = `${7 + Math.floor(Math.random() * 70)}%`;
+}
+
+function startWatermark() {
+  clearInterval(watermarkTimer);
+  watermark.textContent = activeMemberEmail ? `仅限 ${activeMemberEmail} 本人学习` : "会员专享内容";
+  moveWatermark();
+  watermarkTimer = setInterval(moveWatermark, 12000);
+}
+
+function stopPlayback() {
+  clearInterval(watermarkTimer);
+  watermarkTimer = null;
+  frame.src = "about:blank";
+  player.hidden = true;
+}
+
+function startHeartbeat() {
+  if (heartbeatTimer) return;
+  heartbeatTimer = setInterval(async () => {
+    try {
+      const response = await fetch("/members/api/heartbeat", { cache: "no-store" });
+      if (!response.ok) {
+        clearInterval(heartbeatTimer);
+        heartbeatTimer = null;
+        stopPlayback();
+        location.reload();
+      }
+    } catch {}
+  }, 30000);
+}
 
 function renderCourses(courses) {
   grid.innerHTML = courses.length ? courses.map((course) => `<article class="member-course-card${course.allowed ? "" : " is-locked"}">
@@ -34,6 +72,8 @@ async function loadSession() {
     const response = await fetch("/members/api/session", { cache: "no-store" });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "无法读取会员权限");
+    activeMemberEmail = data.email;
+    startHeartbeat();
     document.getElementById("memberGreeting").textContent = `${data.email} · 欢迎回来`;
     document.getElementById("memberSignout").hidden = false;
     loginBox.hidden = true;
@@ -82,20 +122,30 @@ grid.addEventListener("click", async (event) => {
     document.getElementById("playerTitle").textContent = data.title;
     frame.src = data.iframeUrl;
     player.hidden = false;
+    startWatermark();
     player.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (error) { showNotice(error.message, "error"); }
   finally { button.disabled = false; button.querySelector("em").textContent = old; }
 });
 
-document.getElementById("closePlayer").addEventListener("click", () => { frame.src = "about:blank"; player.hidden = true; });
+document.getElementById("closePlayer").addEventListener("click", stopPlayback);
 document.getElementById("memberLoginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const status = document.getElementById("memberLoginStatus");
+  const submit = event.currentTarget.querySelector("button[type='submit']");
+  const turnstileToken = event.currentTarget.querySelector("input[name='cf-turnstile-response']")?.value || "";
   status.textContent = "正在核对会员权限…";
-  const response = await fetch("/members/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: document.getElementById("memberLoginEmail").value, code: document.getElementById("memberLoginCode").value }) });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) { status.textContent = data.error || "登录失败，请检查邮箱和会员码。"; return; }
-  location.reload();
+  submit.disabled = true;
+  try {
+    const response = await fetch("/members/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: document.getElementById("memberLoginEmail").value, code: document.getElementById("memberLoginCode").value, turnstileToken }) });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "登录失败，请检查邮箱和会员码。");
+    location.reload();
+  } catch (error) {
+    status.textContent = error.message;
+    if (window.turnstile) window.turnstile.reset();
+    submit.disabled = false;
+  }
 });
-document.getElementById("memberSignout").addEventListener("click", async () => { await fetch("/members/api/logout", { method: "POST" }); location.assign("/members/"); });
+document.getElementById("memberSignout").addEventListener("click", async () => { clearInterval(heartbeatTimer); stopPlayback(); await fetch("/members/api/logout", { method: "POST" }); location.assign("/members/"); });
 loadSession();

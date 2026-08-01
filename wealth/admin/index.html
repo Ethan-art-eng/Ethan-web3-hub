@@ -202,7 +202,7 @@
     </div><div class="dialog-actions"><button id="cancelLessonDialog" type="button">取消</button><button class="primary-button" id="saveLessonButton" type="submit">保存课时</button></div></form></dialog>
 
     <dialog id="memberDialog"><form id="memberForm"><div class="dialog-heading"><div><p class="eyebrow">Member</p><h2 id="memberDialogTitle">新增会员</h2></div><button class="icon-button" id="closeMemberDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
-      <label>会员邮箱<input id="memberEmail" type="email" maxlength="254" required /></label><label>姓名或备注名<input id="memberName" maxlength="120" /></label><label>会员等级<select id="memberTier"><option value="basic">正式会员</option><option value="premium">高级会员</option></select></label><label>状态<select id="memberStatusInput"><option value="active">正常</option><option value="paused">暂停</option></select></label><label>开通日期<input id="memberStartsAt" type="date" required /></label><label>到期日期<input id="memberExpiresAt" type="date" /></label><label class="full-width">会员登录码<div class="token-row"><input id="memberAccessCode" maxlength="80" autocomplete="off" placeholder="新会员必须设置；编辑时留空表示不重置" /><button id="generateMemberCode" type="button">随机生成</button></div><small>请把邮箱和登录码单独发给会员；后台不会再次显示旧登录码。</small></label><label class="full-width">备注<textarea id="memberNotes" rows="3" maxlength="800"></textarea></label>
+      <label>会员邮箱<input id="memberEmail" type="email" maxlength="254" required /></label><label>姓名或备注名<input id="memberName" maxlength="120" /></label><label>会员等级<select id="memberTier"><option value="basic">正式会员</option><option value="premium">高级会员</option></select></label><label>状态<select id="memberStatusInput"><option value="active">正常</option><option value="paused">暂停</option></select></label><label>开通日期<input id="memberStartsAt" type="date" required /></label><label>到期日期<input id="memberExpiresAt" type="date" /></label><label class="full-width">会员登录码<div class="token-row"><input id="memberAccessCode" minlength="12" maxlength="80" autocomplete="off" placeholder="新会员必须设置；编辑时留空表示不重置" /><button id="generateMemberCode" type="button">随机生成</button></div><small>请把邮箱和登录码单独发给会员；后台不会再次显示旧登录码。重置登录码会立即退出该会员的所有设备。</small></label><label class="full-width">备注<textarea id="memberNotes" rows="3" maxlength="800"></textarea></label>
     </div><div class="dialog-actions"><button id="cancelMemberDialog" type="button">取消</button><button class="primary-button" type="submit">保存会员</button></div></form></dialog>
 
     <dialog id="historyDialog" class="history-dialog"><div class="history-content"><div class="dialog-heading"><div><p class="eyebrow">Revision History</p><h2>理财版本记录</h2></div><button class="icon-button" id="closeHistoryButton" type="button" aria-label="关闭">×</button></div><p class="history-help">每次保存前会自动备份上一版本，备份保留 60 天。</p><div id="historyList" class="history-list"></div><p class="form-status" id="historyStatus" role="status"></p></div></dialog>
@@ -210,6 +210,6 @@
     <script src="./admin.js?v=20260720-library-v1"></script>
     <script src="./airdrop-admin.js?v=20260717-featured-v1"></script>
     <script src="./content-admin.js?v=20260717-featured-v1"></script>
-    <script src="./library-admin.js?v=20260720-library-v2"></script>
+    <script src="./library-admin.js?v=20260801-member-security-v1"></script>
   </body>
 </html>

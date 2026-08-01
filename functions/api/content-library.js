@@ -5,7 +5,7 @@ const UPSERTS = { article: upsertArticle, course: upsertCourse, lesson: upsertLe
 const TABLES = { article: "articles", course: "courses", lesson: "lessons", member: "members" };
 
 export async function onRequestGet({ request, env }) {
-  if (!isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   try {
     return json(await listLibrary(env));
   } catch (error) {
@@ -14,7 +14,7 @@ export async function onRequestGet({ request, env }) {
 }
 
 export async function onRequestPut({ request, env }) {
-  if (!isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   if (!env.CONTENT_DB) return json({ error: "CONTENT_DB is not configured" }, { status: 501 });
   try {
     const payload = await request.json();
@@ -29,7 +29,7 @@ export async function onRequestPut({ request, env }) {
 }
 
 export async function onRequestDelete({ request, env }) {
-  if (!isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   if (!env.CONTENT_DB) return json({ error: "CONTENT_DB is not configured" }, { status: 501 });
   const url = new URL(request.url);
   const resource = url.searchParams.get("resource");

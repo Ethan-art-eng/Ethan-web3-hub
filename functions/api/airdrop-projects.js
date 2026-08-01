@@ -86,7 +86,7 @@ async function saveBackup(env, current) {
 export async function onRequestGet(context) {
   try {
     const admin = new URL(context.request.url).searchParams.get("admin") === "1";
-    if (admin && !isAdminAuthorized(context.request, context.env)) return json({ error: "Unauthorized" }, { status: 401 });
+    if (admin && !await isAdminAuthorized(context.request, context.env)) return json({ error: "Unauthorized" }, { status: 401 });
     return json(await loadData(context.env, context.request));
   } catch (error) {
     return json({ error: error.message }, { status: 500 });
@@ -94,7 +94,7 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPut(context) {
-  if (!isAdminAuthorized(context.request, context.env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAdminAuthorized(context.request, context.env)) return json({ error: "Unauthorized" }, { status: 401 });
   if (!context.env.CEX_YIELDS) return json({ error: "CEX_YIELDS KV binding is not configured" }, { status: 501 });
   try {
     const payload = await context.request.json();

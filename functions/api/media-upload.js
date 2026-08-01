@@ -4,7 +4,7 @@ import { json } from "../../lib/content-library.js";
 const TYPES = new Map([["image/jpeg", "jpg"], ["image/png", "png"], ["image/webp", "webp"], ["image/gif", "gif"]]);
 
 export async function onRequestPost({ request, env }) {
-  if (!isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
+  if (!await isAdminAuthorized(request, env)) return json({ error: "Unauthorized" }, { status: 401 });
   try {
     const form = await request.formData();
     const file = form.get("file");

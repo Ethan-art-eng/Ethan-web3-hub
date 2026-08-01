@@ -4,6 +4,8 @@ pages_build_output_dir = "."
 
 [vars]
 ACCESS_AUTH_ENABLED = "true"
+ACCESS_TEAM_DOMAIN = "summer-disk-607a.cloudflareaccess.com"
+ACCESS_AUD = "f6a15ba81a5cdbc6982d9d0d91f27e9faddd3a7a0584c36b566467b5bc12db1e"
 
 [[kv_namespaces]]
 binding = "CEX_YIELDS"

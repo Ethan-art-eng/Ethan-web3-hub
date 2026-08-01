@@ -40,7 +40,7 @@ function renderLibrary() {
   $("memberAdminBody").innerHTML = visible.map((member) => {
     const active = memberIsActive(member);
     const expiry = member.expires_at ? dateInput(member.expires_at) : "长期有效";
-    return `<tr><td><div class="cell-stack"><strong>${escapeHtml(member.name || "未命名会员")}</strong><span>${escapeHtml(member.email)}</span></div></td><td>${labelLevel(member.tier)}</td><td>${escapeHtml(expiry)}</td><td><span class="admin-badge ${active ? "published" : "ended"}">${active ? "有效" : expired(member) ? "已到期" : "已暂停"}</span></td><td><div class="row-actions"><button data-member-edit="${escapeHtml(member.id)}">编辑</button><button class="delete-button" data-member-delete="${escapeHtml(member.id)}">删除</button></div></td></tr>`;
+    return `<tr><td><div class="cell-stack"><strong>${escapeHtml(member.name || "未命名会员")}</strong><span>${escapeHtml(member.email)}</span></div></td><td>${labelLevel(member.tier)}</td><td>${escapeHtml(expiry)}</td><td><span class="admin-badge ${active ? "published" : "ended"}">${active ? "有效" : expired(member) ? "已到期" : "已暂停"}</span></td><td><div class="row-actions"><button data-member-edit="${escapeHtml(member.id)}">编辑</button><button data-member-revoke="${escapeHtml(member.id)}">强制下线</button><button class="delete-button" data-member-delete="${escapeHtml(member.id)}">删除</button></div></td></tr>`;
   }).join("");
 }
 
@@ -59,6 +59,16 @@ async function deleteResource(resource, id, statusElement, name) {
   if (!confirm(`确定删除“${name}”吗？`)) return;
   const result = await window.adminConsole.apiRequest(`${LIBRARY_API}?resource=${resource}&id=${encodeURIComponent(id)}`, { method: "DELETE" });
   libraryState.data = result.data; renderLibrary(); window.adminConsole.setStatus(statusElement, "已删除。", "success");
+}
+
+async function revokeMemberSessions(member) {
+  if (!confirm(`确定让“${member.email}”在所有设备退出登录吗？`)) return;
+  window.adminConsole.setStatus($("memberSaveStatus"), "正在退出该会员的设备…");
+  await window.adminConsole.apiRequest("/wealth/admin/api/member-sessions", {
+    method: "POST",
+    body: JSON.stringify({ memberId: member.id }),
+  });
+  window.adminConsole.setStatus($("memberSaveStatus"), "该会员已在所有设备退出登录。", "success");
 }
 
 function openArticle(item = null) {
@@ -117,7 +127,20 @@ $("courseAdminList").addEventListener("click", (event) => { let button = event.t
 $("addMemberButton").addEventListener("click", () => openMember()); $("closeMemberDialog").addEventListener("click", () => $("memberDialog").close()); $("cancelMemberDialog").addEventListener("click", () => $("memberDialog").close());
 $("generateMemberCode").addEventListener("click", () => { const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789"; const bytes = crypto.getRandomValues(new Uint8Array(14)); $("memberAccessCode").value = Array.from(bytes, (byte) => alphabet[byte % alphabet.length]).join(""); $("memberAccessCode").select(); });
 $("memberForm").addEventListener("submit", async (event) => { event.preventDefault(); try { const existing = libraryState.data.members.find((item) => item.id === libraryState.memberId); await saveResource("member", { ...existing, id: libraryState.memberId, email: $("memberEmail").value, name: $("memberName").value, tier: $("memberTier").value, status: $("memberStatusInput").value, starts_at: isoDate($("memberStartsAt").value), expires_at: isoDate($("memberExpiresAt").value, true), access_code: $("memberAccessCode").value, notes: $("memberNotes").value }, $("memberSaveStatus"), "会员权限已保存。请将刚设置的登录码安全发送给会员。" ); $("memberDialog").close(); } catch (error) { window.adminConsole.setStatus($("memberSaveStatus"), error.message, "error"); } });
-$("memberAdminBody").addEventListener("click", (event) => { const edit = event.target.closest("[data-member-edit]"); if (edit) openMember(libraryState.data.members.find((item) => item.id === edit.dataset.memberEdit)); const del = event.target.closest("[data-member-delete]"); if (del) { const item = libraryState.data.members.find((entry) => entry.id === del.dataset.memberDelete); deleteResource("member", item.id, $("memberSaveStatus"), item.email); } });
+$("memberAdminBody").addEventListener("click", async (event) => {
+  const edit = event.target.closest("[data-member-edit]");
+  if (edit) openMember(libraryState.data.members.find((item) => item.id === edit.dataset.memberEdit));
+  const revoke = event.target.closest("[data-member-revoke]");
+  if (revoke) {
+    const item = libraryState.data.members.find((entry) => entry.id === revoke.dataset.memberRevoke);
+    try { await revokeMemberSessions(item); } catch (error) { window.adminConsole.setStatus($("memberSaveStatus"), error.message, "error"); }
+  }
+  const del = event.target.closest("[data-member-delete]");
+  if (del) {
+    const item = libraryState.data.members.find((entry) => entry.id === del.dataset.memberDelete);
+    deleteResource("member", item.id, $("memberSaveStatus"), item.email);
+  }
+});
 $("memberSearch").addEventListener("input", (event) => { libraryState.memberQuery = event.target.value; renderLibrary(); }); $("memberFilter").addEventListener("change", (event) => { libraryState.memberFilter = event.target.value; renderLibrary(); });
 
 window.addEventListener("admin:connected", loadLibrary);
