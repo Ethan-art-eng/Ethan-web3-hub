@@ -9,10 +9,63 @@ const watermark = document.getElementById("videoWatermark");
 let activeMemberEmail = "";
 let heartbeatTimer = null;
 let watermarkTimer = null;
+let googleInitialized = false;
 
 function escapeHtml(value) { return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"); }
 function showNotice(message, type = "") { notice.hidden = false; notice.className = `member-notice ${type}`; notice.textContent = message; }
 function levelLabel(level) { return level === "premium" ? "高级会员" : level === "basic" ? "正式会员" : "免费试看"; }
+
+async function waitForGoogle() {
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    if (window.google?.accounts?.id) return window.google.accounts.id;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+  throw new Error("Google 登录服务加载失败，请刷新页面重试。");
+}
+
+async function initializeGoogleLogin() {
+  if (googleInitialized) return;
+  googleInitialized = true;
+  const status = document.getElementById("memberLoginStatus");
+  const button = document.getElementById("googleSignInButton");
+  status.textContent = "正在加载 Google 登录…";
+  try {
+    const configResponse = await fetch("/members/api/auth-config", { cache: "no-store" });
+    const config = await configResponse.json().catch(() => ({}));
+    if (!configResponse.ok) throw new Error(config.error || "Google 登录尚未完成配置。");
+    const googleIdentity = await waitForGoogle();
+    googleIdentity.initialize({
+      client_id: config.clientId,
+      nonce: config.nonce,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      callback: async ({ credential }) => {
+        status.textContent = "正在核对会员权限…";
+        try {
+          const response = await fetch("/members/api/google-login", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ credential }),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.error || "Google 登录失败，请重试。");
+          location.assign("/members/");
+        } catch (error) {
+          const message = error.message;
+          googleInitialized = false;
+          await initializeGoogleLogin();
+          status.textContent = message;
+        }
+      },
+    });
+    button.innerHTML = "";
+    googleIdentity.renderButton(button, { theme: "outline", size: "large", shape: "rectangular", text: "signin_with", width: 320, locale: "zh-CN" });
+    status.textContent = "";
+  } catch (error) {
+    status.textContent = error.message;
+    googleInitialized = false;
+  }
+}
 
 function moveWatermark() {
   watermark.style.left = `${5 + Math.floor(Math.random() * 42)}%`;
@@ -91,10 +144,11 @@ async function loadSession() {
     const article = new URLSearchParams(location.search).get("article");
     if (article) loadArticle(article);
   } catch (error) {
-    statusBox.innerHTML = "<small>当前状态</small><strong>等待登录</strong><span>请输入会员邮箱和登录码</span>";
-    document.getElementById("memberGreeting").textContent = "登录后自动核对会员等级和有效期";
+    statusBox.innerHTML = "<small>当前状态</small><strong>等待登录</strong><span>请使用 Google 邮箱验证</span>";
+    document.getElementById("memberGreeting").textContent = "使用登记的 Google 邮箱登录后，自动核对会员等级和有效期";
     loginBox.hidden = false;
     document.querySelector(".member-library").hidden = true;
+    initializeGoogleLogin();
   }
 }
 
@@ -129,23 +183,5 @@ grid.addEventListener("click", async (event) => {
 });
 
 document.getElementById("closePlayer").addEventListener("click", stopPlayback);
-document.getElementById("memberLoginForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const status = document.getElementById("memberLoginStatus");
-  const submit = event.currentTarget.querySelector("button[type='submit']");
-  const turnstileToken = event.currentTarget.querySelector("input[name='cf-turnstile-response']")?.value || "";
-  status.textContent = "正在核对会员权限…";
-  submit.disabled = true;
-  try {
-    const response = await fetch("/members/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: document.getElementById("memberLoginEmail").value, code: document.getElementById("memberLoginCode").value, turnstileToken }) });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || "登录失败，请检查邮箱和会员码。");
-    location.reload();
-  } catch (error) {
-    status.textContent = error.message;
-    if (window.turnstile) window.turnstile.reset();
-    submit.disabled = false;
-  }
-});
 document.getElementById("memberSignout").addEventListener("click", async () => { clearInterval(heartbeatTimer); stopPlayback(); await fetch("/members/api/logout", { method: "POST" }); location.assign("/members/"); });
 loadSession();

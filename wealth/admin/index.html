@@ -149,10 +149,10 @@
             </section>
 
             <section class="admin-panel" data-panel="members">
-              <div class="workspace-heading"><div><p class="eyebrow">Access Control</p><h1>会员管理</h1><p>按会员邮箱、等级和到期时间控制课程观看权限。</p></div><div class="workspace-actions"><button class="primary-button" id="addMemberButton" type="button">新增会员</button></div></div>
+              <div class="workspace-heading"><div><p class="eyebrow">Access Control</p><h1>会员管理</h1><p>登记会员的 Google 邮箱，并按等级和到期时间控制课程观看权限。</p></div><div class="workspace-actions"><button class="primary-button" id="addMemberButton" type="button">新增会员</button></div></div>
               <div class="admin-summary three"><div><span>会员总数</span><strong id="memberTotal">0</strong></div><div><span>当前有效</span><strong id="memberActive">0</strong></div><div><span>暂停或到期</span><strong id="memberInactive">0</strong></div></div>
               <div class="admin-filter-bar"><label>搜索<input id="memberSearch" type="search" placeholder="邮箱或姓名" /></label><label>状态<select id="memberFilter"><option value="all">全部</option><option value="active">有效</option><option value="inactive">暂停或到期</option></select></label></div>
-              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>会员</th><th>等级</th><th>有效期</th><th>状态</th><th>操作</th></tr></thead><tbody id="memberAdminBody"></tbody></table><p class="admin-empty" id="memberAdminEmpty" hidden>还没有会员。</p></div><p class="save-status" id="memberSaveStatus" role="status"></p>
+              <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>会员</th><th>Google 登录</th><th>等级</th><th>有效期</th><th>状态</th><th>操作</th></tr></thead><tbody id="memberAdminBody"></tbody></table><p class="admin-empty" id="memberAdminEmpty" hidden>还没有会员。</p></div><p class="save-status" id="memberSaveStatus" role="status"></p>
             </section>
           </div>
         </div>
@@ -202,7 +202,7 @@
     </div><div class="dialog-actions"><button id="cancelLessonDialog" type="button">取消</button><button class="primary-button" id="saveLessonButton" type="submit">保存课时</button></div></form></dialog>
 
     <dialog id="memberDialog"><form id="memberForm"><div class="dialog-heading"><div><p class="eyebrow">Member</p><h2 id="memberDialogTitle">新增会员</h2></div><button class="icon-button" id="closeMemberDialog" type="button" aria-label="关闭">×</button></div><div class="form-grid">
-      <label>会员邮箱<input id="memberEmail" type="email" maxlength="254" required /></label><label>姓名或备注名<input id="memberName" maxlength="120" /></label><label>会员等级<select id="memberTier"><option value="basic">正式会员</option><option value="premium">高级会员</option></select></label><label>状态<select id="memberStatusInput"><option value="active">正常</option><option value="paused">暂停</option></select></label><label>开通日期<input id="memberStartsAt" type="date" required /></label><label>到期日期<input id="memberExpiresAt" type="date" /></label><label class="full-width">会员登录码<div class="token-row"><input id="memberAccessCode" minlength="12" maxlength="80" autocomplete="off" placeholder="新会员必须设置；编辑时留空表示不重置" /><button id="generateMemberCode" type="button">随机生成</button></div><small>请把邮箱和登录码单独发给会员；后台不会再次显示旧登录码。重置登录码会立即退出该会员的所有设备。</small></label><label class="full-width">备注<textarea id="memberNotes" rows="3" maxlength="800"></textarea></label>
+      <label>Google 邮箱<input id="memberEmail" type="email" maxlength="254" required /><small>必须与会员点击 Google 登录时选择的邮箱完全一致。首次登录后会自动绑定该 Google 账户。</small></label><label>姓名或备注名<input id="memberName" maxlength="120" /></label><label>会员等级<select id="memberTier"><option value="basic">正式会员</option><option value="premium">高级会员</option></select></label><label>状态<select id="memberStatusInput"><option value="active">正常</option><option value="paused">暂停</option></select></label><label>开通日期<input id="memberStartsAt" type="date" required /></label><label>到期日期<input id="memberExpiresAt" type="date" /></label><label class="full-width">备注<textarea id="memberNotes" rows="3" maxlength="800"></textarea></label>
     </div><div class="dialog-actions"><button id="cancelMemberDialog" type="button">取消</button><button class="primary-button" type="submit">保存会员</button></div></form></dialog>
 
     <dialog id="historyDialog" class="history-dialog"><div class="history-content"><div class="dialog-heading"><div><p class="eyebrow">Revision History</p><h2>理财版本记录</h2></div><button class="icon-button" id="closeHistoryButton" type="button" aria-label="关闭">×</button></div><p class="history-help">每次保存前会自动备份上一版本，备份保留 60 天。</p><div id="historyList" class="history-list"></div><p class="form-status" id="historyStatus" role="status"></p></div></dialog>
@@ -210,6 +210,6 @@
     <script src="./admin.js?v=20260720-library-v1"></script>
     <script src="./airdrop-admin.js?v=20260717-featured-v1"></script>
     <script src="./content-admin.js?v=20260717-featured-v1"></script>
-    <script src="./library-admin.js?v=20260801-member-security-v1"></script>
+    <script src="./library-admin.js?v=20260803-google-login-v1"></script>
   </body>
 </html>

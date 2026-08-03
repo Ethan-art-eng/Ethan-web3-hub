@@ -2,6 +2,9 @@ import { cleanEmail, cleanText, getMember, hashText, json } from "../../../lib/c
 import { clearLoginFailures, getLoginThrottle, recordLoginFailure, verifyTurnstile } from "../../../lib/member-security.js";
 
 export async function onRequestPost({ request, env }) {
+  if (String(env.MEMBER_CODE_LOGIN_ENABLED || "false") !== "true") {
+    return json({ error: "会员码登录已停用，请使用 Google 邮箱登录。" }, { status: 410 });
+  }
   if (!env.CONTENT_DB) return json({ error: "会员数据库尚未连接。" }, { status: 501 });
   try {
     const input = await request.json();
