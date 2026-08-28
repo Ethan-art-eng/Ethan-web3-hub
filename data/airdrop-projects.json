@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T09:05:23.550Z",
+  "updatedAt": "2026-08-28T00:00:00.000Z",
   "projects": [
     {
       "id": "seed-2025-01",
@@ -392,6 +392,76 @@
       "profit": "待观察",
       "link": "https://x.com/wardenprotocol",
       "note": ""
+    },
+    {
+      "id": "seed-2026-15",
+      "year": "2026",
+      "name": "TermMax",
+      "category": "DeFi；固定利率借贷",
+      "funding": "8M+",
+      "investors": "YZi Labs；Cumberland DRW；HashKey Capital",
+      "cost": "有（存借、交易或资金占用）",
+      "accounts": "1（主号）",
+      "status": "已空投",
+      "profit": "待复盘",
+      "link": "https://app.termmax.ts.finance/",
+      "note": "首轮 XP 空投已于 2026-08-25 TGE 兑现；当前仅关注后续活动"
+    },
+    {
+      "id": "seed-2026-16",
+      "year": "2026",
+      "name": "Axis Robotics",
+      "category": "AI；机器人；DePIN",
+      "funding": "12M",
+      "investors": "Hack VC；Nomad Capital；Pi Core Team Ventures；10K Ventures",
+      "cost": "低（Base Gas）",
+      "accounts": "1（主号）",
+      "status": "进行中",
+      "profit": "待观察",
+      "link": "https://hub.axisrobotics.ai/",
+      "note": "浏览器完成机器人训练任务并在 Base 签名获取积分；积分不是代币"
+    },
+    {
+      "id": "seed-2026-17",
+      "year": "2026",
+      "name": "Entropy",
+      "category": "Perp DEX；RWA；HIP-3",
+      "funding": "14M",
+      "investors": "Ribbit Capital",
+      "cost": "有（手续费及仓位风险）",
+      "accounts": "1（主号）",
+      "status": "进行中",
+      "profit": "待观察",
+      "link": "https://entropy.io/",
+      "note": "Hyperliquid 上的前沿资产永续市场；官方尚未公布代币或空投"
+    },
+    {
+      "id": "seed-2026-18",
+      "year": "2026",
+      "name": "MöB（MOB）",
+      "category": "DeFi；统一保证金；Perp 聚合",
+      "funding": "未披露",
+      "investors": "YZi Labs",
+      "cost": "有（手续费及仓位风险）",
+      "accounts": "1（主号）",
+      "status": "进行中",
+      "profit": "待观察",
+      "link": "https://app.mob.exchange/",
+      "note": "已接入 Lighter 等交易场所；官方尚未公布自身积分或空投"
+    },
+    {
+      "id": "seed-2026-19",
+      "year": "2026",
+      "name": "Flop",
+      "category": "AI；算力网络；Agent",
+      "funding": "无融资（官方称无 VC）",
+      "investors": "无（官方公平启动）",
+      "cost": "视参与角色而定",
+      "accounts": "1（主号）",
+      "status": "进行中",
+      "profit": "待观察",
+      "link": "https://flop.finance/",
+      "note": "角色申请已开放；测试网计划 2026 Q4，空投面向矿工、验证者和 Agent 等参与者"
     },
     {
       "id": "seed-2026-01",
