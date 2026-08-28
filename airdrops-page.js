@@ -1,5 +1,6 @@
 const pageSize = 10;
 const STALE_AFTER_MS = 72 * 60 * 60 * 1000;
+const PROJECT_LOGO_VERSION = "20260828-logo1";
 const MISSING_VALUES = new Set(["", "待补", "待补充"]);
 
 let activeView = "2026";
@@ -55,7 +56,7 @@ function projectLogoMarkup(item, className = "") {
   const logoId = String(item?._logoId || item?.id || "").trim();
   const safeLogoId = /^[a-z0-9-]+$/i.test(logoId) ? logoId : "";
   const image = safeLogoId
-    ? `<img src="../assets/airdrops/${escapeHtml(safeLogoId)}.png" alt="" loading="lazy" decoding="async">`
+    ? `<img src="../assets/airdrops/${escapeHtml(safeLogoId)}.png?v=${PROJECT_LOGO_VERSION}" alt="" loading="lazy" decoding="async">`
     : "";
   return `<span class="airdrop-project-logo${className ? ` ${className}` : ""}" aria-hidden="true"><span>${escapeHtml(projectInitials(item?.name))}</span>${image}</span>`;
 }
